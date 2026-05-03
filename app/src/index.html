@@ -51,29 +51,32 @@
 </head>
 <body>
 <div class="popover-card menubar-dropdown w-full">
-  <!-- 날짜 + 날씨 -->
-  <div class="px-3 py-2.5 bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 border-b border-slate-100">
-    <div class="flex items-start gap-2">
-      <div class="flex-1">
-        <div class="text-[10px] text-slate-500 font-medium" id="month-label">2026년 5월</div>
-        <div class="text-base font-bold text-slate-900 leading-tight" id="date-label">3일 월요일</div>
-      </div>
-      <div class="text-right">
-        <div class="flex items-center gap-1 text-sm font-semibold text-slate-800">
-          <span class="text-amber-500">☀</span><span>21°</span>
-          <span class="text-slate-400 font-normal text-[11px]">/12°</span>
+  <!-- ────────────── 메인 뷰 ────────────── -->
+  <div id="view-main">
+    <!-- 날짜 + 날씨 + ⚙ 설정 -->
+    <div class="px-3 py-2.5 bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 border-b border-slate-100">
+      <div class="flex items-start gap-2">
+        <div class="flex-1">
+          <div class="text-[10px] text-slate-500 font-medium" id="month-label">2026년 5월</div>
+          <div class="text-base font-bold text-slate-900 leading-tight" id="date-label">3일 월요일</div>
         </div>
-        <div class="text-[10px] text-slate-500">서울 · 맑음</div>
+        <div class="text-right">
+          <div class="flex items-center gap-1 text-sm font-semibold text-slate-800">
+            <span class="text-amber-500">☀</span><span>21°</span>
+            <span class="text-slate-400 font-normal text-[11px]">/12°</span>
+          </div>
+          <div class="text-[10px] text-slate-500">서울 · 맑음</div>
+        </div>
+        <button onclick="showView('settings')" title="설정" class="ml-1 w-6 h-6 grid place-items-center text-slate-400 hover:text-slate-700 hover:bg-white/50 rounded transition-colors text-base">⚙</button>
+      </div>
+      <div class="mt-1.5 text-[10px] text-slate-500 flex items-center gap-1.5">
+        <span class="text-slate-700 font-medium" id="time-label">오전 9:14</span>
+        <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+        <span class="text-emerald-600 flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>동기화 30초 전
+        </span>
       </div>
     </div>
-    <div class="mt-1.5 text-[10px] text-slate-500 flex items-center gap-1.5">
-      <span class="text-slate-700 font-medium" id="time-label">오전 9:14</span>
-      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
-      <span class="text-emerald-600 flex items-center gap-1">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>동기화 30초 전
-      </span>
-    </div>
-  </div>
 
   <!-- 선택한 날짜의 일정 (캘린더에서 클릭한 날짜) -->
   <div class="px-3 py-2 border-b border-slate-100">
@@ -198,8 +201,144 @@
   <div class="border-t border-slate-100 my-1"></div>
   <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5 text-sm text-slate-700 font-medium">⤢ 전체 대시보드 열기 →</a>
   <a href="#" onclick="syncNow(event)" class="block px-3 py-1.5 text-sm text-slate-600">⟳ 지금 동기화</a>
-  <a href="#" onclick="openSettings(event)" class="block px-3 py-1.5 text-sm text-slate-600">⚙ 설정</a>
-</div>
+  <a href="#" onclick="showView('settings')" class="block px-3 py-1.5 text-sm text-slate-600">⚙ 설정</a>
+  </div><!-- /view-main -->
+
+  <!-- ────────────── 설정 뷰 ────────────── -->
+  <div id="view-settings" style="display:none">
+    <!-- 헤더: 뒤로 + 제목 -->
+    <div class="px-3 py-2.5 bg-gradient-to-br from-slate-50 to-white border-b border-slate-100 flex items-center gap-2 sticky top-0 z-10">
+      <button onclick="showView('main')" class="text-slate-500 hover:text-slate-900 text-sm flex items-center gap-1">← 뒤로</button>
+      <span class="text-sm font-semibold text-slate-800 ml-1">설정</span>
+      <span class="ml-auto text-[10px] text-slate-400">v0.1.0</span>
+    </div>
+
+    <!-- 연결 상태 요약 -->
+    <div class="px-3 py-2 bg-amber-50 border-b border-amber-100 text-[11px] text-amber-800">
+      💡 <strong>현재 mockup 데이터 사용 중</strong> — 아래 채널 연결을 완료하면 본인 진짜 데이터가 표시됩니다 (Phase 1)
+    </div>
+
+    <!-- 1. Notion -->
+    <div class="px-3 py-3 border-b border-slate-100">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 rounded grid place-items-center bg-slate-200 text-slate-700 text-sm font-bold">N</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-slate-900">Notion (SOTR)</div>
+          <div class="text-[10px] text-slate-500">프로젝트·마일스톤·태스크의 진실의 원천</div>
+        </div>
+        <span id="status-notion" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">미연결</span>
+      </div>
+      <input id="notion-token" type="password" placeholder="Notion Integration Token (secret_...)" class="w-full px-2 py-1.5 border border-slate-200 rounded text-[11px] mb-1.5 font-mono" />
+      <div class="flex gap-1.5">
+        <button onclick="connectChannel('notion')" class="flex-1 px-2 py-1.5 rounded bg-indigo-600 text-white text-[11px] font-medium hover:bg-indigo-700">테스트 연결</button>
+        <a href="https://www.notion.so/profile/integrations" onclick="openExternal(this.href);return false" class="px-2 py-1.5 rounded border border-slate-200 text-[10px] text-slate-600 hover:bg-slate-50 grid place-items-center">토큰 발급↗</a>
+      </div>
+      <div class="mt-2 text-[10px] text-slate-500 leading-relaxed">
+        ⓘ www.notion.so/profile/integrations 에서 New integration → 워크스페이스 선택 → 권한 Read/Update content → 토큰 복사
+      </div>
+    </div>
+
+    <!-- 2. Google (Calendar + Gmail) -->
+    <div class="px-3 py-3 border-b border-slate-100">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 rounded grid place-items-center bg-rose-100 text-rose-700 text-sm font-bold">G</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-slate-900">Google Calendar + Gmail</div>
+          <div class="text-[10px] text-slate-500">일정·메일 자동 흡수, 양방향 동기화</div>
+        </div>
+        <span id="status-google" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">미연결</span>
+      </div>
+      <button onclick="connectChannel('google')" class="w-full px-2 py-2 rounded bg-white border border-slate-300 text-[11px] font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-2">
+        <span class="text-base leading-none">G</span> Google 계정으로 로그인
+      </button>
+      <div class="mt-2 text-[10px] text-slate-500 leading-relaxed">
+        ⓘ 권한: Calendar 읽기/쓰기, Gmail 읽기·발송 · OAuth 토큰은 macOS Keychain에 저장
+      </div>
+    </div>
+
+    <!-- 3. Slack -->
+    <div class="px-3 py-3 border-b border-slate-100">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 rounded grid place-items-center bg-violet-100 text-violet-700 text-sm font-bold">S</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-slate-900">Slack 워크스페이스</div>
+          <div class="text-[10px] text-slate-500">메시지·시안 흡수, 발송 워크플로우</div>
+        </div>
+        <span id="status-slack" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">미연결</span>
+      </div>
+      <button onclick="connectChannel('slack')" class="w-full px-2 py-2 rounded bg-violet-600 text-white text-[11px] font-medium hover:bg-violet-700 flex items-center justify-center gap-2">
+        <span class="text-base leading-none">⌘</span> Slack 워크스페이스 연결
+      </button>
+      <div class="mt-2 text-[10px] text-slate-500 leading-relaxed">
+        ⓘ 권한: 메시지 읽기/쓰기, 채널/DM 목록, 파일 읽기 · 본문은 절대 클라우드 미전송
+      </div>
+    </div>
+
+    <!-- 4. KakaoTalk 와치 폴더 -->
+    <div class="px-3 py-3 border-b border-slate-100">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 rounded grid place-items-center bg-amber-100 text-amber-700 text-sm font-bold">K</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-slate-900">KakaoTalk 와치 폴더</div>
+          <div class="text-[10px] text-slate-500">.txt 내보내기 자동 인지 → 노션 반영</div>
+        </div>
+        <span id="status-kakao" class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">미설정</span>
+      </div>
+      <div class="flex gap-1.5">
+        <input id="kakao-folder" type="text" readonly placeholder="폴더 미선택" value="~/Documents/KakaoExport/" class="flex-1 px-2 py-1.5 border border-slate-200 rounded text-[11px] font-mono bg-slate-50" />
+        <button onclick="connectChannel('kakao')" class="px-2 py-1.5 rounded border border-slate-200 text-[11px] text-slate-700 hover:bg-slate-50">폴더 선택</button>
+      </div>
+      <div class="mt-2 text-[10px] text-slate-500 leading-relaxed">
+        ⓘ 카톡 데스크탑 → 대화방 → 더보기 → "대화 내용 내보내기" → .txt 저장 → 이 폴더에 떨구면 자동 처리
+      </div>
+    </div>
+
+    <!-- 5. 알림 시간 -->
+    <div class="px-3 py-3 border-b border-slate-100">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 rounded grid place-items-center bg-blue-100 text-blue-700 text-sm font-bold">⏰</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-slate-900">아침 브리프 알림</div>
+          <div class="text-[10px] text-slate-500">매일 지정 시간에 macOS 알림으로 오늘의 액션 요약</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <input id="brief-time" type="time" value="08:00" class="px-2 py-1.5 border border-slate-200 rounded text-[11px] font-mono" />
+        <label class="flex items-center gap-1 text-[11px] text-slate-700">
+          <input type="checkbox" id="brief-enabled" checked class="rounded"> 활성화
+        </label>
+      </div>
+    </div>
+
+    <!-- 6. AI 비용 -->
+    <div class="px-3 py-3 border-b border-slate-100">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 rounded grid place-items-center bg-emerald-100 text-emerald-700 text-sm font-bold">$</span>
+        <div class="flex-1">
+          <div class="text-sm font-semibold text-slate-900">AI 비용 상한</div>
+          <div class="text-[10px] text-slate-500">Anthropic API 일일 예산 — 초과 시 차단</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <input id="ai-budget" type="number" min="0.1" step="0.1" value="1" class="w-20 px-2 py-1.5 border border-slate-200 rounded text-[11px] font-mono text-right" />
+        <span class="text-[11px] text-slate-600">USD / 일</span>
+        <span class="ml-auto text-[10px] text-slate-400">현재: $0.00 / $1</span>
+      </div>
+    </div>
+
+    <!-- 7. 데이터 / 위험 영역 -->
+    <div class="px-3 py-3">
+      <div class="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-2">데이터</div>
+      <div class="space-y-1">
+        <button onclick="alert('Phase 1+에서 구현됩니다')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-[11px] text-slate-700">📤 모든 데이터 내보내기 (.json)</button>
+        <button onclick="alert('Phase 1+에서 구현됩니다')" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-[11px] text-rose-600">🗑 전체 데이터 삭제 (로컬 + 공유 토큰)</button>
+      </div>
+      <div class="mt-3 pt-3 border-t border-slate-100 text-[10px] text-slate-400 text-center">
+        Designer Dashboard · v0.1.0 · <a href="https://github.com/lsh135401-hue/designer-dashboard-" onclick="openExternal(this.href);return false" class="underline">GitHub</a>
+      </div>
+    </div>
+  </div><!-- /view-settings -->
+</div><!-- /popover-card -->
 
 <script>
   const BASE_URL = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html';
@@ -486,6 +625,57 @@
     count.textContent = total;
     list.innerHTML = html.join('');
   }
+
+  // ── 뷰 전환 (메인 ↔ 설정) ──
+  function showView(name) {
+    document.getElementById('view-main').style.display = name === 'main' ? '' : 'none';
+    document.getElementById('view-settings').style.display = name === 'settings' ? '' : 'none';
+    // 스크롤 최상단으로
+    const card = document.querySelector('.popover-card');
+    if (card) card.scrollTop = 0;
+  }
+  window.showView = showView;
+
+  // ── 채널 연결 (mockup — Phase 1+에서 진짜 OAuth로 교체) ──
+  function connectChannel(ch) {
+    const labels = { notion:'Notion', google:'Google', slack:'Slack', kakao:'KakaoTalk' };
+    const statusEl = document.getElementById(`status-${ch}`);
+    if (ch === 'notion') {
+      const tok = (document.getElementById('notion-token').value || '').trim();
+      if (!tok) { showToast('Notion 토큰을 먼저 입력하세요'); return; }
+      if (!tok.startsWith('secret_') && !tok.startsWith('ntn_')) {
+        showToast('토큰 형식이 올바르지 않습니다 (secret_ 또는 ntn_ 시작)');
+        return;
+      }
+      // Phase 1: 실제 Notion API ping → 워크스페이스 정보 받아옴
+      statusEl.textContent = '확인 중…';
+      statusEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700';
+      setTimeout(() => {
+        statusEl.textContent = 'mockup ✓';
+        statusEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700';
+        showToast(`${labels[ch]} 토큰 형식 OK · Phase 1에서 실제 API 연결`);
+      }, 800);
+    } else if (ch === 'kakao') {
+      // 폴더 선택 mockup — Phase 5에서 Tauri Dialog API로 교체
+      const path = prompt('와치 폴더 경로 입력 (Phase 5에서 NSOpenPanel로 교체):', '~/Documents/KakaoExport/');
+      if (path) {
+        document.getElementById('kakao-folder').value = path;
+        statusEl.textContent = '설정됨 ✓';
+        statusEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700';
+        showToast('카톡 와치 폴더 설정됨');
+      }
+    } else {
+      // OAuth flow mockup — Phase 3/4에서 실제 OAuth deep link로 교체
+      statusEl.textContent = '연결 시도…';
+      statusEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700';
+      showToast(`${labels[ch]} OAuth 흐름은 Phase ${ch==='google'?'3/4':'3'}에서 구현됩니다`);
+      setTimeout(() => {
+        statusEl.textContent = '미연결';
+        statusEl.className = 'text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500';
+      }, 2000);
+    }
+  }
+  window.connectChannel = connectChannel;
 
   // ── 초기화 ──
   document.addEventListener('DOMContentLoaded', () => {
