@@ -228,14 +228,88 @@
 <!-- GSD:conventions-start source:CONVENTIONS.md -->
 ## Conventions
 
-Conventions not yet established. Will populate as patterns emerge during development.
+### File Organization
+- All GSD planning artifacts live under `.planning/` — never in repo root
+- The Tauri app lives under `app/` — `cd app` before running `npm run tauri *`
+- Web mockups live under `.planning/sketches/` and are served as-is via GitHub Pages
+
+### Rust / Tauri
+- `ActivationPolicy::Accessory` must stay (removing brings back Dock icon)
+- Window config in `tauri.conf.json` (not Rust code) — update `width`/`height` there
+- `icon_as_template(true)` for correct dark/light menubar behavior
+- `toggle_main_window` + `position_window_under_tray` in `lib.rs` handle popover positioning — do not duplicate in JS
+
+### Frontend (current vanilla phase)
+- All UI in `app/src/index.html` as single file (until React migration)
+- View navigation: `showView('main'|'settings'|...)` toggles `display` on `<section>` elements
+- Mock data hardcoded inline; replace with Tauri `invoke()` calls when Rust commands land
+
+### GSD Workflow
+- Use `/gsd-plan-phase N` before implementing any phase
+- Update `.planning/STATE.md` after each significant session
+- Phase 0 partial: tray + popover exist, but Keychain/SQLite/OAuth primitives not implemented
 <!-- GSD:conventions-end -->
 
 <!-- GSD:architecture-start source:ARCHITECTURE.md -->
 ## Architecture
 
-Architecture not yet mapped. Follow existing patterns found in the codebase.
+### Directory Layout
+```
+designer-dashboard/
+├── app/                        # Tauri 2 app — real macOS menu-bar binary
+│   ├── src/index.html          # Vanilla JS popover UI (calendar/projects/settings/kakao)
+│   ├── src-tauri/
+│   │   ├── src/lib.rs          # Tray + window + toggle + position
+│   │   ├── Cargo.toml          # tauri 2 + tray-icon + macos-private-api + opener
+│   │   └── tauri.conf.json     # 320×720 transparent no-decorations
+├── .planning/                  # GSD artifacts
+│   ├── PROJECT.md, REQUIREMENTS.md (100 REQ-IDs), ROADMAP.md (9 phases), STATE.md
+│   └── sketches/               # Web mockups (GitHub Pages)
+│       ├── index.html          # Layout comparison (4 variants)
+│       └── v0-dashboard.html   # SPA: menubar/main/project/share/brief
+├── CLAUDE.md, index.html, .nojekyll
+```
+
+### What's Shipped (v0.1.0)
+`/Applications/Designer Dashboard.app` — working Tauri 2 menu-bar app:
+- macOS Accessory mode (no Dock icon), template tray icon, left-click toggle, right-click menu
+- 320×720 transparent popover, hide-on-blur, positioned under tray
+- Frontend (vanilla HTML/JS): date/weather, clickable calendar → events, 이번주 할 일 toggle, project cards, draft cards, settings token UI (Notion/Google/Slack/KakaoTalk), KakaoTalk .txt drag-drop parser with AI summary mock, external deep-link buttons (GCal/Notion/Slack/Gmail)
+
+### Not Yet Implemented (Phase 0 gap)
+- Real OAuth flows (settings UI exists but tokens not wired)
+- SQLite persistence, Keychain token storage, AI budget primitive
+- Wake observer, Hardened Runtime entitlements, code signing/notarization
+- React/Tailwind/shadcn migration
+
+### Build & Install
+```bash
+cd /Users/isohyeon/ProjectsClaude/designer-dashboard/app
+npm run tauri dev               # dev mode (hot-reload + recompile)
+npm run tauri build             # release: ~5-10min first, ~2min incremental
+cp -r src-tauri/target/release/bundle/macos/"Designer Dashboard.app" /Applications/
+# Or DMG: src-tauri/target/release/bundle/dmg/Designer Dashboard_0.1.0_x64.dmg
+```
+Build target: Intel x86_64 (arm64 not configured yet).
+
+### GitHub Pages
+- Root: https://lsh135401-hue.github.io/designer-dashboard-/
+- SPA mockup: `.../.planning/sketches/v0-dashboard.html`
+- Enabled via `.nojekyll` at root + `index.html` redirect
 <!-- GSD:architecture-end -->
+
+## Phase Status
+
+**Last updated**: 2026-05-03 (session 1, 30 commits)
+
+| Phase | Status | Notes |
+|---|---|---|
+| 0 — Foundation Shell | **Partial** | Tray + popover + hide-on-blur done. Keychain, SQLite WAL, OAuth single-flight, AI budget primitive, Hardened Runtime, wake observer all pending. |
+| 1–8 | Not started | See ROADMAP.md |
+
+**Phase 0 gap**: Built visible shell (tray app, popover, settings UI mock) but not the Rust primitives the roadmap specifies as Phase 0's actual deliverables. Next session: `/gsd-plan-phase 0` → implement SQLite + Keychain + OAuth before Phase 1 (Notion).
+
+**Web mockup**: Full 5-section SPA at `.planning/sketches/v0-dashboard.html` + 3 layout variants. Reference-only; no shared code with `app/`.
 
 <!-- GSD:skills-start source:skills/ -->
 ## Project Skills
@@ -254,6 +328,8 @@ Use these entry points:
 - `/gsd-execute-phase` for planned phase work
 
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
+
+**Current entry point for next session**: Phase 0 primitives are incomplete. Run `/gsd-plan-phase 0` to derive plans for: SQLite WAL setup, Keychain token storage, OAuth single-flight mutex, AI budget primitive, Notion rate limiter, wake observer, Hardened Runtime entitlements.
 <!-- GSD:workflow-end -->
 
 

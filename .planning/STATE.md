@@ -26,9 +26,9 @@
 | Current phase | 0 — Foundation Shell |
 | Current plan | (none — phase not yet planned) |
 | Current node | — |
-| Status | awaiting `/gsd-plan-phase 0` |
-| Phase progress | 0/9 phases complete |
-| Plans complete in current phase | 0/0 (plans not yet derived) |
+| Status | Partial — tray/popover shell built; core Rust primitives not yet implemented |
+| Phase progress | 0/9 phases complete (Phase 0 partial) |
+| Plans complete in current phase | 0/0 (plans not yet formally derived via `/gsd-plan-phase 0`) |
 | Last completed phase | — |
 | Next milestone gate | Phase 0 verification (see ROADMAP.md success criteria) |
 
@@ -46,7 +46,7 @@ Current phase plans
 |--------|---------|--------|-------|
 | v1 requirements mapped | 100/100 | 100 | All REQ-IDs assigned to phases |
 | Phases planned | 0/9 | 9 | Run `/gsd-plan-phase 0` next |
-| Code shipped | 0 LOC | — | Pre-implementation |
+| Code shipped | ~350 LOC Rust + ~1200 LOC HTML/JS | — | Tray + popover shell only; no Phase 0 Rust primitives yet |
 | Notarization smoke test | not yet | passing in CI | P0 verification gate |
 | AI daily spend | $0 | <$1/day default ceiling | COST-01 enforced from P0 |
 | Prompt cache hit rate | — | ≥70% | COST-07; first measurable in P3 |
@@ -91,9 +91,11 @@ Current phase plans
 
 ## Session Continuity
 
-**Last session work**: Initial roadmap creation. Synthesized PROJECT.md + REQUIREMENTS.md + research SUMMARY/STACK/ARCHITECTURE/PITFALLS/FEATURES into a 9-phase plan. Mapped all 100 v1 REQ-IDs across 16 categories. Wrote ROADMAP.md with goal-backward success criteria per phase.
+**Session 1** (2026-05-03, 30 commits): Initial roadmap + research synthesis (PROJECT.md, REQUIREMENTS.md, ROADMAP.md, research/). Built v0 web mockup (5-section SPA + 3 layout variants + Cmd+K search + color hierarchy + +추가 routing to external services). Pushed to GitHub Pages (https://lsh135401-hue.github.io/designer-dashboard-/). Scaffolded Tauri 2 menu-bar app at `app/`: macOS Accessory mode, tray icon, 320×720 transparent popover, hide-on-blur, position-under-tray, settings UI mock (Notion/Google/Slack/KakaoTalk), KakaoTalk .txt drag-drop parser with AI summary mock. App installed to `/Applications/Designer Dashboard.app`, DMG built. v0.1.0 tag pushed.
 
-**Next session entry point**: `/gsd-plan-phase 0` — derive plans for Foundation Shell. Phase 0 is unusually primitive-heavy (no user-visible features ship); plans should likely group as: (1) Tauri shell + tray + autostart, (2) SQLite WAL + Keychain + OAuth single-flight, (3) Wake observer + tokio scheduler skeleton + AI budget primitive + Notion rate limiter, (4) Hardened Runtime + signing baseline + CI notarization smoke test.
+**What Phase 0 still needs**: Keychain (`tauri-plugin-keyring`), SQLite WAL (`tauri-plugin-sql`), OAuth single-flight mutex, AI budget primitive, Notion rate limiter, wake observer, Hardened Runtime entitlements + CI notarization smoke test.
+
+**Next session entry point**: `/gsd-plan-phase 0` — derive formal plans for the Phase 0 Rust primitives above. Tray shell is done; Rust infrastructure layer is the outstanding work. Then `/gsd-plan-phase 1` for Notion OAuth integration (the user's stated goal: replace mockup data with real Notion DB).
 
 **Files to load on resume**:
 - `.planning/PROJECT.md`
