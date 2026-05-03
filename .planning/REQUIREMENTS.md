@@ -198,17 +198,127 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Which phases cover which requirements. Will be filled by gsd-roadmapper.
+Phase mapping for every v1 REQ-ID. Phases derive from research/SUMMARY.md sequencing (P0 Foundation → P8 Distribution + Notion webhooks). See ROADMAP.md for full phase definitions and goal-backward success criteria.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (To be populated by roadmap creation) | | |
+| FOUND-01 | P0 — Foundation Shell | Pending |
+| FOUND-02 | P0 — Foundation Shell | Pending |
+| FOUND-03 | P0 — Foundation Shell | Pending |
+| FOUND-04 | P0 — Foundation Shell | Pending |
+| FOUND-05 | P0 — Foundation Shell | Pending |
+| FOUND-06 | P0 — Foundation Shell | Pending |
+| NOTION-01 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-02 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-03 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-04 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-05 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-06 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-07 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-08 | P1 — Notion SOTR + Schema Wizard + LWW | Pending |
+| NOTION-09 | P0 — Foundation Shell (rate-limiter primitive) | Pending |
+| GCAL-01 | P4 — Gmail + Google Calendar | Pending |
+| GCAL-02 | P4 — Gmail + Google Calendar | Pending |
+| GCAL-03 | P4 — Gmail + Google Calendar | Pending |
+| GCAL-04 | P4 — Gmail + Google Calendar | Pending |
+| GMAIL-01 | P4 — Gmail + Google Calendar | Pending |
+| GMAIL-02 | P4 — Gmail + Google Calendar | Pending |
+| GMAIL-03 | P4 — Gmail + Google Calendar | Pending |
+| GMAIL-04 | P4 — Gmail + Google Calendar | Pending |
+| GMAIL-05 | P4 — Gmail + Google Calendar | Pending |
+| GMAIL-06 | P4 — Gmail + Google Calendar | Pending |
+| SLACK-01 | P3 — Slack + AI Classifier | Pending |
+| SLACK-02 | P3 — Slack + AI Classifier | Pending |
+| SLACK-03 | P3 — Slack + AI Classifier | Pending |
+| SLACK-04 | P3 — Slack + AI Classifier | Pending |
+| SLACK-05 | P3 — Slack + AI Classifier | Pending |
+| SLACK-06 | P3 — Slack + AI Classifier | Pending |
+| SLACK-07 | P3 — Slack + AI Classifier | Pending |
+| ADOBE-01 | P5 — KakaoTalk + Adobe | Pending |
+| ADOBE-02 | P5 — KakaoTalk + Adobe | Pending |
+| ADOBE-03 | P5 — KakaoTalk + Adobe | Pending |
+| ADOBE-04 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-01 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-02 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-03 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-04 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-05 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-06 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-07 | P5 — KakaoTalk + Adobe | Pending |
+| KAKAO-08 | P5 — KakaoTalk + Adobe | Pending |
+| BRIEF-01 | P6 — AI Brief + Today-View + Search | Pending |
+| BRIEF-02 | P6 — AI Brief + Today-View + Search | Pending |
+| BRIEF-03 | P6 — AI Brief + Today-View + Search | Pending |
+| BRIEF-04 | P6 — AI Brief + Today-View + Search | Pending |
+| BRIEF-05 | P6 — AI Brief + Today-View + Search | Pending |
+| BRIEF-06 | P6 — AI Brief + Today-View + Search | Pending |
+| BRIEF-07 | P6 — AI Brief + Today-View + Search | Pending |
+| TODAY-01 | P6 — AI Brief + Today-View + Search | Pending |
+| TODAY-02 | P6 — AI Brief + Today-View + Search | Pending |
+| TODAY-03 | P6 — AI Brief + Today-View + Search | Pending |
+| TODAY-04 | P1 — Notion SOTR (progress calc lives with milestones/tasks) | Pending |
+| SEARCH-01 | P6 — AI Brief + Today-View + Search | Pending |
+| SEARCH-02 | P6 — AI Brief + Today-View + Search | Pending |
+| SEARCH-03 | P6 — AI Brief + Today-View + Search | Pending |
+| SEARCH-04 | P6 — AI Brief + Today-View + Search | Pending |
+| SEND-01 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-02 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-03 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-04 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-05 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-06 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-07 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-08 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-09 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-10 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-11 | P7 — Send Cards + Approval Gate | Pending |
+| SEND-12 | P7 — Send Cards + Approval Gate | Pending |
+| SHARE-01 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-02 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-03 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-04 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-05 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-06 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-07 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| SHARE-08 | P2 — Cloudflare Bridge + Share Skeleton + SharedView | Pending |
+| PRIV-01 | P3 — Slack + AI Classifier (first AI consent gate) | Pending |
+| PRIV-02 | P3 — Slack + AI Classifier (per-channel AI-off) | Pending |
+| PRIV-03 | P2 — SharedView privacy boundary | Pending |
+| PRIV-04 | P3 — Slack + AI Classifier (Anthropic policy disclosure) | Pending |
+| PRIV-05 | P2 — SharedView (KV token bulk-delete) | Pending |
+| COST-01 | P0 — Foundation Shell (AI budget primitive) | Pending |
+| COST-02 | P0 — Foundation Shell (budget enforcement) | Pending |
+| COST-03 | P3 — Slack + AI Classifier (idempotency cache exercised) | Pending |
+| COST-04 | P3 — Slack + AI Classifier (loop detection) | Pending |
+| COST-05 | P1 — Notion SOTR (last_edited_by loop-breaker) | Pending |
+| COST-06 | P3 — Slack + AI Classifier (Haiku-only compile guard) | Pending |
+| COST-07 | P3 — Slack + AI Classifier (cache hit telemetry) | Pending |
+| ONBOARD-01 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| ONBOARD-02 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| ONBOARD-03 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| ONBOARD-04 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| DIST-01 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| DIST-02 | P0 — Foundation Shell (Hardened Runtime baseline) | Pending |
+| DIST-03 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| DIST-04 | P8 — Polish + Distribution + Notion Webhooks | Pending |
+| DIST-05 | P8 — Polish + Distribution + Notion Webhooks | Pending |
 
 **Coverage:**
-- v1 requirements: 95 total (count to be verified)
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: TBD
+- v1 requirements: 100 total (FOUND 6 + NOTION 9 + GCAL 4 + GMAIL 6 + SLACK 7 + ADOBE 4 + KAKAO 8 + BRIEF 7 + TODAY 4 + SEARCH 4 + SEND 12 + SHARE 8 + PRIV 5 + COST 7 + ONBOARD 4 + DIST 5)
+- Mapped to phases: 100 (P0: 10, P1: 10, P2: 10, P3: 14, P4: 10, P5: 12, P6: 14, P7: 12, P8: 8) — sum 100 ✓
+- Unmapped: 0
+
+**Per-phase REQ counts** (sanity check):
+- P0 = 6 FOUND + NOTION-09 + COST-01 + COST-02 + DIST-02 = 10
+- P1 = NOTION-01..08 + TODAY-04 + COST-05 = 10
+- P2 = 8 SHARE + PRIV-03 + PRIV-05 = 10
+- P3 = 7 SLACK + COST-03,04,06,07 + PRIV-01,02,04 = 14
+- P4 = 6 GMAIL + 4 GCAL = 10
+- P5 = 8 KAKAO + 4 ADOBE = 12
+- P6 = 7 BRIEF + TODAY-01,02,03 + 4 SEARCH = 14
+- P7 = 12 SEND = 12
+- P8 = 4 ONBOARD + DIST-01,03,04,05 = 8
 
 ---
 *Requirements defined: 2026-05-03*
-*Last updated: 2026-05-03 after research synthesis*
+*Last updated: 2026-05-03 with phase traceability after roadmap creation*
