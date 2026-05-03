@@ -177,10 +177,10 @@
     <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
   </a>
 
-  <!-- 활성 프로젝트 -->
+  <!-- 활성 프로젝트 (각 카드 클릭 → 프로젝트 상세 페이지) -->
   <div class="border-t border-slate-100 my-1"></div>
   <div class="px-3 py-1.5 text-[10px] uppercase tracking-wide text-slate-400">활성 프로젝트</div>
-  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+  <a href="#" onclick="openProject(event,'SKU01')" class="block px-3 py-1.5">
     <div class="flex items-center gap-2 text-sm">
       <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
       <span class="font-medium text-slate-800">SKU01 봄 운동화</span>
@@ -188,7 +188,7 @@
     </div>
     <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar" style="width:67%"></div></div>
   </a>
-  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+  <a href="#" onclick="openProject(event,'SKU02')" class="block px-3 py-1.5">
     <div class="flex items-center gap-2 text-sm">
       <span class="w-2 h-2 rounded-full bg-amber-500"></span>
       <span class="font-medium text-slate-800">SKU02 여름 백팩</span>
@@ -196,7 +196,7 @@
     </div>
     <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar warn" style="width:50%"></div></div>
   </a>
-  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+  <a href="#" onclick="openProject(event,'SKU03')" class="block px-3 py-1.5">
     <div class="flex items-center gap-2 text-sm">
       <span class="w-2 h-2 rounded-full bg-rose-500"></span>
       <span class="font-medium text-slate-800">SKU03 비치웨어</span>
@@ -204,7 +204,7 @@
     </div>
     <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar danger" style="width:17%"></div></div>
   </a>
-  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+  <a href="#" onclick="openProject(event,'SKU04')" class="block px-3 py-1.5">
     <div class="flex items-center gap-2 text-sm">
       <span class="w-2 h-2 rounded-full bg-slate-400"></span>
       <span class="font-medium text-slate-800">SKU04 가을 코트</span>
@@ -221,14 +221,22 @@
 </div>
 
 <script>
-  function openDashboard(e) {
-    if (e) e.preventDefault();
-    const url = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html#main';
+  const BASE_URL = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html';
+  function openExternal(url) {
     if (window.__TAURI__ && window.__TAURI__.opener) {
       window.__TAURI__.opener.openUrl(url).catch(() => window.open(url, '_blank'));
     } else {
       window.open(url, '_blank');
     }
+  }
+  function openDashboard(e) {
+    if (e) e.preventDefault();
+    openExternal(BASE_URL + '#main');
+  }
+  function openProject(e, sku) {
+    if (e) e.preventDefault();
+    // 프로젝트 상세 페이지로 직접 이동 (SKU는 추후 ?sku=... 쿼리로 분기)
+    openExternal(BASE_URL + '#project');
   }
   function syncNow(e) {
     e.preventDefault();
