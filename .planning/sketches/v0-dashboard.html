@@ -8,8 +8,20 @@
 <style>
   :root { color-scheme: light; }
   html { scroll-behavior: smooth; }
-  section[id] { scroll-margin-top: 64px; }
   body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro KR", "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif; }
+
+  /* ── SPA-style page switching ── */
+  /* When body has data-mode="spa": only the active section is visible */
+  body[data-mode="spa"] section[id] { display: none; opacity: 0; }
+  body[data-mode="spa"] section[id].active { display: block; opacity: 1; animation: fadeIn .2s ease; }
+  body[data-mode="spa"] .all-mode-only { display: none; }
+  body:not([data-mode="spa"]) .spa-mode-only { display: none; }
+  body:not([data-mode="spa"]) section[id] { scroll-margin-top: 64px; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(4px) } to { opacity:1; transform: translateY(0) } }
+
+  .nav-pill.active-pill { background: #4f46e5 !important; color: white !important; }
+  .nav-pill.active-pill:hover { background: #4338ca !important; }
+
   .menubar-dropdown { box-shadow: 0 12px 40px rgba(0,0,0,.18); }
   .menubar-dropdown a { cursor: pointer; }
   .menubar-dropdown a:hover { background: #f1f5f9; }
@@ -28,7 +40,7 @@
   details > summary::-webkit-details-marker { display: none; }
 </style>
 </head>
-<body class="bg-slate-100 grain min-h-screen">
+<body class="bg-slate-100 grain min-h-screen" data-mode="spa">
 
 <!-- Top stage navigation -->
 <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
@@ -41,13 +53,17 @@
       </div>
     </div>
     <nav class="ml-8 flex gap-1 text-sm">
-      <a href="#menubar"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">메뉴바 트레이</a>
-      <a href="#main"      class="nav-pill px-3 py-1.5 rounded-md text-slate-700">메인 대시보드</a>
-      <a href="#project"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">프로젝트 상세</a>
-      <a href="#share"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">공유 페이지</a>
-      <a href="#brief"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">아침 알림</a>
+      <a href="#main"      class="nav-pill px-3 py-1.5 rounded-md text-slate-700">📊 메인</a>
+      <a href="#project"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">📦 프로젝트</a>
+      <a href="#menubar"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">☉ 메뉴바</a>
+      <a href="#share"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">⤴ 공유</a>
+      <a href="#brief"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">🔔 알림</a>
     </nav>
-    <div class="ml-auto text-xs text-slate-500">2026-05-03 (월) · 오전 9:14 · 마지막 동기화 30초 전</div>
+    <div class="ml-auto flex items-center gap-2 text-xs text-slate-500">
+      <span id="breadcrumb"></span>
+      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+      <button onclick="toggleMode()" id="mode-toggle" title="SPA(한 페이지씩) ↔ 전체 보기 전환" class="px-2 py-1 rounded hover:bg-slate-100 text-slate-600">전체보기</button>
+    </div>
   </div>
 </header>
 
@@ -55,7 +71,7 @@
 
 <!-- 1. Menu bar tray dropdown -->
 <section id="menubar">
-  <div class="flex items-baseline gap-3 mb-4">
+  <div class="flex items-baseline gap-3 mb-4 all-mode-only">
     <h2 class="text-xl font-semibold text-slate-900">1. 메뉴바 트레이 (드롭다운)</h2>
     <span class="text-xs text-slate-500">macOS 상단바 아이콘 클릭 시</span>
   </div>
@@ -274,7 +290,7 @@
 
 <!-- 2. Main dashboard window -->
 <section id="main">
-  <div class="flex items-baseline gap-3 mb-4">
+  <div class="flex items-baseline gap-3 mb-4 all-mode-only">
     <h2 class="text-xl font-semibold text-slate-900">2. 메인 대시보드</h2>
     <span class="text-xs text-slate-500">메뉴바 클릭 또는 ⌥+Space 단축키</span>
   </div>
@@ -741,13 +757,13 @@
 
 <!-- 3. Project detail -->
 <section id="project">
-  <div class="flex items-baseline gap-3 mb-4">
+  <div class="flex items-baseline gap-3 mb-4 all-mode-only">
     <h2 class="text-xl font-semibold text-slate-900">3. 프로젝트 상세</h2>
     <span class="text-xs text-slate-500">활성 프로젝트 카드 클릭 시</span>
   </div>
   <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100 flex items-center gap-3">
-      <button class="text-slate-400 hover:text-slate-700 text-sm">← 대시보드</button>
+      <a href="#main" class="text-slate-500 hover:text-slate-900 text-sm flex items-center gap-1">← 대시보드</a>
       <div class="ml-2">
         <div class="text-xs text-slate-400">SKU01</div>
         <h3 class="text-lg font-semibold text-slate-900">봄 시즌 운동화</h3>
@@ -1059,7 +1075,7 @@
 
 <!-- 4. Share page -->
 <section id="share">
-  <div class="flex items-baseline gap-3 mb-4">
+  <div class="flex items-baseline gap-3 mb-4 all-mode-only">
     <h2 class="text-xl font-semibold text-slate-900">4. 공유 페이지 (외부용)</h2>
     <span class="text-xs text-slate-500">designer-dashboard.workers.dev/p/sku01/abc123</span>
     <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 ml-2">메시지 본문 미노출</span>
@@ -1106,7 +1122,7 @@
 
 <!-- 5. Morning brief notification -->
 <section id="brief">
-  <div class="flex items-baseline gap-3 mb-4">
+  <div class="flex items-baseline gap-3 mb-4 all-mode-only">
     <h2 class="text-xl font-semibold text-slate-900">5. 아침 브리프 알림</h2>
     <span class="text-xs text-slate-500">매일 8시 macOS Notification Center</span>
   </div>
@@ -1162,7 +1178,62 @@
 </div>
 
 <script>
-  // Smooth scroll + URL hash update for ALL in-page anchors (header nav, menubar dropdown, etc)
+  // ── SPA-style page switching ──
+  const PAGE_LABELS = {
+    main: '📊 메인 대시보드',
+    project: '📦 SKU01 봄 시즌 운동화',
+    menubar: '☉ 메뉴바 트레이',
+    share: '⤴ 공유 페이지',
+    brief: '🔔 아침 브리프 알림'
+  };
+
+  function isSpaMode() {
+    return document.body.getAttribute('data-mode') === 'spa';
+  }
+
+  function showSection(hash) {
+    const id = (hash || '#main').slice(1) || 'main';
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    if (isSpaMode()) {
+      document.querySelectorAll('section[id]').forEach(s => {
+        s.classList.toggle('active', s.id === id);
+      });
+      window.scrollTo({ top: 0 });
+    } else {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.querySelectorAll('.nav-pill[href^="#"]').forEach(a => {
+      a.classList.toggle('active-pill', a.getAttribute('href') === '#' + id);
+    });
+
+    const crumb = document.getElementById('breadcrumb');
+    if (crumb) {
+      const label = PAGE_LABELS[id] || id;
+      crumb.innerHTML = isSpaMode()
+        ? `<span class="text-slate-400">홈</span> <span class="text-slate-300 mx-1">/</span> <span class="text-slate-700 font-medium">${label}</span>`
+        : `<span class="text-slate-400">전체 보기 모드</span>`;
+    }
+
+    const tg = document.getElementById('mode-toggle');
+    if (tg) tg.textContent = isSpaMode() ? '전체보기' : 'SPA모드';
+  }
+
+  function toggleMode() {
+    if (isSpaMode()) {
+      document.body.removeAttribute('data-mode');
+      const id = (location.hash || '#main').slice(1);
+      const el = document.getElementById(id);
+      setTimeout(() => { if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+    } else {
+      document.body.setAttribute('data-mode', 'spa');
+    }
+    showSection(location.hash);
+  }
+  window.toggleMode = toggleMode;
+
   function bindAnchors() {
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       if (a.dataset.bound) return;
@@ -1171,16 +1242,22 @@
         const id = a.getAttribute('href').slice(1);
         if (!id) return;
         const el = document.getElementById(id);
-        if (el) {
-          e.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.pushState(null, '', '#' + id);
-        }
+        if (!el) return;
+        e.preventDefault();
+        history.pushState(null, '', '#' + id);
+        showSection('#' + id);
       });
     });
   }
+
+  window.addEventListener('hashchange', () => showSection(location.hash));
+  window.addEventListener('popstate', () => showSection(location.hash));
+  document.addEventListener('DOMContentLoaded', () => {
+    bindAnchors();
+    showSection(location.hash || '#main');
+  });
   bindAnchors();
-  document.addEventListener('DOMContentLoaded', bindAnchors);
+  showSection(location.hash || '#main');
 
   // Search index (mocked — would come from local SQLite FTS5 in real app)
   const SEARCH_INDEX = [
