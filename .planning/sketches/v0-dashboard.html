@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Designer Dashboard — v0 Mockup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro KR", "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif; }
+  .menubar-dropdown { box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+  .grain { background-image: radial-gradient(rgba(0,0,0,.025) 1px, transparent 1px); background-size: 3px 3px; }
+  .progress-bar { background: linear-gradient(90deg, #10b981 0%, #059669 100%); }
+  .progress-bar.warn { background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); }
+  .progress-bar.danger { background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%); }
+  .card-hover { transition: all .15s ease; }
+  .card-hover:hover { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(0,0,0,.06); }
+  .nav-pill { transition: all .15s ease; }
+  .nav-pill:hover { background: rgba(15, 23, 42, .04); }
+  .scroll-hidden::-webkit-scrollbar { display: none; }
+  .scroll-hidden { scrollbar-width: none; }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+<body class="bg-slate-100 grain min-h-screen">
+
+<!-- Top stage navigation -->
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+  <div class="max-w-[1280px] mx-auto px-6 py-3 flex items-center gap-3">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 grid place-items-center text-white font-semibold">☉</div>
+      <div>
+        <div class="text-sm font-semibold text-slate-900">Designer Dashboard</div>
+        <div class="text-[11px] text-slate-500">v0 Mockup · 디자인 검토용</div>
+      </div>
+    </div>
+    <nav class="ml-8 flex gap-1 text-sm">
+      <a href="#menubar"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">메뉴바 트레이</a>
+      <a href="#main"      class="nav-pill px-3 py-1.5 rounded-md text-slate-700">메인 대시보드</a>
+      <a href="#project"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">프로젝트 상세</a>
+      <a href="#share"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">공유 페이지</a>
+      <a href="#brief"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">아침 알림</a>
+      <a href="#onboarding" class="nav-pill px-3 py-1.5 rounded-md text-slate-700">온보딩</a>
+    </nav>
+    <div class="ml-auto text-xs text-slate-500">2026-05-03 (월) · 오전 9:14 · 마지막 동기화 30초 전</div>
+  </div>
+</header>
+
+<main class="max-w-[1280px] mx-auto px-6 py-10 space-y-16">
+
+<!-- 1. Menu bar tray dropdown -->
+<section id="menubar">
+  <div class="flex items-baseline gap-3 mb-4">
+    <h2 class="text-xl font-semibold text-slate-900">1. 메뉴바 트레이 (드롭다운)</h2>
+    <span class="text-xs text-slate-500">macOS 상단바 아이콘 클릭 시</span>
+  </div>
+  <div class="relative h-[420px] bg-gradient-to-b from-slate-200 to-slate-300 rounded-xl overflow-hidden border border-slate-300">
+    <!-- Mac top bar mock -->
+    <div class="h-6 bg-white/30 backdrop-blur border-b border-white/40 flex items-center justify-end px-3 gap-3 text-[11px] text-slate-700">
+      <span>⚡</span><span>📶</span><span>🔋 78%</span>
+      <span class="w-5 h-5 rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 grid place-items-center text-white text-[10px] font-semibold ring-2 ring-indigo-300">☉</span>
+      <span>📍</span><span>🔍</span><span>9:14</span>
+    </div>
+    <!-- Dropdown menu -->
+    <div class="menubar-dropdown absolute top-7 right-12 w-[280px] bg-white rounded-lg overflow-hidden">
+      <div class="px-3 py-2 border-b border-slate-100 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span class="text-xs font-semibold text-slate-700">Designer Dashboard</span>
+        <span class="ml-auto text-[10px] text-slate-400">동기화 · 30초 전</span>
+      </div>
+      <a class="block px-3 py-2 hover:bg-slate-50 flex items-center gap-2 text-sm">
+        <span class="text-slate-400">▶</span> 오늘 할 일
+        <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
+      </a>
+      <a class="block px-3 py-2 hover:bg-slate-50 flex items-center gap-2 text-sm">
+        <span class="text-slate-400">▶</span> 보낼 메시지
+        <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
+      </a>
+      <div class="border-t border-slate-100 my-1"></div>
+      <div class="px-3 py-1.5 text-[10px] uppercase tracking-wide text-slate-400">활성 프로젝트</div>
+      <a class="block px-3 py-1.5 hover:bg-slate-50">
+        <div class="flex items-center gap-2 text-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="font-medium text-slate-800">SKU01 봄 운동화</span>
+          <span class="ml-auto text-[11px] text-slate-500 font-mono">67%</span>
+        </div>
+        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar" style="width:67%"></div></div>
+      </a>
+      <a class="block px-3 py-1.5 hover:bg-slate-50">
+        <div class="flex items-center gap-2 text-sm">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <span class="font-medium text-slate-800">SKU02 여름 백팩</span>
+          <span class="ml-auto text-[11px] text-slate-500 font-mono">50%</span>
+        </div>
+        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar warn" style="width:50%"></div></div>
+      </a>
+      <a class="block px-3 py-1.5 hover:bg-slate-50">
+        <div class="flex items-center gap-2 text-sm">
+          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+          <span class="font-medium text-slate-800">SKU03 비치웨어</span>
+          <span class="ml-auto text-[11px] text-rose-600 font-mono">17% ⚠</span>
+        </div>
+        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar danger" style="width:17%"></div></div>
+      </a>
+      <a class="block px-3 py-1.5 hover:bg-slate-50">
+        <div class="flex items-center gap-2 text-sm">
+          <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span class="font-medium text-slate-800">SKU04 가을 코트</span>
+          <span class="ml-auto text-[11px] text-slate-500 font-mono">100%</span>
+        </div>
+        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-slate-400" style="width:100%"></div></div>
+      </a>
+      <div class="border-t border-slate-100 my-1"></div>
+      <a class="block px-3 py-1.5 hover:bg-slate-50 text-sm text-slate-600">⟳ 지금 동기화</a>
+      <a class="block px-3 py-1.5 hover:bg-slate-50 text-sm text-slate-600">⚙ 설정</a>
+      <a class="block px-3 py-1.5 hover:bg-slate-50 text-sm text-slate-600">× Designer Dashboard 종료</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Main dashboard window -->
+<section id="main">
+  <div class="flex items-baseline gap-3 mb-4">
+    <h2 class="text-xl font-semibold text-slate-900">2. 메인 대시보드</h2>
+    <span class="text-xs text-slate-500">메뉴바 클릭 또는 ⌥+Space 단축키</span>
+  </div>
+  <div class="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+    <!-- Window chrome -->
+    <div class="h-9 bg-slate-50 border-b border-slate-200 flex items-center px-3 gap-2">
+      <span class="w-3 h-3 rounded-full bg-rose-400"></span>
+      <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+      <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+      <div class="flex-1 text-center text-[11px] text-slate-500 font-medium">Designer Dashboard — 2026-05-03 (월)</div>
+    </div>
+    <!-- Toolbar -->
+    <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-3">
+      <button class="text-slate-400 hover:text-slate-700">◀</button>
+      <span class="text-base font-semibold text-slate-900">2026-05-03 (월)</span>
+      <button class="text-slate-400 hover:text-slate-700">▶</button>
+      <span class="ml-3 text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">오늘</span>
+      <div class="ml-auto flex items-center gap-2 text-sm">
+        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>⟳</span>동기화</button>
+        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>🔍</span>검색</button>
+        <button class="px-3 py-1.5 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-1.5"><span>⤴</span>공유</button>
+      </div>
+    </div>
+    <!-- 3-column dashboard -->
+    <div class="grid grid-cols-12 gap-0">
+      <!-- Left: Today -->
+      <aside class="col-span-3 border-r border-slate-100 p-4">
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="text-sm font-semibold text-slate-900">오늘 할 일</h3>
+          <span class="text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
+        </div>
+        <ul class="space-y-1 text-sm">
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-900">SKU01 양산 발주서 보내기</div>
+              <div class="text-[11px] text-slate-500">⚠ D-1 · 공장A</div>
+            </div>
+            <button class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-slate-700 text-xs">⋯</button>
+          </li>
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-900">SKU02 시안 v2 마감</div>
+              <div class="text-[11px] text-slate-500">오늘 · MD 김** 검토용</div>
+            </div>
+          </li>
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-900">SKU03 QC 항목 점검</div>
+              <div class="text-[11px] text-slate-500">⚠ D+2 · 지연</div>
+            </div>
+          </li>
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-900">MD 사이즈 컨펌 요청</div>
+              <div class="text-[11px] text-slate-500">SKU01 · 카톡</div>
+            </div>
+          </li>
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-900">공장B 견적 회신</div>
+              <div class="text-[11px] text-slate-500">SKU04 · 메일</div>
+            </div>
+          </li>
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" checked class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-400 line-through">아침 메일 정리</div>
+            </div>
+          </li>
+          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
+            <input type="checkbox" class="mt-0.5">
+            <div class="flex-1">
+              <div class="text-slate-900">14:00 MD 미팅 준비</div>
+              <div class="text-[11px] text-slate-500">SKU02 시안 보드</div>
+            </div>
+          </li>
+        </ul>
+        <button class="mt-3 w-full py-2 text-xs text-slate-500 border border-dashed border-slate-300 rounded hover:bg-slate-50 hover:text-slate-700">+ 직접 추가</button>
+      </aside>
+      <!-- Center: Active projects -->
+      <section class="col-span-6 border-r border-slate-100 p-4 bg-slate-50/50">
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="text-sm font-semibold text-slate-900">활성 프로젝트</h3>
+          <span class="text-[11px] text-slate-500">4개</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Project A -->
+          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <div class="text-xs text-slate-400">SKU01</div>
+                <div class="text-sm font-semibold text-slate-900">봄 시즌 운동화</div>
+              </div>
+              <span class="text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">샘플 D-1</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">67%</span></div>
+            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full progress-bar" style="width:67%"></div></div>
+            <div class="text-xs">
+              <div class="text-slate-700"><span class="text-slate-400">다음:</span> 양산 발주</div>
+              <div class="text-slate-500 mt-1">📌 AI: 도면에 사이즈 누락 — 발주 전 확인 필요</div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 flex gap-1.5 text-[11px]">
+              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">Slack 12</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">Mail 8</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">카톡 5</span>
+            </div>
+          </div>
+          <!-- Project B -->
+          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <div class="text-xs text-slate-400">SKU02</div>
+                <div class="text-sm font-semibold text-slate-900">여름 백팩</div>
+              </div>
+              <span class="text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">2차 시안</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">50%</span></div>
+            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full progress-bar warn" style="width:50%"></div></div>
+            <div class="text-xs">
+              <div class="text-slate-700"><span class="text-slate-400">다음:</span> MD 시안 검토</div>
+              <div class="text-slate-500 mt-1">📌 AI: 색상 옵션 3가지 모두 패브릭 컨펌 완료</div>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 flex gap-1.5 text-[11px]">
+              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">Slack 7</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">시안 v3</span>
+            </div>
+          </div>
+          <!-- Project C -->
+          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <div class="text-xs text-slate-400">SKU03</div>
+                <div class="text-sm font-semibold text-slate-900">비치웨어 라인</div>
+              </div>
+              <span class="text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">⚠ D+2 지연</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">17%</span></div>
+            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full progress-bar danger" style="width:17%"></div></div>
+            <div class="text-xs">
+              <div class="text-slate-700"><span class="text-slate-400">다음:</span> 1차 시안 마감</div>
+              <div class="text-rose-600 mt-1">📌 AI: 공장에서 24h 응답 없음 — 컨택 추천</div>
+            </div>
+          </div>
+          <!-- Project D -->
+          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3 opacity-70">
+            <div class="flex items-start justify-between mb-2">
+              <div>
+                <div class="text-xs text-slate-400">SKU04</div>
+                <div class="text-sm font-semibold text-slate-900">가을 트렌치 코트</div>
+              </div>
+              <span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">✓ 출고 완료</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">100%</span></div>
+            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full bg-emerald-500" style="width:100%"></div></div>
+            <div class="text-xs text-slate-500">2026-04-25 출고됨</div>
+          </div>
+        </div>
+        <button class="mt-3 w-full py-2 text-xs text-slate-500 border border-dashed border-slate-300 rounded hover:bg-slate-50 hover:text-slate-700">+ 프로젝트 추가</button>
+      </section>
+      <!-- Right: Send drafts -->
+      <aside class="col-span-3 p-4">
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="text-sm font-semibold text-slate-900">보낼 메시지</h3>
+          <span class="text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
+          <span class="ml-auto text-[10px] text-slate-400">AI 초안</span>
+        </div>
+        <div class="space-y-3">
+          <!-- Draft 1 -->
+          <article class="card-hover bg-white rounded-lg border border-slate-200 overflow-hidden">
+            <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
+              <span class="text-[10px] text-slate-500">→ Slack #factory-A</span>
+              <span class="ml-auto text-[10px] text-slate-400">SKU01</span>
+            </div>
+            <div class="p-3 text-xs text-slate-700 leading-relaxed">
+              <p class="font-medium text-slate-900 mb-1">사장님, 안녕하세요.</p>
+              <p>SKU01 양산 D-1 리마인드 드립니다. 도면에서 사이즈 표기 누락 건 확인 부탁드리고, 발주서는 오늘 17시까지 회신 주시면 감사하겠습니다.</p>
+            </div>
+            <div class="px-3 py-2 bg-amber-50 border-t border-amber-100 text-[10px] text-amber-800">
+              ✓ 수신: 김사장 (공장A) · 다른 프로젝트 1건 · 수신자 시간 09:14
+            </div>
+            <div class="px-3 py-2 flex gap-1.5">
+              <button class="flex-1 px-2 py-1.5 text-xs rounded bg-indigo-600 text-white hover:bg-indigo-700">발송</button>
+              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">수정</button>
+              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">무시</button>
+            </div>
+          </article>
+          <!-- Draft 2 -->
+          <article class="card-hover bg-white rounded-lg border border-slate-200 overflow-hidden">
+            <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
+              <span class="text-[10px] text-slate-500">→ Slack DM @md_kim</span>
+              <span class="ml-auto text-[10px] text-slate-400">SKU01</span>
+            </div>
+            <div class="p-3 text-xs text-slate-700 leading-relaxed">
+              <p class="font-medium text-slate-900 mb-1">MD 김** 님</p>
+              <p>SKU01 사이즈 컨펌 한 번만 더 부탁드릴게요. 어제 카톡 주신 230 사이즈 라인이 도면 반영됐는지 확인이 필요합니다.</p>
+            </div>
+            <div class="px-3 py-2 bg-amber-50 border-t border-amber-100 text-[10px] text-amber-800">
+              ✓ 수신: 김MD (내부) · 존댓말
+            </div>
+            <div class="px-3 py-2 flex gap-1.5">
+              <button class="flex-1 px-2 py-1.5 text-xs rounded bg-indigo-600 text-white hover:bg-indigo-700">발송</button>
+              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">수정</button>
+              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">무시</button>
+            </div>
+          </article>
+          <!-- Draft 3 (English / factory) -->
+          <article class="card-hover bg-white rounded-lg border border-slate-200 overflow-hidden">
+            <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
+              <span class="text-[10px] text-slate-500">→ Gmail · linh@vnfactory</span>
+              <span class="ml-auto text-[10px] text-slate-400">SKU03</span>
+            </div>
+            <div class="p-3 text-xs text-slate-700 leading-relaxed">
+              <p class="font-medium text-slate-900 mb-1">Hi Linh,</p>
+              <p>Following up on the beachwear sample timeline. Could you confirm whether the fabric arrived this week? Our launch is at risk if it slips past May 10.</p>
+            </div>
+            <div class="px-3 py-2 bg-amber-50 border-t border-amber-100 text-[10px] text-amber-800">
+              ✓ 수신: Linh (VN factory) · 영문 자동 · 수신자 시간 07:14 ⚠
+            </div>
+            <div class="px-3 py-2 flex gap-1.5">
+              <button class="flex-1 px-2 py-1.5 text-xs rounded bg-indigo-600 text-white hover:bg-indigo-700">발송</button>
+              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">수정</button>
+              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">무시</button>
+            </div>
+          </article>
+        </div>
+        <button class="mt-3 w-full py-2 text-xs text-slate-500 border border-dashed border-slate-300 rounded hover:bg-slate-50 hover:text-slate-700">+ 직접 작성</button>
+      </aside>
+    </div>
+    <!-- Activity timeline -->
+    <div class="border-t border-slate-100 px-5 py-4">
+      <div class="flex items-center gap-2 mb-3">
+        <h3 class="text-sm font-semibold text-slate-900">최근 활동</h3>
+        <span class="text-[11px] text-slate-500">통합 타임라인</span>
+        <div class="ml-auto flex gap-1 text-[11px]">
+          <button class="px-2 py-0.5 rounded bg-slate-900 text-white">전체</button>
+          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">Slack</button>
+          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">Gmail</button>
+          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">카톡</button>
+          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">Notion</button>
+        </div>
+      </div>
+      <ul class="space-y-1.5 text-xs">
+        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
+          <span class="px-1.5 py-0.5 text-[10px] rounded bg-violet-100 text-violet-700 font-mono">Slack</span>
+          <span class="text-slate-700">#factory-A · 파일 업로드</span>
+          <span class="text-slate-400">SKU01_v3.psd</span>
+          <span class="ml-auto text-slate-400">2분 전</span>
+        </li>
+        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
+          <span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-100 text-amber-700 font-mono">카톡</span>
+          <span class="text-slate-700">MD 김** · "사이즈 OK"</span>
+          <span class="text-emerald-600">→ 노션 SKU01 반영됨</span>
+          <span class="ml-auto text-slate-400">15분 전</span>
+        </li>
+        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
+          <span class="px-1.5 py-0.5 text-[10px] rounded bg-rose-100 text-rose-700 font-mono">Gmail</span>
+          <span class="text-slate-700">공장B 견적서 도착</span>
+          <span class="text-slate-400">→ SKU04 견적</span>
+          <span class="ml-auto text-slate-400">1시간 전</span>
+        </li>
+        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
+          <span class="px-1.5 py-0.5 text-[10px] rounded bg-blue-100 text-blue-700 font-mono">캘린더</span>
+          <span class="text-slate-700">14:00 MD 미팅</span>
+          <span class="text-slate-400">SKU02 시안 검토</span>
+          <span class="ml-auto text-slate-400">오늘</span>
+        </li>
+        <li class="flex items-center gap-2 py-1.5">
+          <span class="px-1.5 py-0.5 text-[10px] rounded bg-slate-200 text-slate-700 font-mono">Notion</span>
+          <span class="text-slate-700">SKU01 마일스톤 갱신</span>
+          <span class="text-slate-400">샘플 도착 → ☑</span>
+          <span class="ml-auto text-slate-400">2시간 전</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Project detail -->
+<section id="project">
+  <div class="flex items-baseline gap-3 mb-4">
+    <h2 class="text-xl font-semibold text-slate-900">3. 프로젝트 상세</h2>
+    <span class="text-xs text-slate-500">활성 프로젝트 카드 클릭 시</span>
+  </div>
+  <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <div class="px-6 py-4 border-b border-slate-100 flex items-center gap-3">
+      <button class="text-slate-400 hover:text-slate-700 text-sm">← 대시보드</button>
+      <div class="ml-2">
+        <div class="text-xs text-slate-400">SKU01</div>
+        <h3 class="text-lg font-semibold text-slate-900">봄 시즌 운동화</h3>
+      </div>
+      <span class="ml-3 text-[11px] px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">샘플 D-1</span>
+      <div class="ml-auto flex gap-2 text-sm">
+        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700">노션 열기 ↗</button>
+        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700">공유 링크 복사</button>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 gap-0">
+      <!-- Milestones -->
+      <div class="col-span-5 p-5 border-r border-slate-100">
+        <div class="flex items-center gap-2 mb-3">
+          <h4 class="text-sm font-semibold text-slate-900">마일스톤</h4>
+          <span class="text-[11px] text-slate-500">6 / 12 완료</span>
+          <span class="ml-auto text-sm font-mono text-slate-700">67%</span>
+        </div>
+        <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-4"><div class="h-full progress-bar" style="width:67%"></div></div>
+        <ol class="space-y-1.5 text-sm">
+          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">기획</span><span class="text-[11px] text-slate-400">04-01</span></li>
+          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">1차 시안</span><span class="text-[11px] text-slate-400">04-08</span></li>
+          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">1차 피드백</span><span class="text-[11px] text-slate-400">04-12</span></li>
+          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">2차/확정</span><span class="text-[11px] text-slate-400">04-18</span></li>
+          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">샘플 발주</span><span class="text-[11px] text-slate-400">04-22</span></li>
+          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">샘플 도착</span><span class="text-[11px] text-slate-400">04-29</span></li>
+          <li class="flex items-center gap-2 bg-rose-50 -mx-2 px-2 py-1 rounded">
+            <span class="text-slate-300">☐</span>
+            <span class="flex-1 text-slate-900 font-medium">컨펌</span>
+            <span class="text-[11px] text-rose-700 font-medium">D-1 · 05-04</span>
+          </li>
+          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">양산 발주</span><span class="text-[11px] text-slate-400">05-06</span></li>
+          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">양산 진행</span><span class="text-[11px] text-slate-400">05-08~</span></li>
+          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">QC/QA</span><span class="text-[11px] text-slate-400">—</span></li>
+          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">출고/입고</span><span class="text-[11px] text-slate-400">예정 06-10</span></li>
+        </ol>
+      </div>
+      <!-- Channel activity + Assets -->
+      <div class="col-span-7 p-5 space-y-5">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-sm font-semibold text-slate-900">채널 활동</h4>
+            <span class="text-[11px] text-slate-500">이 프로젝트 관련 모든 채널</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="p-3 rounded border border-slate-200">
+              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-violet-100 text-violet-700 font-mono">Slack</span><span class="font-medium text-slate-900">#factory-A</span></div>
+              <div class="text-slate-500">12개 메시지 · 4개 첨부</div>
+            </div>
+            <div class="p-3 rounded border border-slate-200">
+              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-rose-100 text-rose-700 font-mono">Gmail</span><span class="font-medium text-slate-900">8개 메일</span></div>
+              <div class="text-slate-500">최근: 공장 견적서</div>
+            </div>
+            <div class="p-3 rounded border border-slate-200">
+              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-100 text-amber-700 font-mono">카톡</span><span class="font-medium text-slate-900">MD와 5개</span></div>
+              <div class="text-slate-500">.txt import 2회</div>
+            </div>
+            <div class="p-3 rounded border border-slate-200">
+              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-slate-200 text-slate-700 font-mono">Notion</span><span class="font-medium text-slate-900">페이지 1건</span></div>
+              <div class="text-slate-500">갱신 30초 전</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-sm font-semibold text-slate-900">시안 자료</h4>
+            <span class="text-[11px] text-slate-500">Slack 자동 인지</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="rounded border border-slate-200 overflow-hidden">
+              <div class="aspect-square bg-gradient-to-br from-slate-200 to-slate-300 grid place-items-center text-slate-400 text-xs">PSD 썸네일</div>
+              <div class="px-2 py-1.5 text-[11px]">
+                <div class="font-medium text-slate-700">SKU01_v1.psd</div>
+                <div class="text-slate-400">04-08</div>
+              </div>
+            </div>
+            <div class="rounded border border-slate-200 overflow-hidden">
+              <div class="aspect-square bg-gradient-to-br from-indigo-200 to-violet-300 grid place-items-center text-white text-xs">PSD 썸네일</div>
+              <div class="px-2 py-1.5 text-[11px]">
+                <div class="font-medium text-slate-700">SKU01_v2.psd</div>
+                <div class="text-slate-400">04-15</div>
+              </div>
+            </div>
+            <div class="rounded border-2 border-emerald-400 overflow-hidden ring-2 ring-emerald-100">
+              <div class="aspect-square bg-gradient-to-br from-emerald-200 to-emerald-400 grid place-items-center text-white text-xs">PSD 썸네일</div>
+              <div class="px-2 py-1.5 text-[11px]">
+                <div class="font-medium text-slate-900">SKU01_v3.psd ⭐</div>
+                <div class="text-emerald-600">방금</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-sm font-semibold text-slate-900">AI 인사이트</h4>
+            <span class="text-[11px] text-slate-500">참고용 · 점수 미반영</span>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-600">
+            <li class="flex gap-2"><span class="text-violet-500">📌</span>1차 → 2차 사이클이 평균보다 2일 짧았음</li>
+            <li class="flex gap-2"><span class="text-violet-500">📌</span>공장A 응답 시간 평균 4시간, 양산 5일 후 시작 적정</li>
+            <li class="flex gap-2"><span class="text-rose-500">⚠</span>도면에 사이즈 누락 의심 — MD 컨펌 권장</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Share page -->
+<section id="share">
+  <div class="flex items-baseline gap-3 mb-4">
+    <h2 class="text-xl font-semibold text-slate-900">4. 공유 페이지 (외부용)</h2>
+    <span class="text-xs text-slate-500">designer-dashboard.workers.dev/p/sku01/abc123</span>
+    <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 ml-2">메시지 본문 미노출</span>
+  </div>
+  <div class="max-w-md mx-auto rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <div class="bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-4 text-white">
+      <div class="text-xs opacity-80">SKU01</div>
+      <h3 class="text-lg font-semibold">봄 시즌 운동화</h3>
+      <div class="text-xs opacity-80 mt-1">공유: 이** 디자이너</div>
+    </div>
+    <div class="p-5 space-y-4">
+      <div>
+        <div class="flex justify-between text-xs text-slate-500 mb-1.5"><span>진행률</span><span class="font-mono">67%</span></div>
+        <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar" style="width:67%"></div></div>
+      </div>
+      <div class="bg-slate-50 rounded p-3">
+        <div class="text-[11px] text-slate-500 mb-1">다음 단계</div>
+        <div class="text-sm font-semibold text-slate-900">컨펌 (D-1)</div>
+      </div>
+      <div>
+        <div class="text-xs text-slate-500 mb-2">예정 일정</div>
+        <ul class="text-sm space-y-1.5">
+          <li class="flex justify-between"><span class="text-slate-700">컨펌</span><span class="font-mono text-rose-700">05-04</span></li>
+          <li class="flex justify-between"><span class="text-slate-700">양산 발주</span><span class="font-mono text-slate-500">05-06</span></li>
+          <li class="flex justify-between"><span class="text-slate-700">양산 시작</span><span class="font-mono text-slate-500">05-15</span></li>
+          <li class="flex justify-between"><span class="text-slate-700">출고 예정</span><span class="font-mono text-slate-500">06-10</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-xs text-slate-500 mb-2">최근 업데이트</div>
+        <ul class="text-xs space-y-1.5 text-slate-600">
+          <li>• 5/3  샘플 v3 업로드</li>
+          <li>• 5/2  사이즈 컨펌</li>
+          <li>• 4/29 샘플 도착</li>
+        </ul>
+      </div>
+      <div class="border-t border-slate-100 pt-3 text-[11px] text-slate-400 flex justify-between">
+        <span>※ 메시지 본문은 비공개</span>
+        <span>⏱ 1분 전 갱신</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Morning brief notification -->
+<section id="brief">
+  <div class="flex items-baseline gap-3 mb-4">
+    <h2 class="text-xl font-semibold text-slate-900">5. 아침 브리프 알림</h2>
+    <span class="text-xs text-slate-500">매일 8시 macOS Notification Center</span>
+  </div>
+  <div class="bg-gradient-to-b from-slate-200 to-slate-300 rounded-xl p-10 grid place-items-center">
+    <div class="w-[360px] bg-white/95 backdrop-blur rounded-xl shadow-2xl overflow-hidden">
+      <div class="p-4">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-6 h-6 rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 grid place-items-center text-white text-xs">☉</div>
+          <span class="text-xs font-semibold text-slate-700">Designer Dashboard</span>
+          <span class="ml-auto text-[10px] text-slate-400">방금 전</span>
+        </div>
+        <p class="text-sm font-semibold text-slate-900">오늘 액션 7건 · 가장 급한 일</p>
+        <p class="text-sm text-slate-700 mt-1">"SKU01 샘플 D-1 — 컨펌 회의 잡기"</p>
+      </div>
+      <div class="border-t border-slate-200 grid grid-cols-2 divide-x divide-slate-200 text-sm">
+        <button class="py-2.5 hover:bg-slate-50 text-slate-600">나중에</button>
+        <button class="py-2.5 hover:bg-slate-50 font-semibold text-indigo-600">열기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Onboarding wizard -->
+<section id="onboarding">
+  <div class="flex items-baseline gap-3 mb-4">
+    <h2 class="text-xl font-semibold text-slate-900">6. 온보딩 마법사</h2>
+    <span class="text-xs text-slate-500">첫 실행 5단계 · 각 단계 skip 가능</span>
+  </div>
+  <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+    <!-- Step indicator -->
+    <div class="px-6 py-4 border-b border-slate-100 flex items-center gap-3">
+      <div class="flex-1 flex items-center gap-2">
+        <span class="w-7 h-7 rounded-full bg-emerald-500 grid place-items-center text-white text-xs font-semibold">✓</span>
+        <span class="flex-1 h-px bg-emerald-300"></span>
+        <span class="w-7 h-7 rounded-full bg-emerald-500 grid place-items-center text-white text-xs font-semibold">✓</span>
+        <span class="flex-1 h-px bg-indigo-300"></span>
+        <span class="w-7 h-7 rounded-full bg-indigo-600 grid place-items-center text-white text-xs font-semibold ring-4 ring-indigo-100">3</span>
+        <span class="flex-1 h-px bg-slate-200"></span>
+        <span class="w-7 h-7 rounded-full bg-slate-200 grid place-items-center text-slate-500 text-xs font-semibold">4</span>
+        <span class="flex-1 h-px bg-slate-200"></span>
+        <span class="w-7 h-7 rounded-full bg-slate-200 grid place-items-center text-slate-500 text-xs font-semibold">5</span>
+      </div>
+      <div class="text-xs text-slate-500">3 / 5 단계</div>
+    </div>
+    <div class="p-8 grid grid-cols-2 gap-8">
+      <div>
+        <div class="text-xs text-indigo-600 font-semibold mb-1">단계 3 · Slack 연결</div>
+        <h3 class="text-2xl font-semibold text-slate-900 mb-3">슬랙 워크스페이스를 연결하세요</h3>
+        <p class="text-sm text-slate-600 leading-relaxed mb-6">
+          공장과 MD가 사용하는 슬랙 워크스페이스를 연결하면 메시지·시안 첨부가 자동으로 프로젝트에 분류됩니다.
+          <strong>본문은 로컬에만 저장</strong>되고 클라우드로 전송되지 않습니다.
+        </p>
+        <div class="flex gap-2">
+          <button class="px-4 py-2 rounded-md bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 flex items-center gap-2">
+            <span class="w-4 h-4 rounded bg-white/20 grid place-items-center text-xs">S</span>
+            Slack으로 로그인
+          </button>
+          <button class="px-4 py-2 rounded-md border border-slate-200 text-sm text-slate-700 hover:bg-slate-50">나중에 연결</button>
+        </div>
+        <div class="mt-6 text-[11px] text-slate-400">
+          ⓘ Slack 권한: 메시지 읽기, 채널 목록, 메시지 발송, 파일 읽기
+        </div>
+      </div>
+      <div class="bg-slate-50 rounded-lg p-4 text-xs text-slate-600 space-y-2">
+        <div class="font-semibold text-slate-900 mb-2">완료 체크리스트</div>
+        <div class="flex items-center gap-2"><span class="text-emerald-500">✓</span><span>Notion 워크스페이스 연결</span></div>
+        <div class="flex items-center gap-2"><span class="text-emerald-500">✓</span><span>Google 계정 (Calendar + Gmail)</span></div>
+        <div class="flex items-center gap-2"><span class="text-indigo-500">●</span><span class="font-semibold text-slate-900">Slack 워크스페이스</span></div>
+        <div class="flex items-center gap-2"><span class="text-slate-300">○</span><span>KakaoTalk 와치 폴더</span></div>
+        <div class="flex items-center gap-2"><span class="text-slate-300">○</span><span>아침 알림 시간</span></div>
+        <div class="border-t border-slate-200 pt-3 mt-3">
+          <div class="font-semibold text-slate-900 mb-1">왜 이 단계가 필요한가요?</div>
+          <p>각 채널은 독립적으로 끌 수 있고, 나중에 설정에서 다시 연결할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-12 text-center text-xs text-slate-400">
+  Designer Dashboard · v0 시각화 목업 · 2026-05-03 · 기획 검토용
+</footer>
+
+</main>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
