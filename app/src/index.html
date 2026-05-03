@@ -23,6 +23,21 @@
   .popover-card::-webkit-scrollbar-track { background: transparent; }
   .popover-card::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
   .popover-card::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  /* Native <details> 토글 — 화살표 커스터마이즈 */
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  .toggle-arrow { display: inline-block; transition: transform 0.15s ease; font-size: 10px; }
+  details[open] .toggle-arrow { transform: rotate(90deg); }
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(15, 23, 42, .92); color: white;
+    font-size: 11px; padding: 8px 12px; border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    z-index: 9999; max-width: calc(100% - 24px); white-space: nowrap;
+  }
+  #toast.show { opacity: 1; }
   .progress-bar { background: linear-gradient(90deg, #10b981 0%, #059669 100%); }
   .progress-bar.warn { background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); }
   .progress-bar.danger { background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%); }
@@ -176,15 +191,91 @@
     </div>
   </div>
 
-  <!-- 빠른 진입 -->
-  <a href="#" onclick="openDashboard(event)" class="block px-3 py-2 flex items-center gap-2 text-sm">
-    <span class="text-slate-400">▶</span> 오늘 할 일
-    <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
-  </a>
-  <a href="#" onclick="openDashboard(event)" class="block px-3 py-2 flex items-center gap-2 text-sm">
-    <span class="text-slate-400">▶</span> 보낼 메시지
-    <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
-  </a>
+  <!-- 오늘 할 일 (토글) -->
+  <details>
+    <summary class="block px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50">
+      <span class="toggle-arrow text-slate-400">▶</span> 오늘 할 일
+      <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
+    </summary>
+    <div class="bg-slate-50/60 border-y border-slate-100 py-1">
+      <a href="#" onclick='openInChannel(event,"slack","#factory-A","사장님 안녕하세요. SKU01 양산 발주서 17시까지 회신 부탁드립니다. 사이즈표 누락 건 함께 확인해주세요.","Slack #factory-A")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
+        <span class="font-mono text-[10px] text-slate-400 w-9">17:00</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-700">SKU01 양산 발주서 마감</span>
+        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
+      </a>
+      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","김** 님, SKU01 사이즈 컨펌 한 번만 더 부탁드릴게요. 어제 230 라인 도면 반영됐는지 확인이 필요합니다.","Slack DM @md_kim")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
+        <span class="font-mono text-[10px] text-slate-400 w-9">오전</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-700">MD 사이즈 컨펌 요청</span>
+        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
+      </a>
+      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","김** 님, SKU02 시안 v2 검토 부탁드립니다. 14시 미팅 전에 확인 가능하실까요?","Slack DM @md_kim")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
+        <span class="font-mono text-[10px] text-slate-400 w-9">12:00</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-700">SKU02 시안 v2 마감</span>
+        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
+      </a>
+      <a href="#" onclick='openInChannel(event,"slack","#factory-VN","Hi Linh, could you share the QC checklist for SKU03? We are 2 days behind and need to align by EOD.","Slack #factory-VN")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
+        <span class="font-mono text-[10px] text-slate-400 w-9">오후</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-700">SKU03 QC 점검 (지연)</span>
+        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
+      </a>
+      <a href="#" onclick='openInChannel(event,"gmail","factory-b@example.com","공장B 관계자님, SKU04 견적서 확인 감사합니다. 단가 협의 가능 여부 회신 부탁드립니다.","Gmail")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
+        <span class="font-mono text-[10px] text-slate-400 w-9">오후</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-700">공장B 견적 회신</span>
+        <span class="text-[9px] text-rose-600 font-mono">→ Gmail</span>
+      </a>
+      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","오늘 14시 미팅 어젠다: SKU02 시안 v2, SKU01 양산 일정, 비치웨어 지연 대응. 자료 공유드립니다.","Slack DM")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
+        <span class="font-mono text-[10px] text-slate-400 w-9">14:00</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-700">MD 미팅 준비</span>
+        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
+      </a>
+      <a href="#" onclick='openInChannel(event,"notion","",""," ")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white opacity-60">
+        <span class="font-mono text-[10px] text-slate-400 w-9">완료</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+        <span class="flex-1 truncate text-slate-500 line-through">아침 메일 정리</span>
+      </a>
+    </div>
+  </details>
+
+  <!-- 보낼 메시지 (토글, AI 초안) -->
+  <details>
+    <summary class="block px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50">
+      <span class="toggle-arrow text-slate-400">▶</span> 보낼 메시지
+      <span class="text-[10px] text-slate-400">AI 초안</span>
+      <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
+    </summary>
+    <div class="bg-slate-50/60 border-y border-slate-100 py-1">
+      <a href="#" onclick='openInChannel(event,"slack","#factory-A","사장님, 안녕하세요.\n\nSKU01 양산 D-1 리마인드 드립니다.\n도면에서 사이즈 표기 누락 건 확인 부탁드리고, 발주서는 오늘 17시까지 회신 주시면 감사하겠습니다.\n\n감사합니다.","Slack #factory-A · AI 초안")' class="block px-3 py-2 hover:bg-white">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="text-xs">📝</span>
+          <span class="text-[11px] font-medium text-slate-800 truncate">공장A 양산 발주서 리마인드</span>
+          <span class="ml-auto text-[9px] px-1 py-0.5 rounded bg-violet-100 text-violet-700 font-mono">Slack</span>
+        </div>
+        <div class="text-[10px] text-slate-500 ml-5 truncate">SKU01 · 17시까지 회신 요청 ·&nbsp;존댓말</div>
+      </a>
+      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","MD 김** 님,\n\nSKU01 사이즈 컨펌 한 번만 더 부탁드릴게요.\n어제 카톡 주신 230 사이즈 라인이 도면 반영됐는지 확인이 필요합니다.\n\n감사합니다.","Slack DM @md_kim · AI 초안")' class="block px-3 py-2 hover:bg-white">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="text-xs">📝</span>
+          <span class="text-[11px] font-medium text-slate-800 truncate">MD 김** 사이즈 재컨펌</span>
+          <span class="ml-auto text-[9px] px-1 py-0.5 rounded bg-violet-100 text-violet-700 font-mono">Slack</span>
+        </div>
+        <div class="text-[10px] text-slate-500 ml-5 truncate">SKU01 · 230 라인 반영 확인 · 존댓말</div>
+      </a>
+      <a href="#" onclick='openInChannel(event,"gmail","linh@vnfactory.com","Hi Linh,\n\nFollowing up on the beachwear sample timeline. Could you confirm whether the fabric arrived this week? Our launch is at risk if it slips past May 10.\n\nThanks,","Gmail · linh@vnfactory.com · AI 초안")' class="block px-3 py-2 hover:bg-white">
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span class="text-xs">📝</span>
+          <span class="text-[11px] font-medium text-slate-800 truncate">VN factory 샘플 fabric 확인</span>
+          <span class="ml-auto text-[9px] px-1 py-0.5 rounded bg-rose-100 text-rose-700 font-mono">Gmail</span>
+        </div>
+        <div class="text-[10px] text-slate-500 ml-5 truncate">SKU03 · D+2 지연 · 영문 자동</div>
+      </a>
+    </div>
+  </details>
 
   <!-- 활성 프로젝트 (각 카드 클릭 → 프로젝트 상세 페이지) -->
   <div class="border-t border-slate-100 my-1"></div>
@@ -231,6 +322,7 @@
 
 <script>
   const BASE_URL = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html';
+
   function openExternal(url) {
     if (window.__TAURI__ && window.__TAURI__.opener) {
       window.__TAURI__.opener.openUrl(url).catch(() => window.open(url, '_blank'));
@@ -244,8 +336,54 @@
   }
   function openProject(e, sku) {
     if (e) e.preventDefault();
-    // 프로젝트 상세 페이지로 직접 이동 (SKU는 추후 ?sku=... 쿼리로 분기)
     openExternal(BASE_URL + '#project');
+  }
+
+  // 채널로 진입하면서 AI 초안을 클립보드에 복사 (Phase 7에서 진짜 발송 API로 교체)
+  async function openInChannel(e, channel, target, draftBody, label) {
+    if (e) e.preventDefault();
+    if (draftBody && draftBody.trim()) {
+      try {
+        await navigator.clipboard.writeText(draftBody);
+      } catch (_) {
+        // 권한 안되면 무시
+      }
+    }
+    let url = '';
+    if (channel === 'slack') {
+      // 실제 OAuth 후 team_id/channel_id로 deep link 생성됨
+      // 지금은 Slack 앱만 열어줌 (사용자가 채널/DM 직접 이동 → Cmd+V)
+      url = 'slack://open';
+    } else if (channel === 'gmail') {
+      // Gmail은 compose URL이 body 매개변수 지원
+      const subject = encodeURIComponent('Designer Dashboard 초안');
+      const body = encodeURIComponent(draftBody || '');
+      url = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(target)}&su=${subject}&body=${body}`;
+    } else if (channel === 'notion') {
+      url = 'notion://';
+    } else {
+      url = BASE_URL + '#main';
+    }
+    openExternal(url);
+    if (draftBody && draftBody.trim()) {
+      showToast(`${label} 열림 · 📋 초안 복사됨 (Cmd+V)`);
+    } else {
+      showToast(`${label} 열림`);
+    }
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    let toast = document.getElementById('toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
   }
   function syncNow(e) {
     e.preventDefault();
