@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v1 · Today-First Hero</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+  .glow{box-shadow:0 20px 60px -20px rgba(99,102,241,.4)}
+  .progress-bar{background:linear-gradient(90deg,#10b981,#059669)}
+  .progress-bar.warn{background:linear-gradient(90deg,#f59e0b,#d97706)}
+  .progress-bar.danger{background:linear-gradient(90deg,#ef4444,#dc2626)}
+</style></head>
+<body class="bg-slate-100 min-h-screen">
+
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+  <div class="max-w-[1100px] mx-auto px-6 py-3 flex items-center gap-3">
+    <a href="index.html" class="text-xs text-slate-500 hover:text-slate-900">← 비교 페이지</a>
+    <div class="ml-auto text-xs text-slate-500"><strong class="text-slate-700">v1 · Today-First Hero</strong> — 오늘 단 하나에 집중하는 zen 레이아웃</div>
+  </div>
+</header>
+
+<main class="max-w-[1100px] mx-auto px-6 py-12 space-y-8">
+
+  <!-- HERO: today's #1 action -->
+  <section>
+    <div class="text-xs text-slate-500 mb-2 flex items-center gap-2">
+      <span>2026년 5월 3일 월요일 · 오전 9:14</span>
+      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+      <span class="text-emerald-600">동기화 30초 전</span>
+    </div>
+    <div class="glow rounded-3xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 text-white p-10">
+      <div class="text-xs uppercase tracking-widest opacity-70 mb-2">오늘 가장 급한 일</div>
+      <h1 class="text-4xl font-semibold mb-4 leading-tight">SKU01 양산 발주서를<br>17시까지 공장에 보내기</h1>
+      <div class="flex items-center gap-3 text-sm opacity-90 mb-8">
+        <span class="px-2 py-0.5 rounded-full bg-white/20">⚠ 샘플 D-1</span>
+        <span>봄 시즌 운동화 · 67%</span>
+        <span>김사장 · 공장A</span>
+      </div>
+      <div class="flex gap-2">
+        <button class="px-5 py-2.5 rounded-full bg-white text-indigo-700 font-semibold text-sm hover:bg-slate-100">초안 열기 →</button>
+        <button class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-sm">완료 표시</button>
+        <button class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-sm">스누즈</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next-up actions (compact list) -->
+  <section>
+    <div class="flex items-baseline gap-2 mb-3">
+      <h2 class="text-sm font-semibold text-slate-900">그다음</h2>
+      <span class="text-xs text-slate-500">남은 6건</span>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100">
+      <a class="flex items-center gap-3 p-4 hover:bg-slate-50">
+        <input type="checkbox" class="w-4 h-4">
+        <div class="flex-1">
+          <div class="text-sm font-medium text-slate-900">MD 김** 사이즈 컨펌 메시지 보내기</div>
+          <div class="text-xs text-slate-500">SKU01 · 카톡 컨텍스트</div>
+        </div>
+        <span class="text-xs text-rose-600">긴급</span>
+      </a>
+      <a class="flex items-center gap-3 p-4 hover:bg-slate-50">
+        <input type="checkbox" class="w-4 h-4">
+        <div class="flex-1">
+          <div class="text-sm font-medium text-slate-900">SKU02 시안 v2 마감</div>
+          <div class="text-xs text-slate-500">14:00 MD 미팅 전까지</div>
+        </div>
+        <span class="text-xs text-amber-600">2시간 후</span>
+      </a>
+      <a class="flex items-center gap-3 p-4 hover:bg-slate-50">
+        <input type="checkbox" class="w-4 h-4">
+        <div class="flex-1">
+          <div class="text-sm font-medium text-slate-900">공장B 견적서 회신 검토</div>
+          <div class="text-xs text-slate-500">SKU04 · 어제 도착</div>
+        </div>
+        <span class="text-xs text-slate-400">오후</span>
+      </a>
+      <a class="flex items-center gap-3 p-4 hover:bg-slate-50">
+        <input type="checkbox" class="w-4 h-4">
+        <div class="flex-1">
+          <div class="text-sm font-medium text-slate-900">SKU03 QC 항목 체크리스트 작성</div>
+          <div class="text-xs text-slate-500">⚠ D+2 지연</div>
+        </div>
+        <span class="text-xs text-rose-600">밀림</span>
+      </a>
+      <a class="flex items-center gap-3 p-4 hover:bg-slate-50 opacity-50">
+        <input type="checkbox" checked class="w-4 h-4">
+        <div class="flex-1">
+          <div class="text-sm font-medium text-slate-500 line-through">아침 메일 정리</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Active projects (compact rows) -->
+  <section>
+    <div class="flex items-baseline gap-2 mb-3">
+      <h2 class="text-sm font-semibold text-slate-900">활성 프로젝트</h2>
+      <span class="text-xs text-slate-500">4개 · 클릭하면 펼침</span>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100 overflow-hidden">
+      <a class="block p-4 hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span class="font-medium text-slate-900 text-sm">SKU01 봄 시즌 운동화</span>
+          <span class="text-xs text-slate-500">→ 양산 발주</span>
+          <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-rose-50 text-rose-700">D-1</span>
+          <span class="text-xs font-mono text-slate-700 w-10 text-right">67%</span>
+        </div>
+        <div class="ml-5 mt-2 h-1 bg-slate-100 rounded-full"><div class="h-full progress-bar rounded-full" style="width:67%"></div></div>
+      </a>
+      <a class="block p-4 hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          <span class="font-medium text-slate-900 text-sm">SKU02 여름 백팩</span>
+          <span class="text-xs text-slate-500">→ MD 시안 검토</span>
+          <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-700">2차 시안</span>
+          <span class="text-xs font-mono text-slate-700 w-10 text-right">50%</span>
+        </div>
+        <div class="ml-5 mt-2 h-1 bg-slate-100 rounded-full"><div class="h-full progress-bar warn rounded-full" style="width:50%"></div></div>
+      </a>
+      <a class="block p-4 hover:bg-slate-50">
+        <div class="flex items-center gap-3">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          <span class="font-medium text-slate-900 text-sm">SKU03 비치웨어 라인</span>
+          <span class="text-xs text-rose-600">⚠ 공장 24h 무응답</span>
+          <span class="ml-auto text-xs px-2 py-0.5 rounded-full bg-rose-50 text-rose-700">D+2</span>
+          <span class="text-xs font-mono text-slate-700 w-10 text-right">17%</span>
+        </div>
+        <div class="ml-5 mt-2 h-1 bg-slate-100 rounded-full"><div class="h-full progress-bar danger rounded-full" style="width:17%"></div></div>
+      </a>
+      <a class="block p-4 hover:bg-slate-50 opacity-60">
+        <div class="flex items-center gap-3">
+          <span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+          <span class="font-medium text-slate-700 text-sm line-through">SKU04 가을 트렌치</span>
+          <span class="text-xs text-slate-400">출고 완료</span>
+          <span class="ml-auto text-xs font-mono text-slate-400 w-10 text-right">100%</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <div class="text-center text-xs text-slate-400 pt-4">
+    💡 <strong>패러다임:</strong> 한 화면에 정보를 다 보여주지 않고, "오늘 단 하나"를 영웅적으로 강조 → 의사결정 부하를 최소화
+  </div>
+
+</main>
+</body></html>

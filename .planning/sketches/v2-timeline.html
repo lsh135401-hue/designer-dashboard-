@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v2 · Timeline / Schedule</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard",system-ui,sans-serif}
+  .grid-week{display:grid;grid-template-columns:200px repeat(14,minmax(60px,1fr))}
+  .day-cell{border-right:1px solid #f1f5f9;padding:.25rem;min-height:48px;position:relative}
+  .day-cell.today{background:#eef2ff}
+  .day-cell.weekend{background:#fafbfc}
+  .bar{position:absolute;height:18px;border-radius:9px;display:flex;align-items:center;padding:0 .5rem;font-size:10px;font-weight:600;color:white;white-space:nowrap;overflow:hidden}
+  .milestone{width:8px;height:8px;background:white;border:2px solid #6366f1;border-radius:50%;position:absolute;top:50%;transform:translate(-50%,-50%);cursor:pointer}
+  .milestone.done{background:#10b981;border-color:#059669}
+  .milestone.due{background:#ef4444;border-color:#dc2626;animation:pulse 1.5s infinite}
+  @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.4)}}
+</style></head>
+<body class="bg-slate-100 min-h-screen">
+
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+  <div class="max-w-[1400px] mx-auto px-6 py-3 flex items-center gap-3">
+    <a href="index.html" class="text-xs text-slate-500 hover:text-slate-900">← 비교 페이지</a>
+    <div class="ml-auto text-xs text-slate-500"><strong class="text-slate-700">v2 · Timeline / Gantt</strong> — 시간축 우선, 모든 프로젝트 한눈에</div>
+  </div>
+</header>
+
+<main class="max-w-[1400px] mx-auto px-6 py-8">
+
+  <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+    <!-- Toolbar -->
+    <div class="flex items-center gap-3 px-5 py-3 border-b border-slate-100">
+      <button class="text-slate-400 hover:text-slate-700">◀</button>
+      <span class="text-sm font-semibold text-slate-900">2026년 5월 · 첫째~둘째 주</span>
+      <button class="text-slate-400 hover:text-slate-700">▶</button>
+      <div class="ml-4 flex gap-1 text-xs">
+        <button class="px-2 py-1 rounded text-slate-600 hover:bg-slate-100">일</button>
+        <button class="px-2 py-1 rounded bg-slate-900 text-white">2주</button>
+        <button class="px-2 py-1 rounded text-slate-600 hover:bg-slate-100">월</button>
+        <button class="px-2 py-1 rounded text-slate-600 hover:bg-slate-100">분기</button>
+      </div>
+      <div class="ml-auto flex items-center gap-3 text-xs text-slate-500">
+        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>완료</div>
+        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span>오늘 마감</div>
+        <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-indigo-500"></span>예정</div>
+      </div>
+    </div>
+
+    <!-- Day header -->
+    <div class="grid-week border-b border-slate-200 bg-slate-50 text-[11px] text-slate-500 sticky top-0">
+      <div class="px-3 py-2 font-semibold text-slate-700">프로젝트</div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem">
+        <div>월</div><div class="font-mono">04-27</div>
+      </div>
+      <div class="day-cell weekend" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>화</div><div class="font-mono">04-28</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>수</div><div class="font-mono">04-29</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>목</div><div class="font-mono">04-30</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>금</div><div class="font-mono">05-01</div></div>
+      <div class="day-cell weekend" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>토</div><div class="font-mono">05-02</div></div>
+      <div class="day-cell weekend" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>일</div><div class="font-mono">05-03</div></div>
+      <div class="day-cell today" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div class="font-bold text-indigo-700">월</div><div class="font-mono text-indigo-700 font-bold">05-04</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>화</div><div class="font-mono">05-05</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>수</div><div class="font-mono">05-06</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>목</div><div class="font-mono">05-07</div></div>
+      <div class="day-cell" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>금</div><div class="font-mono">05-08</div></div>
+      <div class="day-cell weekend" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>토</div><div class="font-mono">05-09</div></div>
+      <div class="day-cell weekend" style="text-align:center;min-height:auto;padding:.5rem .25rem"><div>일</div><div class="font-mono">05-10</div></div>
+    </div>
+
+    <!-- SKU01 -->
+    <div class="grid-week border-b border-slate-100">
+      <div class="px-3 py-3 border-r border-slate-200">
+        <div class="text-xs text-slate-400">SKU01</div>
+        <div class="text-sm font-semibold text-slate-900">봄 시즌 운동화</div>
+        <div class="text-[11px] text-slate-500 mt-1">공장A · 67%</div>
+      </div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell"><span class="milestone done" style="left:50%" title="샘플 도착"></span></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell today">
+        <span class="milestone due" style="left:50%" title="컨펌 마감"></span>
+        <div class="bar" style="background:#dc2626;left:0;right:50%;top:65%">컨펌 D-day</div>
+      </div>
+      <div class="day-cell"></div>
+      <div class="day-cell"><span class="milestone" style="left:50%" title="양산 발주"></span></div>
+      <div class="day-cell"></div>
+      <div class="day-cell">
+        <div class="bar" style="background:#6366f1;left:0;right:0;top:65%">양산 시작</div>
+      </div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+    </div>
+
+    <!-- SKU02 -->
+    <div class="grid-week border-b border-slate-100">
+      <div class="px-3 py-3 border-r border-slate-200">
+        <div class="text-xs text-slate-400">SKU02</div>
+        <div class="text-sm font-semibold text-slate-900">여름 백팩</div>
+        <div class="text-[11px] text-slate-500 mt-1">공장A · 50%</div>
+      </div>
+      <div class="day-cell"><span class="milestone done" style="left:50%"></span></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"><span class="milestone done" style="left:50%"></span></div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell today">
+        <div class="bar" style="background:#f59e0b;left:0;right:0;top:30%">시안 v2 마감</div>
+      </div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"><span class="milestone" style="left:50%" title="MD 검토"></span></div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+    </div>
+
+    <!-- SKU03 -->
+    <div class="grid-week border-b border-slate-100 bg-rose-50/30">
+      <div class="px-3 py-3 border-r border-slate-200">
+        <div class="text-xs text-slate-400">SKU03</div>
+        <div class="text-sm font-semibold text-slate-900">비치웨어 라인 ⚠</div>
+        <div class="text-[11px] text-rose-600 mt-1">공장 무응답 24h · 17%</div>
+      </div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell">
+        <div class="bar" style="background:#dc2626;left:0;right:-200%;top:65%;opacity:.7">⚠ 1차 시안 (D+2 지연)</div>
+        <span class="milestone due" style="left:50%"></span>
+      </div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell today"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+    </div>
+
+    <!-- SKU04 -->
+    <div class="grid-week opacity-60">
+      <div class="px-3 py-3 border-r border-slate-200">
+        <div class="text-xs text-slate-400">SKU04</div>
+        <div class="text-sm font-semibold text-slate-900">가을 트렌치</div>
+        <div class="text-[11px] text-emerald-600 mt-1">✓ 출고 완료</div>
+      </div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell">
+        <div class="bar" style="background:#10b981;left:0;right:0;top:65%">출고 ✓</div>
+      </div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell today"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell"></div>
+      <div class="day-cell weekend"></div>
+      <div class="day-cell weekend"></div>
+    </div>
+
+    <!-- Today's actions strip -->
+    <div class="border-t border-slate-200 bg-indigo-50/50 px-5 py-3">
+      <div class="text-xs font-semibold text-indigo-700 mb-2">📍 오늘(05-04)의 액션 — 4건</div>
+      <div class="flex gap-2 flex-wrap text-xs">
+        <span class="px-2 py-1 bg-white border border-rose-200 rounded-full">⚠ SKU01 컨펌 마감</span>
+        <span class="px-2 py-1 bg-white border border-amber-200 rounded-full">SKU02 시안 v2</span>
+        <span class="px-2 py-1 bg-white border border-slate-200 rounded-full">14:00 MD 미팅</span>
+        <span class="px-2 py-1 bg-white border border-slate-200 rounded-full">메일 확인</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center text-xs text-slate-400 pt-6">
+    💡 <strong>패러다임:</strong> 시간축이 화면의 주축. 어떤 프로젝트가 언제 마감인지, 어디서 충돌하는지를 한 화면에 — 일정 조율이 핵심인 사용자에게 적합
+  </div>
+
+</main>
+</body></html>
