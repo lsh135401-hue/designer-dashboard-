@@ -220,6 +220,21 @@
     <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-slate-400" style="width:100%"></div></div>
   </a>
 
+  <!-- 빠른 추가 액션 -->
+  <div class="border-t border-slate-100 my-1"></div>
+  <div class="px-3 py-1.5 text-[10px] uppercase tracking-wide text-slate-400">+ 빠른 추가</div>
+  <div class="px-3 pb-1.5 grid grid-cols-3 gap-1.5">
+    <button onclick="routeAdd('todo')" class="px-2 py-1.5 text-[10px] rounded border border-slate-200 hover:bg-slate-50 text-slate-700 flex flex-col items-center gap-0.5">
+      <span class="text-base">✅</span><span>할 일</span>
+    </button>
+    <button onclick="routeAdd('project')" class="px-2 py-1.5 text-[10px] rounded border border-slate-200 hover:bg-slate-50 text-slate-700 flex flex-col items-center gap-0.5">
+      <span class="text-base">📦</span><span>프로젝트</span>
+    </button>
+    <button onclick="routeAdd('message')" class="px-2 py-1.5 text-[10px] rounded border border-slate-200 hover:bg-slate-50 text-slate-700 flex flex-col items-center gap-0.5">
+      <span class="text-base">💬</span><span>메시지</span>
+    </button>
+  </div>
+
   <!-- 푸터 -->
   <div class="border-t border-slate-100 my-1"></div>
   <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5 text-sm text-slate-700 font-medium">⤢ 전체 대시보드 열기 →</a>
@@ -362,6 +377,24 @@
     </div>
   </div><!-- /view-settings -->
 </div><!-- /popover-card -->
+
+<!-- + 추가 라우팅 모달 (팝오버 위에 떠 있음) -->
+<div id="add-modal" class="hidden fixed inset-0 z-[200] bg-slate-900/60 backdrop-blur-sm" onclick="if(event.target===this)closeAddModal()">
+  <div class="absolute inset-x-2 top-8 bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
+    <div class="px-3 py-2.5 border-b border-slate-100 flex items-start gap-2">
+      <span id="add-modal-icon" class="text-xl">➕</span>
+      <div class="flex-1 min-w-0">
+        <div id="add-modal-title" class="text-sm font-semibold text-slate-900">추가하기</div>
+        <div id="add-modal-sub" class="text-[10px] text-slate-500 mt-0.5"></div>
+      </div>
+      <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none px-1">×</button>
+    </div>
+    <div id="add-modal-body" class="p-2 space-y-1.5"></div>
+    <div class="px-3 py-2 border-t border-slate-100 bg-slate-50 text-[9px] text-slate-500 flex gap-1.5">
+      <span>🔒</span><span>외부 앱·웹이 열립니다. 거기서 저장 → 자동 동기화로 대시보드에 다시 나타남</span>
+    </div>
+  </div>
+</div>
 
 <script>
   const BASE_URL = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html';
@@ -868,6 +901,65 @@
       showToast(`파일 읽기 실패: ${err.message}`);
     }
   }
+
+  // ── + 추가 라우팅 (외부 서비스로 이동, 진짜 데이터의 원천에 추가) ──
+  const ADD_TITLES = {
+    todo:    { icon: '✅', title: '오늘 할 일 추가',    sub: '어디에 등록?' },
+    project: { icon: '📦', title: '새 프로젝트',       sub: '노션 프로젝트 DB' },
+    message: { icon: '💬', title: '메시지 보내기',     sub: '어느 채널?' }
+  };
+  const ADD_DESTINATIONS = {
+    todo: [
+      { icon: '📅', label: '구글 캘린더 새 이벤트', sub: '시간·장소 있는 일정', url: 'https://calendar.google.com/calendar/u/0/r/eventedit?text=새+할일' },
+      { icon: '📝', label: '노션 프로젝트에 태스크', sub: '특정 SKU 안에 추가', url: 'https://www.notion.so/' },
+      { icon: '💬', label: '슬랙 "나에게 메모"', sub: '본인 DM에 임시 캡처', url: 'slack://open' }
+    ],
+    project: [
+      { icon: '📦', label: '노션에 새 프로젝트 페이지', sub: '12단계 마일스톤 자동', url: 'https://www.notion.so/' },
+      { icon: '📋', label: '템플릿에서 복제', sub: '기존 SKU 베이스', url: 'https://www.notion.so/' }
+    ],
+    message: [
+      { icon: '💬', label: '슬랙 채널', sub: '#factory-A 등 공개 채널', url: 'slack://open' },
+      { icon: '💬', label: '슬랙 DM', sub: 'MD·공장 1:1', url: 'slack://open' },
+      { icon: '📧', label: '지메일 작성', sub: '외부 파트너에게 이메일', url: 'https://mail.google.com/mail/?view=cm&fs=1' }
+    ]
+  };
+
+  function routeAdd(type) {
+    const meta = ADD_TITLES[type];
+    const list = ADD_DESTINATIONS[type];
+    if (!meta || !list) return;
+    document.getElementById('add-modal-icon').textContent = meta.icon;
+    document.getElementById('add-modal-title').textContent = meta.title;
+    document.getElementById('add-modal-sub').textContent = meta.sub;
+    const body = document.getElementById('add-modal-body');
+    body.innerHTML = list.map((d, i) => `
+      <button onclick='handleAddDestination(${i}, "${type}")' class="w-full text-left p-2 rounded border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 transition-colors flex items-start gap-2">
+        <span class="text-base shrink-0">${d.icon}</span>
+        <div class="flex-1 min-w-0">
+          <div class="text-[12px] font-medium text-slate-900">${d.label}</div>
+          <div class="text-[10px] text-slate-500 mt-0.5">${d.sub}</div>
+        </div>
+        <span class="text-slate-400 text-xs shrink-0">↗</span>
+      </button>
+    `).join('');
+    document.getElementById('add-modal').classList.remove('hidden');
+  }
+  window.routeAdd = routeAdd;
+
+  function handleAddDestination(idx, type) {
+    const dest = (ADD_DESTINATIONS[type] || [])[idx];
+    if (!dest) return;
+    closeAddModal();
+    openExternal(dest.url);
+    showToast(`${dest.label} 열림 — 거기서 저장하면 자동 동기화됩니다`);
+  }
+  window.handleAddDestination = handleAddDestination;
+
+  function closeAddModal() {
+    document.getElementById('add-modal').classList.add('hidden');
+  }
+  window.closeAddModal = closeAddModal;
 
   // ── 초기화 ──
   document.addEventListener('DOMContentLoaded', () => {
