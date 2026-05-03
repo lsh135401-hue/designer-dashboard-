@@ -161,6 +161,29 @@
     </div>
   </details>
 
+  <!-- 카톡 가져오기 (토글, .txt 드래그 또는 와치 폴더) -->
+  <details id="kakao-import-toggle">
+    <summary class="block px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50">
+      <span class="toggle-arrow text-slate-400">▶</span> 카톡 가져오기
+      <span class="text-[10px] text-slate-400">.txt 드롭</span>
+      <span id="kakao-import-count" class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">0</span>
+    </summary>
+    <div class="bg-slate-50/60 border-y border-slate-100 px-3 py-2.5">
+      <div id="kakao-drop-zone" class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-[11px] text-slate-500 cursor-pointer hover:border-indigo-400 hover:bg-white transition-colors">
+        <div class="text-2xl mb-1 opacity-50">📩</div>
+        <div class="text-slate-700 font-medium mb-0.5">카카오톡 .txt 파일 드롭</div>
+        <div class="text-[10px] text-slate-400">또는 클릭해서 선택 · 한국어 PC판 자동 인식</div>
+      </div>
+      <input type="file" id="kakao-file-input" accept=".txt" class="hidden" />
+      <div class="mt-2 flex items-center gap-1.5 text-[10px] text-slate-500">
+        <span>💡</span>
+        <span class="flex-1">카톡 데스크탑 → 대화방 → ≡ → "대화 내용 내보내기"</span>
+      </div>
+      <!-- 결과 -->
+      <div id="kakao-results" class="mt-2 space-y-1.5"></div>
+    </div>
+  </details>
+
   <!-- 활성 프로젝트 (각 카드 클릭 → 프로젝트 상세 페이지) -->
   <div class="border-t border-slate-100 my-1"></div>
   <div class="px-3 py-1.5 text-[10px] uppercase tracking-wide text-slate-400">활성 프로젝트</div>
@@ -677,12 +700,182 @@
   }
   window.connectChannel = connectChannel;
 
+  // ── 카카오톡 .txt 파서 (한국어 PC판) ──
+  // Format:
+  //   [발화자명] 님과 카카오톡 대화
+  //   저장한 날짜 : YYYY년 M월 D일 오전/오후 H:MM
+  //   --------------- YYYY년 M월 D일 요일 ---------------
+  //   [발화자] [오전/오후 H:MM] 메시지본문
+  const KAKAO_DATE_SEP = /^-+\s*(\d{4})년\s+(\d+)월\s+(\d+)일\s+\S+요일\s*-+\s*$/;
+  const KAKAO_MSG_LINE = /^\[(.+?)\]\s+\[(오전|오후)\s+(\d{1,2}):(\d{2})\]\s+(.*)$/;
+  const KAKAO_TITLE = /^(.+?)\s+님과\s+카카오톡\s+대화$/;
+
+  function parseKakaoTxt(text) {
+    // BOM 제거
+    text = text.replace(/^﻿/, '');
+    const lines = text.split(/\r?\n/);
+    const result = { roomName: null, savedAt: null, messages: [] };
+    let currentDate = null;
+    let lastMsg = null;
+    for (const line of lines) {
+      // 1. 대화방 이름
+      const titleMatch = line.match(KAKAO_TITLE);
+      if (titleMatch && !result.roomName) { result.roomName = titleMatch[1]; continue; }
+      // 2. 저장한 날짜
+      if (line.startsWith('저장한 날짜')) { result.savedAt = line.replace(/^저장한 날짜\s*[:：]\s*/, '').trim(); continue; }
+      // 3. 날짜 구분선
+      const dateMatch = line.match(KAKAO_DATE_SEP);
+      if (dateMatch) {
+        currentDate = `${dateMatch[1]}-${String(+dateMatch[2]).padStart(2,'0')}-${String(+dateMatch[3]).padStart(2,'0')}`;
+        lastMsg = null;
+        continue;
+      }
+      // 4. 메시지 라인
+      const msgMatch = line.match(KAKAO_MSG_LINE);
+      if (msgMatch && currentDate) {
+        const [, author, ampm, h, m, body] = msgMatch;
+        let hour = +h % 12;
+        if (ampm === '오후') hour += 12;
+        const time = `${String(hour).padStart(2,'0')}:${m}`;
+        lastMsg = { date: currentDate, time, author, body };
+        result.messages.push(lastMsg);
+        continue;
+      }
+      // 5. 멀티라인 메시지 (이전 메시지에 append)
+      if (lastMsg && line.trim()) {
+        lastMsg.body += '\n' + line;
+      }
+    }
+    return result;
+  }
+
+  // ── 프로젝트 자동 매칭 (mockup) ──
+  const PROJECT_KEYWORDS = {
+    'SKU01': ['SKU01','운동화','신발','샘플','컨펌','양산'],
+    'SKU02': ['SKU02','백팩','가방','시안'],
+    'SKU03': ['SKU03','비치웨어','수영복','VN','Linh'],
+    'SKU04': ['SKU04','트렌치','코트','출고']
+  };
+  function matchProject(roomName, body) {
+    const text = (roomName || '') + ' ' + (body || '');
+    for (const [sku, kws] of Object.entries(PROJECT_KEYWORDS)) {
+      for (const kw of kws) {
+        if (text.toLowerCase().includes(kw.toLowerCase())) return sku;
+      }
+    }
+    return null;
+  }
+
+  // ── AI 요약 mockup (실제 Anthropic 호출은 P3+) ──
+  function summarizeMockup(messages) {
+    const count = messages.length;
+    const decisions = messages.filter(m => /OK|확정|컨펌|승인|진행|결정/i.test(m.body)).length;
+    const requests = messages.filter(m => /부탁|요청|보내주세요|확인|컨펌해|체크/i.test(m.body)).length;
+    const dates = messages.filter(m => /(\d+월\s*\d+일|D-?\d|마감|D[+-]\d)/i.test(m.body)).length;
+    const urgent = messages.some(m => /급함|급해|D-day|즉시|asap|긴급/i.test(m.body));
+    return {
+      count, decisions, requests, dates, urgent,
+      latestDate: messages.length ? messages[messages.length-1].date : null,
+      participants: [...new Set(messages.map(m => m.author))]
+    };
+  }
+
+  // ── 카톡 결과 렌더 ──
+  let kakaoImportCount = 0;
+  function renderKakaoResult(parsed, fileName) {
+    const summary = summarizeMockup(parsed.messages);
+    const sku = matchProject(parsed.roomName, parsed.messages.map(m => m.body).join(' '));
+    const skuLabel = sku ? `${sku} 자동 매칭` : '⚠ 프로젝트 미매칭';
+    const skuClass = sku ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700';
+    const urgentBadge = summary.urgent ? '<span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 text-[9px] font-bold">긴급</span>' : '';
+    const html = `
+      <div class="rounded-lg border border-slate-200 bg-white p-2.5 text-[11px]">
+        <div class="flex items-center gap-1.5 mb-1">
+          <span class="text-base">💬</span>
+          <span class="font-medium text-slate-900 truncate flex-1">${parsed.roomName || fileName}</span>
+          ${urgentBadge}
+          <span class="text-[9px] px-1.5 py-0.5 rounded ${skuClass} font-mono whitespace-nowrap">${skuLabel}</span>
+        </div>
+        <div class="text-[10px] text-slate-500 mb-1.5">
+          ${summary.count}개 메시지 · ${summary.participants.length}명 · ${parsed.savedAt || '날짜 미상'}
+        </div>
+        <div class="grid grid-cols-3 gap-1 mb-1.5 text-[10px]">
+          <div class="bg-emerald-50 text-emerald-700 px-1.5 py-1 rounded text-center"><strong>${summary.decisions}</strong> 결정</div>
+          <div class="bg-blue-50 text-blue-700 px-1.5 py-1 rounded text-center"><strong>${summary.requests}</strong> 요청</div>
+          <div class="bg-amber-50 text-amber-700 px-1.5 py-1 rounded text-center"><strong>${summary.dates}</strong> 일정</div>
+        </div>
+        <div class="text-[10px] text-slate-600 italic mb-2">
+          🤖 AI: 결정 ${summary.decisions}건, 요청 ${summary.requests}건, 일정 언급 ${summary.dates}건${summary.urgent ? ' — 긴급 키워드 감지' : ''}
+        </div>
+        <div class="flex gap-1">
+          <button onclick='showToast("Phase 1 Notion 연결 후 진짜 push됩니다 (${sku||"미매칭"})")' class="flex-1 px-2 py-1.5 rounded bg-indigo-600 text-white text-[10px] font-medium hover:bg-indigo-700">
+            ${sku ? `${sku}에 반영` : '프로젝트 선택 후 반영'}
+          </button>
+          <button onclick='this.closest(".rounded-lg").remove(); kakaoImportCount=Math.max(0,kakaoImportCount-1); document.getElementById("kakao-import-count").textContent=kakaoImportCount;' class="px-2 py-1.5 rounded border border-slate-200 text-[10px] text-slate-600 hover:bg-slate-50">무시</button>
+        </div>
+      </div>
+    `;
+    const list = document.getElementById('kakao-results');
+    list.insertAdjacentHTML('afterbegin', html);
+    kakaoImportCount++;
+    document.getElementById('kakao-import-count').textContent = kakaoImportCount;
+    // 토글 자동 펼침
+    const tg = document.getElementById('kakao-import-toggle');
+    if (tg && !tg.open) tg.open = true;
+    // 토스트
+    showToast(`카톡 .txt 파싱 완료 — ${summary.count}개 메시지${sku ? ' → ' + sku + ' 매칭' : ''}`);
+  }
+
+  // ── Drag & drop + 파일 선택 ──
+  function setupKakaoImport() {
+    const zone = document.getElementById('kakao-drop-zone');
+    const input = document.getElementById('kakao-file-input');
+    if (!zone || !input) return;
+
+    zone.addEventListener('click', () => input.click());
+    input.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) await handleKakaoFile(file);
+      input.value = '';
+    });
+
+    ['dragenter','dragover'].forEach(ev => zone.addEventListener(ev, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      zone.classList.add('border-indigo-500','bg-indigo-50');
+    }));
+    ['dragleave','drop'].forEach(ev => zone.addEventListener(ev, (e) => {
+      e.preventDefault(); e.stopPropagation();
+      zone.classList.remove('border-indigo-500','bg-indigo-50');
+    }));
+    zone.addEventListener('drop', async (e) => {
+      const files = e.dataTransfer.files;
+      for (const f of files) {
+        if (f.name.endsWith('.txt')) await handleKakaoFile(f);
+      }
+    });
+  }
+
+  async function handleKakaoFile(file) {
+    try {
+      const text = await file.text();
+      const parsed = parseKakaoTxt(text);
+      if (!parsed.messages.length) {
+        showToast(`${file.name} — 카톡 메시지 형식 미인식 (지원: 한국어 PC판)`);
+        return;
+      }
+      renderKakaoResult(parsed, file.name);
+    } catch (err) {
+      showToast(`파일 읽기 실패: ${err.message}`);
+    }
+  }
+
   // ── 초기화 ──
   document.addEventListener('DOMContentLoaded', () => {
     renderCalendar();
     renderEvents();
     renderTodayTasks();
     renderWeekTasks();
+    setupKakaoImport();
   });
 
   function openExternal(url) {
