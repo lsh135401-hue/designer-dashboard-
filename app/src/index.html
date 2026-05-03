@@ -75,37 +75,22 @@
     </div>
   </div>
 
-  <!-- 오늘의 일정 -->
+  <!-- 선택한 날짜의 일정 (캘린더에서 클릭한 날짜) -->
   <div class="px-3 py-2 border-b border-slate-100">
     <div class="flex items-center gap-2 mb-1.5">
-      <span class="text-[10px] uppercase tracking-wide text-slate-500 font-semibold">오늘의 일정</span>
-      <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-medium">3건</span>
+      <span id="events-date-label" class="text-[10px] uppercase tracking-wide text-slate-500 font-semibold">오늘의 일정</span>
+      <span id="events-count" class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-medium">0건</span>
+      <button id="events-back-today" onclick="selectDate(TODAY_ISO)" class="ml-auto text-[10px] text-indigo-600 hover:underline hidden">오늘로</button>
     </div>
-    <div class="space-y-1 text-[11px]">
-      <div class="flex items-center gap-1.5 text-slate-700">
-        <span class="font-mono text-[10px] text-slate-400 w-9">17:00</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-        <span class="truncate">SKU01 양산 발주서 마감</span>
-      </div>
-      <div class="flex items-center gap-1.5 text-slate-700">
-        <span class="font-mono text-[10px] text-slate-400 w-9">14:00</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-        <span class="truncate">MD 김** 미팅</span>
-      </div>
-      <div class="flex items-center gap-1.5 text-slate-700">
-        <span class="font-mono text-[10px] text-slate-400 w-9">종일</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-        <span class="truncate">SKU02 시안 v2 마감</span>
-      </div>
-    </div>
+    <div id="events-list" class="space-y-1 text-[11px]"></div>
   </div>
 
-  <!-- 미니 월간 캘린더 -->
+  <!-- 미니 월간 캘린더 (날짜 클릭 → 위 일정 갱신) -->
   <div class="px-2 py-2 border-b border-slate-100">
     <div class="flex items-center justify-between mb-1 px-1">
-      <button class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">‹</button>
-      <span class="text-[11px] font-semibold text-slate-700">2026년 5월</span>
-      <button class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">›</button>
+      <button onclick="navMonth(-1)" class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">‹</button>
+      <span id="cal-month-label" class="text-[11px] font-semibold text-slate-700">2026년 5월</span>
+      <button onclick="navMonth(1)" class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">›</button>
     </div>
     <div class="grid grid-cols-7 text-[9px] text-center font-medium">
       <div class="text-rose-400 py-1">일</div>
@@ -116,130 +101,26 @@
       <div class="text-slate-500 py-1">금</div>
       <div class="text-blue-400 py-1">토</div>
     </div>
-    <div class="grid grid-cols-7 text-[10px] text-center">
-      <div class="aspect-square grid place-items-center text-slate-300">25</div>
-      <div class="aspect-square grid place-items-center text-slate-300">26</div>
-      <div class="aspect-square grid place-items-center text-slate-300">27</div>
-      <div class="aspect-square grid place-items-center text-slate-300">28</div>
-      <div class="aspect-square grid place-items-center text-slate-300">29</div>
-      <div class="aspect-square grid place-items-center text-slate-300">30</div>
-      <div class="aspect-square relative grid place-items-center text-rose-500 font-medium">
-        <span>1</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-300"></span>
-      </div>
-      <div class="aspect-square relative grid place-items-center text-rose-500">2</div>
-      <div class="aspect-square relative grid place-items-center">
-        <span class="absolute inset-1 rounded-full bg-indigo-600"></span>
-        <span class="relative text-white font-bold">3</span>
-        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-[2px]">
-          <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
-          <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
-          <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
-        </span>
-      </div>
-      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-        <span>4</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500"></span>
-      </div>
-      <div class="aspect-square relative grid place-items-center text-slate-700">5</div>
-      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-        <span>6</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500"></span>
-      </div>
-      <div class="aspect-square relative grid place-items-center text-slate-700">7</div>
-      <div class="aspect-square relative grid place-items-center text-blue-500 font-medium">
-        <span>8</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-500"></span>
-      </div>
-      <div class="aspect-square grid place-items-center text-rose-500">9</div>
-      <div class="aspect-square grid place-items-center text-slate-700">10</div>
-      <div class="aspect-square grid place-items-center text-slate-700">11</div>
-      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-        <span>12</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500"></span>
-      </div>
-      <div class="aspect-square grid place-items-center text-slate-700">13</div>
-      <div class="aspect-square grid place-items-center text-slate-700">14</div>
-      <div class="aspect-square grid place-items-center text-blue-500">15</div>
-      <div class="aspect-square grid place-items-center text-rose-500">16</div>
-      <div class="aspect-square grid place-items-center text-slate-700">17</div>
-      <div class="aspect-square grid place-items-center text-slate-700">18</div>
-      <div class="aspect-square grid place-items-center text-slate-700">19</div>
-      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-        <span>20</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500"></span>
-      </div>
-      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-        <span>21</span>
-        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-400"></span>
-      </div>
-      <div class="aspect-square grid place-items-center text-blue-500">22</div>
-      <div class="aspect-square grid place-items-center text-rose-500">23</div>
-      <div class="aspect-square grid place-items-center text-slate-700">24</div>
-      <div class="aspect-square grid place-items-center text-slate-700">25</div>
-      <div class="aspect-square grid place-items-center text-slate-700">26</div>
-      <div class="aspect-square grid place-items-center text-slate-700">27</div>
-      <div class="aspect-square grid place-items-center text-slate-700">28</div>
-      <div class="aspect-square grid place-items-center text-blue-500">29</div>
-      <div class="aspect-square grid place-items-center text-rose-500">30</div>
-      <div class="aspect-square grid place-items-center text-slate-700">31</div>
-      <div class="aspect-square grid place-items-center text-slate-300">1</div>
-      <div class="aspect-square grid place-items-center text-slate-300">2</div>
-      <div class="aspect-square grid place-items-center text-slate-300">3</div>
-      <div class="aspect-square grid place-items-center text-slate-300">4</div>
-      <div class="aspect-square grid place-items-center text-slate-300">5</div>
-    </div>
+    <div id="cal-grid" class="grid grid-cols-7 text-[10px] text-center"></div>
   </div>
 
-  <!-- 오늘 할 일 (토글) -->
-  <details>
+  <!-- 오늘 할 일 (토글, JS 렌더) -->
+  <details id="today-tasks-toggle">
     <summary class="block px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50">
       <span class="toggle-arrow text-slate-400">▶</span> 오늘 할 일
-      <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
+      <span id="today-tasks-count" class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">0</span>
     </summary>
-    <div class="bg-slate-50/60 border-y border-slate-100 py-1">
-      <a href="#" onclick='openInChannel(event,"slack","#factory-A","사장님 안녕하세요. SKU01 양산 발주서 17시까지 회신 부탁드립니다. 사이즈표 누락 건 함께 확인해주세요.","Slack #factory-A")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
-        <span class="font-mono text-[10px] text-slate-400 w-9">17:00</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-700">SKU01 양산 발주서 마감</span>
-        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
-      </a>
-      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","김** 님, SKU01 사이즈 컨펌 한 번만 더 부탁드릴게요. 어제 230 라인 도면 반영됐는지 확인이 필요합니다.","Slack DM @md_kim")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
-        <span class="font-mono text-[10px] text-slate-400 w-9">오전</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-700">MD 사이즈 컨펌 요청</span>
-        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
-      </a>
-      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","김** 님, SKU02 시안 v2 검토 부탁드립니다. 14시 미팅 전에 확인 가능하실까요?","Slack DM @md_kim")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
-        <span class="font-mono text-[10px] text-slate-400 w-9">12:00</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-700">SKU02 시안 v2 마감</span>
-        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
-      </a>
-      <a href="#" onclick='openInChannel(event,"slack","#factory-VN","Hi Linh, could you share the QC checklist for SKU03? We are 2 days behind and need to align by EOD.","Slack #factory-VN")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
-        <span class="font-mono text-[10px] text-slate-400 w-9">오후</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-700">SKU03 QC 점검 (지연)</span>
-        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
-      </a>
-      <a href="#" onclick='openInChannel(event,"gmail","factory-b@example.com","공장B 관계자님, SKU04 견적서 확인 감사합니다. 단가 협의 가능 여부 회신 부탁드립니다.","Gmail")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
-        <span class="font-mono text-[10px] text-slate-400 w-9">오후</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-700">공장B 견적 회신</span>
-        <span class="text-[9px] text-rose-600 font-mono">→ Gmail</span>
-      </a>
-      <a href="#" onclick='openInChannel(event,"slack","DM @md_kim","오늘 14시 미팅 어젠다: SKU02 시안 v2, SKU01 양산 일정, 비치웨어 지연 대응. 자료 공유드립니다.","Slack DM")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white">
-        <span class="font-mono text-[10px] text-slate-400 w-9">14:00</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-700">MD 미팅 준비</span>
-        <span class="text-[9px] text-violet-600 font-mono">→ Slack</span>
-      </a>
-      <a href="#" onclick='openInChannel(event,"notion","",""," ")' class="flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white opacity-60">
-        <span class="font-mono text-[10px] text-slate-400 w-9">완료</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-        <span class="flex-1 truncate text-slate-500 line-through">아침 메일 정리</span>
-      </a>
-    </div>
+    <div id="today-tasks-list" class="bg-slate-50/60 border-y border-slate-100 py-1"></div>
+  </details>
+
+  <!-- 이번주 할 일 (토글, 요약, JS 렌더) -->
+  <details id="week-tasks-toggle">
+    <summary class="block px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50">
+      <span class="toggle-arrow text-slate-400">▶</span> 이번주 할 일
+      <span class="text-[10px] text-slate-400">요약</span>
+      <span id="week-tasks-count" class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-medium">0</span>
+    </summary>
+    <div id="week-tasks-list" class="bg-slate-50/60 border-y border-slate-100 py-1"></div>
   </details>
 
   <!-- 보낼 메시지 (토글, AI 초안) -->
@@ -322,6 +203,297 @@
 
 <script>
   const BASE_URL = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html';
+
+  // ── 데이터 ──
+  // mockup 기준 오늘 = 2026-05-03 (월)
+  const TODAY_ISO = '2026-05-03';
+  const VIEW_YEAR = 2026;
+  let viewYear = VIEW_YEAR;
+  let viewMonth = 5; // 1-based
+  let selectedDate = TODAY_ISO;
+
+  // 우선순위별 색상 (좌측 점)
+  const PRI_COLOR = {
+    urgent: 'bg-rose-500',
+    today:  'bg-amber-500',
+    week:   'bg-blue-500',
+    normal: 'bg-slate-400',
+    done:   'bg-emerald-500'
+  };
+
+  // 채널별 색상 (라벨)
+  const CH_COLOR = {
+    slack:  { text: 'text-violet-600', bg: 'bg-violet-100', label: 'Slack' },
+    gmail:  { text: 'text-rose-600',   bg: 'bg-rose-100',   label: 'Gmail' },
+    kakao:  { text: 'text-amber-700',  bg: 'bg-amber-100',  label: '카톡' },
+    notion: { text: 'text-slate-700',  bg: 'bg-slate-200',  label: 'Notion' },
+    cal:    { text: 'text-blue-600',   bg: 'bg-blue-100',   label: '캘린더' }
+  };
+
+  // 날짜별 일정 (mockup)
+  const EVENTS_BY_DATE = {
+    '2026-05-01': [
+      { time: '종일', priority: 'normal', title: '근로자의 날 (휴무)', kind: 'holiday' }
+    ],
+    '2026-05-03': [
+      { time: '17:00', priority: 'urgent', title: 'SKU01 양산 발주서 마감', channel: 'slack', target: '#factory-A',
+        body: '사장님, 안녕하세요.\n\nSKU01 양산 D-1 리마인드 드립니다.\n도면에서 사이즈 표기 누락 건 확인 부탁드리고, 발주서는 오늘 17시까지 회신 주시면 감사하겠습니다.\n\n감사합니다.',
+        label: 'Slack #factory-A · AI 초안' },
+      { time: '14:00', priority: 'today', title: 'MD 김** 미팅', channel: 'cal', target: '',
+        body: '오늘 14시 미팅 어젠다: SKU02 시안 v2, SKU01 양산 일정, 비치웨어 지연 대응. 자료 공유드립니다.',
+        label: '캘린더 이벤트' },
+      { time: '종일', priority: 'today', title: 'SKU02 시안 v2 마감', channel: 'slack', target: 'DM @md_kim',
+        body: '김** 님, SKU02 시안 v2 12시 전까지 보내드릴게요. 14시 미팅에서 같이 보시죠.',
+        label: 'Slack DM @md_kim' }
+    ],
+    '2026-05-04': [
+      { time: '오전', priority: 'urgent', title: 'SKU01 컨펌 D-day', channel: 'slack', target: '#factory-A',
+        body: '사장님, SKU01 컨펌 D-day입니다. 오늘 결정 사항 공유 부탁드립니다.', label: 'Slack #factory-A' },
+      { time: '오후', priority: 'today', title: 'MD 사이즈 컨펌 회의', channel: 'slack', target: 'DM @md_kim',
+        body: 'MD 김** 님, SKU01 사이즈 230 라인 도면 반영됐는지 컨펌 부탁드릴게요.', label: 'Slack DM @md_kim' }
+    ],
+    '2026-05-05': [
+      { time: '종일', priority: 'normal', title: '어린이날 (휴무)', kind: 'holiday' }
+    ],
+    '2026-05-06': [
+      { time: '오전', priority: 'urgent', title: 'SKU01 양산 발주서 송부', channel: 'gmail', target: 'factory-a@example.com',
+        body: '공장A 사장님, SKU01 양산 발주서 첨부드립니다. 납기 5/30 기준 진행 부탁드립니다.', label: 'Gmail · 공장A' }
+    ],
+    '2026-05-07': [
+      { time: '오후', priority: 'week', title: '공장A 견적 검토', channel: 'notion', target: '',
+        body: '', label: 'Notion 페이지 열기' }
+    ],
+    '2026-05-08': [
+      { time: '오전', priority: 'today', title: 'SKU01 양산 시작 확인', channel: 'slack', target: '#factory-A',
+        body: '사장님, SKU01 양산 시작 확인 부탁드립니다. 진행 사진 한 장만 공유해주시면 감사하겠습니다.', label: 'Slack #factory-A' }
+    ],
+    '2026-05-12': [
+      { time: '오후', priority: 'week', title: 'SKU02 MD 검토 회의', channel: 'cal', target: '',
+        body: '', label: '캘린더 이벤트' }
+    ],
+    '2026-05-15': [
+      { time: '오전', priority: 'today', title: 'SKU02 샘플 도착', channel: 'slack', target: '#factory-A',
+        body: 'SKU02 샘플 도착 확인 — 사진 공유 부탁드립니다.', label: 'Slack #factory-A' },
+      { time: '오후', priority: 'week', title: 'SKU01 QC 시작', channel: 'notion', target: '',
+        body: '', label: 'Notion QC 페이지' }
+    ],
+    '2026-05-20': [
+      { time: '종일', priority: 'urgent', title: 'SKU03 1차 시안 마감', channel: 'slack', target: 'DM @md_kim',
+        body: 'SKU03 1차 시안 검토 부탁드립니다. 비치웨어 라인업 컨셉 확인 필요.', label: 'Slack DM @md_kim' }
+    ],
+    '2026-05-21': [
+      { time: '종일', priority: 'normal', title: '석가탄신일 (휴무)', kind: 'holiday' }
+    ],
+    '2026-05-25': [
+      { time: '오전', priority: 'today', title: 'SKU01 QC 점검', channel: 'notion', target: '',
+        body: '', label: 'Notion QC 체크리스트' }
+    ],
+    '2026-05-28': [
+      { time: '종일', priority: 'today', title: 'SKU03 2차 시안', channel: 'slack', target: 'DM @md_kim',
+        body: 'SKU03 2차 시안 보내드립니다. 1차 코멘트 반영 완료.', label: 'Slack DM @md_kim' }
+    ],
+    '2026-05-30': [
+      { time: '종일', priority: 'today', title: 'SKU01 양산 완료', channel: 'notion', target: '',
+        body: '', label: 'Notion 출고 페이지' }
+    ]
+  };
+
+  // ── 유틸 ──
+  function isoFromYMD(y, m, d) {
+    return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+  function dayOfWeek(iso) {
+    return new Date(iso + 'T00:00:00').getDay();
+  }
+  function escapeAttr(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/\n/g,'\\n');
+  }
+
+  // ── 캘린더 렌더 ──
+  function renderCalendar() {
+    const grid = document.getElementById('cal-grid');
+    const label = document.getElementById('cal-month-label');
+    if (!grid) return;
+    label.textContent = `${viewYear}년 ${viewMonth}월`;
+
+    const firstDow = new Date(viewYear, viewMonth-1, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth, 0).getDate();
+    const prevMonthDays = new Date(viewYear, viewMonth-1, 0).getDate();
+
+    let html = '';
+    // 이전 달 채우기
+    for (let i = firstDow - 1; i >= 0; i--) {
+      html += `<div class="aspect-square grid place-items-center text-slate-300">${prevMonthDays - i}</div>`;
+    }
+    // 이번 달
+    for (let d = 1; d <= daysInMonth; d++) {
+      const iso = isoFromYMD(viewYear, viewMonth, d);
+      const dow = dayOfWeek(iso);
+      const events = EVENTS_BY_DATE[iso] || [];
+      const isHoliday = events.some(e => e.kind === 'holiday');
+      const isToday = iso === TODAY_ISO;
+      const isSelected = iso === selectedDate;
+
+      let textClass = 'text-slate-700';
+      if (isHoliday || dow === 0) textClass = 'text-rose-500';
+      else if (dow === 6) textClass = 'text-blue-500';
+
+      // 우선순위 가장 높은 이벤트 색상
+      let dotClass = '';
+      const order = ['urgent','today','week','normal'];
+      for (const p of order) {
+        if (events.some(e => e.priority === p && e.kind !== 'holiday')) { dotClass = PRI_COLOR[p]; break; }
+      }
+      if (!dotClass && isHoliday) dotClass = 'bg-rose-300';
+
+      html += `<div class="aspect-square relative grid place-items-center ${textClass} cursor-pointer hover:bg-slate-100 rounded transition-colors ${isSelected && !isToday ? 'ring-2 ring-indigo-400' : ''}" data-date="${iso}" onclick="selectDate('${iso}')">`;
+      if (isToday) {
+        html += `<span class="absolute inset-1 rounded-full bg-indigo-600"></span>`;
+        html += `<span class="relative text-white font-bold">${d}</span>`;
+        if (events.length) {
+          const dotsCount = Math.min(3, events.length);
+          html += `<span class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-[2px]">`;
+          for (let i = 0; i < dotsCount; i++) html += `<span class="w-[3px] h-[3px] rounded-full bg-white"></span>`;
+          html += `</span>`;
+        }
+      } else {
+        html += `<span class="${events.length ? 'font-medium' : ''}">${d}</span>`;
+        if (dotClass) {
+          html += `<span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${dotClass}"></span>`;
+        }
+      }
+      html += `</div>`;
+    }
+    // 다음 달 채우기 (6주 = 42셀까지)
+    const used = firstDow + daysInMonth;
+    const trailing = (Math.ceil(used / 7) * 7) - used;
+    for (let i = 1; i <= trailing; i++) {
+      html += `<div class="aspect-square grid place-items-center text-slate-300">${i}</div>`;
+    }
+    grid.innerHTML = html;
+  }
+
+  function navMonth(delta) {
+    viewMonth += delta;
+    if (viewMonth < 1) { viewMonth = 12; viewYear--; }
+    if (viewMonth > 12) { viewMonth = 1; viewYear++; }
+    renderCalendar();
+  }
+  window.navMonth = navMonth;
+
+  // ── 일정 리스트 (선택한 날짜) ──
+  function eventToHTML(ev, opts = {}) {
+    const ch = CH_COLOR[ev.channel] || { text: 'text-slate-500', label: '' };
+    const arrow = ev.channel ? `<span class="text-[9px] ${ch.text} font-mono ml-auto shrink-0">→ ${ch.label}</span>` : '';
+    const klass = opts.compact
+      ? 'flex items-center gap-1.5 px-3 py-1 text-[11px] rounded hover:bg-white'
+      : 'flex items-center gap-1.5 px-3 py-1.5 text-[11px] hover:bg-white';
+    const time = opts.showTime !== false
+      ? `<span class="font-mono text-[10px] text-slate-400 w-9 shrink-0">${ev.time || ''}</span>`
+      : '';
+    const handler = ev.kind === 'holiday' ? '' :
+      ` onclick='openInChannel(event,"${ev.channel||""}","${escapeAttr(ev.target)}","${escapeAttr(ev.body)}","${escapeAttr(ev.label||ev.title)}")'`;
+    return `<a href="#"${handler} class="${klass}">
+      ${time}
+      <span class="w-1.5 h-1.5 rounded-full ${PRI_COLOR[ev.priority]||'bg-slate-400'} shrink-0"></span>
+      <span class="flex-1 truncate text-slate-700">${ev.title}</span>
+      ${arrow}
+    </a>`;
+  }
+
+  function renderEvents() {
+    const list = document.getElementById('events-list');
+    const labelEl = document.getElementById('events-date-label');
+    const countEl = document.getElementById('events-count');
+    const backBtn = document.getElementById('events-back-today');
+    if (!list) return;
+
+    const events = EVENTS_BY_DATE[selectedDate] || [];
+    const isToday = selectedDate === TODAY_ISO;
+    const d = new Date(selectedDate + 'T00:00:00');
+    const dows = ['일','월','화','수','목','금','토'];
+    labelEl.textContent = isToday
+      ? '오늘의 일정'
+      : `${d.getMonth()+1}월 ${d.getDate()}일 (${dows[d.getDay()]}) 일정`;
+    countEl.textContent = `${events.length}건`;
+    backBtn.classList.toggle('hidden', isToday);
+
+    list.innerHTML = events.length
+      ? events.map(ev => `<div class="flex items-center gap-1.5">${
+          ev.kind === 'holiday'
+            ? `<span class="font-mono text-[10px] text-slate-400 w-9">${ev.time}</span>
+               <span class="w-1.5 h-1.5 rounded-full bg-rose-300 shrink-0"></span>
+               <span class="text-slate-500 italic">${ev.title}</span>`
+            : eventToHTML(ev, { compact: false }).replace(/^<a /, '<a class="flex-1" ').replace('class="flex-1" href="#"', 'href="#"').replace(/class="flex items-center gap-1.5 px-3 py-1.5/, 'class="w-full flex items-center gap-1.5 py-1')
+        }</div>`).join('')
+      : '<div class="text-[11px] text-slate-400 italic px-1 py-1">일정 없음</div>';
+  }
+
+  function selectDate(iso) {
+    selectedDate = iso;
+    renderCalendar();
+    renderEvents();
+  }
+  window.selectDate = selectDate;
+
+  // ── 오늘 할 일 (오늘 날짜의 events) ──
+  function renderTodayTasks() {
+    const list = document.getElementById('today-tasks-list');
+    const count = document.getElementById('today-tasks-count');
+    if (!list) return;
+    const events = EVENTS_BY_DATE[TODAY_ISO] || [];
+    const actionable = events.filter(e => e.kind !== 'holiday');
+    count.textContent = actionable.length;
+    list.innerHTML = actionable.map(ev => eventToHTML(ev)).join('');
+  }
+
+  // ── 이번주 할 일 (요약, 일~토) ──
+  function renderWeekTasks() {
+    const list = document.getElementById('week-tasks-list');
+    const count = document.getElementById('week-tasks-count');
+    if (!list) return;
+
+    const today = new Date(TODAY_ISO + 'T00:00:00');
+    const dow = today.getDay();
+    const sunday = new Date(today);
+    sunday.setDate(today.getDate() - dow);
+    const dows = ['일','월','화','수','목','금','토'];
+
+    let total = 0;
+    const html = [];
+    for (let i = 0; i < 7; i++) {
+      const dayDate = new Date(sunday);
+      dayDate.setDate(sunday.getDate() + i);
+      const iso = isoFromYMD(dayDate.getFullYear(), dayDate.getMonth()+1, dayDate.getDate());
+      const events = (EVENTS_BY_DATE[iso] || []).filter(e => e.kind !== 'holiday');
+      total += events.length;
+      const isToday = iso === TODAY_ISO;
+      const dayLabel = `${dayDate.getMonth()+1}/${dayDate.getDate()} (${dows[i]})`;
+      const isWeekend = i === 0 || i === 6;
+      html.push(`
+        <div class="px-3 py-1">
+          <div class="text-[10px] uppercase tracking-wide ${isToday ? 'text-indigo-700 font-bold' : (isWeekend ? 'text-slate-400 font-semibold' : 'text-slate-500 font-semibold')} mb-0.5">
+            ${dayLabel}${isToday ? ' · 오늘' : ''}${events.length ? '' : ' <span class="font-normal lowercase italic text-slate-400">일정 없음</span>'}
+          </div>
+          ${events.map(ev => `<a href="#" onclick='openInChannel(event,"${ev.channel||""}","${escapeAttr(ev.target)}","${escapeAttr(ev.body)}","${escapeAttr(ev.label||ev.title)}")' class="flex items-center gap-1.5 ml-2 py-0.5 text-[11px] hover:bg-white rounded">
+            <span class="w-1.5 h-1.5 rounded-full ${PRI_COLOR[ev.priority]||'bg-slate-400'} shrink-0"></span>
+            <span class="truncate text-slate-700 flex-1">${ev.title}</span>
+            ${ev.channel ? `<span class="text-[9px] ${(CH_COLOR[ev.channel]||{}).text||'text-slate-500'} font-mono">→ ${(CH_COLOR[ev.channel]||{}).label||ev.channel}</span>` : ''}
+          </a>`).join('')}
+        </div>
+      `);
+    }
+    count.textContent = total;
+    list.innerHTML = html.join('');
+  }
+
+  // ── 초기화 ──
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCalendar();
+    renderEvents();
+    renderTodayTasks();
+    renderWeekTasks();
+  });
 
   function openExternal(url) {
     if (window.__TAURI__ && window.__TAURI__.opener) {
