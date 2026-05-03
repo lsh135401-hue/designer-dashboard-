@@ -8,16 +8,21 @@
   },
   "app": {
     "withGlobalTauri": true,
+    "macOSPrivateApi": true,
     "windows": [
       {
         "label": "main",
         "title": "Designer Dashboard",
-        "width": 420,
+        "width": 320,
         "height": 720,
         "visible": false,
         "skipTaskbar": true,
-        "resizable": true,
-        "decorations": true
+        "resizable": false,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "alwaysOnTop": false,
+        "focus": true
       }
     ],
     "security": {

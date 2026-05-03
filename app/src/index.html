@@ -3,1323 +3,254 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Designer Dashboard — v0 Mockup</title>
+<title>Designer Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root { color-scheme: light; }
-  html { scroll-behavior: smooth; }
-  section[id] { scroll-margin-top: 64px; }
+  html, body { background: transparent; margin: 0; padding: 0; overflow: hidden; }
   body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro KR", "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif; }
-  .menubar-dropdown { box-shadow: 0 12px 40px rgba(0,0,0,.18); }
-  .menubar-dropdown a { cursor: pointer; }
-  .menubar-dropdown a:hover { background: #f1f5f9; }
-  .menubar-dropdown a:active { background: #e2e8f0; }
-  .grain { background-image: radial-gradient(rgba(0,0,0,.025) 1px, transparent 1px); background-size: 3px 3px; }
   .progress-bar { background: linear-gradient(90deg, #10b981 0%, #059669 100%); }
   .progress-bar.warn { background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%); }
   .progress-bar.danger { background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%); }
-  .card-hover { transition: all .15s ease; }
-  .card-hover:hover { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(0,0,0,.06); }
-  .nav-pill { transition: all .15s ease; }
-  .nav-pill:hover { background: rgba(15, 23, 42, .04); }
-  .scroll-hidden::-webkit-scrollbar { display: none; }
-  .scroll-hidden { scrollbar-width: none; }
-  details > summary { list-style: none; cursor: pointer; }
-  details > summary::-webkit-details-marker { display: none; }
+  .menubar-dropdown { box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+  .menubar-dropdown a { cursor: pointer; transition: background .1s; text-decoration: none; }
+  .menubar-dropdown a:hover { background: #f1f5f9; }
+  .menubar-dropdown a:active { background: #e2e8f0; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 </style>
 </head>
-<body class="bg-slate-100 grain min-h-screen">
-
-<!-- Top stage navigation -->
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
-  <div class="max-w-[1280px] mx-auto px-6 py-3 flex items-center gap-3">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 grid place-items-center text-white font-semibold">☉</div>
-      <div>
-        <div class="text-sm font-semibold text-slate-900">Designer Dashboard</div>
-        <div class="text-[11px] text-slate-500">v0 Mockup · 디자인 검토용</div>
+<body class="p-2">
+<div class="menubar-dropdown w-full bg-white rounded-lg overflow-hidden">
+  <!-- 날짜 + 날씨 -->
+  <div class="px-3 py-2.5 bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 border-b border-slate-100">
+    <div class="flex items-start gap-2">
+      <div class="flex-1">
+        <div class="text-[10px] text-slate-500 font-medium" id="month-label">2026년 5월</div>
+        <div class="text-base font-bold text-slate-900 leading-tight" id="date-label">3일 월요일</div>
+      </div>
+      <div class="text-right">
+        <div class="flex items-center gap-1 text-sm font-semibold text-slate-800">
+          <span class="text-amber-500">☀</span><span>21°</span>
+          <span class="text-slate-400 font-normal text-[11px]">/12°</span>
+        </div>
+        <div class="text-[10px] text-slate-500">서울 · 맑음</div>
       </div>
     </div>
-    <nav class="ml-8 flex gap-1 text-sm">
-      <a href="#menubar"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">메뉴바 트레이</a>
-      <a href="#main"      class="nav-pill px-3 py-1.5 rounded-md text-slate-700">메인 대시보드</a>
-      <a href="#project"   class="nav-pill px-3 py-1.5 rounded-md text-slate-700">프로젝트 상세</a>
-      <a href="#share"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">공유 페이지</a>
-      <a href="#brief"     class="nav-pill px-3 py-1.5 rounded-md text-slate-700">아침 알림</a>
-    </nav>
-    <div class="ml-auto text-xs text-slate-500">2026-05-03 (월) · 오전 9:14 · 마지막 동기화 30초 전</div>
-  </div>
-</header>
-
-<main class="max-w-[1280px] mx-auto px-6 py-10 space-y-16">
-
-<!-- 1. Menu bar tray dropdown -->
-<section id="menubar">
-  <div class="flex items-baseline gap-3 mb-4">
-    <h2 class="text-xl font-semibold text-slate-900">1. 메뉴바 트레이 (드롭다운)</h2>
-    <span class="text-xs text-slate-500">macOS 상단바 아이콘 클릭 시</span>
-  </div>
-  <div class="relative h-[760px] bg-gradient-to-b from-slate-200 to-slate-300 rounded-xl overflow-hidden border border-slate-300">
-    <!-- Mac top bar mock -->
-    <div class="h-6 bg-white/30 backdrop-blur border-b border-white/40 flex items-center justify-end px-3 gap-3 text-[11px] text-slate-700">
-      <span>⚡</span><span>📶</span><span>🔋 78%</span>
-      <span class="w-5 h-5 rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 grid place-items-center text-white text-[10px] font-semibold ring-2 ring-indigo-300">☉</span>
-      <span>📍</span><span>🔍</span><span>9:14</span>
-    </div>
-    <!-- Dropdown menu -->
-    <div class="menubar-dropdown absolute top-7 right-12 w-[300px] bg-white rounded-lg overflow-hidden">
-      <!-- Date + Weather header -->
-      <div class="px-3 py-2.5 bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 border-b border-slate-100">
-        <div class="flex items-start gap-2">
-          <div class="flex-1">
-            <div class="text-[10px] text-slate-500 font-medium">2026년 5월</div>
-            <div class="text-base font-bold text-slate-900 leading-tight">3일 월요일</div>
-          </div>
-          <div class="text-right">
-            <div class="flex items-center gap-1 text-sm font-semibold text-slate-800">
-              <span class="text-amber-500">☀</span>
-              <span>21°</span>
-              <span class="text-slate-400 font-normal text-[11px]">/12°</span>
-            </div>
-            <div class="text-[10px] text-slate-500">서울 · 맑음</div>
-          </div>
-        </div>
-        <div class="mt-1.5 text-[10px] text-slate-500 flex items-center gap-1.5">
-          <span class="text-slate-700 font-medium">오전 9:14</span>
-          <span class="w-1 h-1 rounded-full bg-slate-300"></span>
-          <span class="text-emerald-600 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>동기화 30초 전
-          </span>
-        </div>
-      </div>
-
-      <!-- Today's events strip (moved up — order 1-3-2) -->
-      <div class="px-3 py-2 border-b border-slate-100">
-        <div class="flex items-center gap-2 mb-1.5">
-          <span class="text-[10px] uppercase tracking-wide text-slate-500 font-semibold">오늘의 일정</span>
-          <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-medium">3건</span>
-        </div>
-        <div class="space-y-1 text-[11px]">
-          <div class="flex items-center gap-1.5 text-slate-700">
-            <span class="font-mono text-[10px] text-slate-400 w-9">17:00</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-            <span class="truncate">SKU01 양산 발주서 마감</span>
-          </div>
-          <div class="flex items-center gap-1.5 text-slate-700">
-            <span class="font-mono text-[10px] text-slate-400 w-9">14:00</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-            <span class="truncate">MD 김** 미팅</span>
-          </div>
-          <div class="flex items-center gap-1.5 text-slate-700">
-            <span class="font-mono text-[10px] text-slate-400 w-9">종일</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-            <span class="truncate">SKU02 시안 v2 마감</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mini month calendar -->
-      <div class="px-2 py-2 border-b border-slate-100">
-        <div class="flex items-center justify-between mb-1 px-1">
-          <button class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">‹</button>
-          <span class="text-[11px] font-semibold text-slate-700">2026년 5월</span>
-          <button class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">›</button>
-        </div>
-        <div class="grid grid-cols-7 text-[9px] text-center font-medium">
-          <div class="text-rose-400 py-1">일</div>
-          <div class="text-slate-500 py-1">월</div>
-          <div class="text-slate-500 py-1">화</div>
-          <div class="text-slate-500 py-1">수</div>
-          <div class="text-slate-500 py-1">목</div>
-          <div class="text-slate-500 py-1">금</div>
-          <div class="text-blue-400 py-1">토</div>
-        </div>
-        <div class="grid grid-cols-7 text-[10px] text-center">
-          <!-- Week 1: prev month carryover ending at 5/1 (Sat) -->
-          <div class="aspect-square grid place-items-center text-slate-300">25</div>
-          <div class="aspect-square grid place-items-center text-slate-300">26</div>
-          <div class="aspect-square grid place-items-center text-slate-300">27</div>
-          <div class="aspect-square grid place-items-center text-slate-300">28</div>
-          <div class="aspect-square grid place-items-center text-slate-300">29</div>
-          <div class="aspect-square grid place-items-center text-slate-300">30</div>
-          <!-- 5/1 근로자의날 -->
-          <div class="aspect-square relative grid place-items-center text-rose-500 font-medium">
-            <span>1</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-300" title="근로자의 날"></span>
-          </div>
-          <!-- Week 2: 5/2 ~ 5/8 -->
-          <div class="aspect-square relative grid place-items-center text-rose-500">2</div>
-          <!-- 5/3 TODAY -->
-          <div class="aspect-square relative grid place-items-center">
-            <span class="absolute inset-1 rounded-full bg-indigo-600"></span>
-            <span class="relative text-white font-bold">3</span>
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-[2px]">
-              <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
-              <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
-              <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
-            </span>
-          </div>
-          <!-- 5/4 컨펌 -->
-          <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-            <span>4</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500" title="SKU01 컨펌"></span>
-          </div>
-          <div class="aspect-square relative grid place-items-center text-slate-700">5</div>
-          <!-- 5/6 양산 발주 -->
-          <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-            <span>6</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500" title="SKU01 양산 발주"></span>
-          </div>
-          <div class="aspect-square relative grid place-items-center text-slate-700">7</div>
-          <!-- 5/8 양산 시작 -->
-          <div class="aspect-square relative grid place-items-center text-blue-500 font-medium">
-            <span>8</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-500" title="SKU01 양산 시작"></span>
-          </div>
-          <!-- Week 3 -->
-          <div class="aspect-square grid place-items-center text-rose-500">9</div>
-          <div class="aspect-square grid place-items-center text-slate-700">10</div>
-          <div class="aspect-square grid place-items-center text-slate-700">11</div>
-          <!-- 5/12 SKU02 시안 -->
-          <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-            <span>12</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500" title="SKU02 MD 검토"></span>
-          </div>
-          <div class="aspect-square grid place-items-center text-slate-700">13</div>
-          <div class="aspect-square grid place-items-center text-slate-700">14</div>
-          <div class="aspect-square grid place-items-center text-blue-500">15</div>
-          <!-- Week 4 -->
-          <div class="aspect-square grid place-items-center text-rose-500">16</div>
-          <div class="aspect-square grid place-items-center text-slate-700">17</div>
-          <div class="aspect-square grid place-items-center text-slate-700">18</div>
-          <div class="aspect-square grid place-items-center text-slate-700">19</div>
-          <!-- 5/20 SKU03 1차 시안 -->
-          <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-            <span>20</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500" title="SKU03 1차 시안"></span>
-          </div>
-          <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
-            <span>21</span>
-            <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-400" title="석가탄신일"></span>
-          </div>
-          <div class="aspect-square grid place-items-center text-blue-500">22</div>
-          <!-- Week 5 -->
-          <div class="aspect-square grid place-items-center text-rose-500">23</div>
-          <div class="aspect-square grid place-items-center text-slate-700">24</div>
-          <div class="aspect-square grid place-items-center text-slate-700">25</div>
-          <div class="aspect-square grid place-items-center text-slate-700">26</div>
-          <div class="aspect-square grid place-items-center text-slate-700">27</div>
-          <div class="aspect-square grid place-items-center text-slate-700">28</div>
-          <div class="aspect-square grid place-items-center text-blue-500">29</div>
-          <!-- Week 6 -->
-          <div class="aspect-square grid place-items-center text-rose-500">30</div>
-          <div class="aspect-square grid place-items-center text-slate-700">31</div>
-          <div class="aspect-square grid place-items-center text-slate-300">1</div>
-          <div class="aspect-square grid place-items-center text-slate-300">2</div>
-          <div class="aspect-square grid place-items-center text-slate-300">3</div>
-          <div class="aspect-square grid place-items-center text-slate-300">4</div>
-          <div class="aspect-square grid place-items-center text-slate-300">5</div>
-        </div>
-      </div>
-
-      <a href="#main" class="block px-3 py-2 hover:bg-slate-50 flex items-center gap-2 text-sm">
-        <span class="text-slate-400">▶</span> 오늘 할 일
-        <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
-      </a>
-      <a href="#main" class="block px-3 py-2 hover:bg-slate-50 flex items-center gap-2 text-sm">
-        <span class="text-slate-400">▶</span> 보낼 메시지
-        <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
-      </a>
-      <div class="border-t border-slate-100 my-1"></div>
-      <div class="px-3 py-1.5 text-[10px] uppercase tracking-wide text-slate-400">활성 프로젝트</div>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50">
-        <div class="flex items-center gap-2 text-sm">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span class="font-medium text-slate-800">SKU01 봄 운동화</span>
-          <span class="ml-auto text-[11px] text-slate-500 font-mono">67%</span>
-        </div>
-        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar" style="width:67%"></div></div>
-      </a>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50">
-        <div class="flex items-center gap-2 text-sm">
-          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-          <span class="font-medium text-slate-800">SKU02 여름 백팩</span>
-          <span class="ml-auto text-[11px] text-slate-500 font-mono">50%</span>
-        </div>
-        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar warn" style="width:50%"></div></div>
-      </a>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50">
-        <div class="flex items-center gap-2 text-sm">
-          <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-          <span class="font-medium text-slate-800">SKU03 비치웨어</span>
-          <span class="ml-auto text-[11px] text-rose-600 font-mono">17% ⚠</span>
-        </div>
-        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar danger" style="width:17%"></div></div>
-      </a>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50">
-        <div class="flex items-center gap-2 text-sm">
-          <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-          <span class="font-medium text-slate-800">SKU04 가을 코트</span>
-          <span class="ml-auto text-[11px] text-slate-500 font-mono">100%</span>
-        </div>
-        <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-slate-400" style="width:100%"></div></div>
-      </a>
-      <div class="border-t border-slate-100 my-1"></div>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50 text-sm text-slate-600">⟳ 지금 동기화</a>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50 text-sm text-slate-600">⚙ 설정</a>
-      <a href="#main" class="block px-3 py-1.5 hover:bg-slate-50 text-sm text-slate-600">× Designer Dashboard 종료</a>
+    <div class="mt-1.5 text-[10px] text-slate-500 flex items-center gap-1.5">
+      <span class="text-slate-700 font-medium" id="time-label">오전 9:14</span>
+      <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+      <span class="text-emerald-600 flex items-center gap-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>동기화 30초 전
+      </span>
     </div>
   </div>
-</section>
 
-<!-- 2. Main dashboard window -->
-<section id="main">
-  <div class="flex items-baseline gap-3 mb-4">
-    <h2 class="text-xl font-semibold text-slate-900">2. 메인 대시보드</h2>
-    <span class="text-xs text-slate-500">메뉴바 클릭 또는 ⌥+Space 단축키</span>
-  </div>
-  <div class="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
-    <!-- Window chrome -->
-    <div class="h-9 bg-slate-50 border-b border-slate-200 flex items-center px-3 gap-2">
-      <span class="w-3 h-3 rounded-full bg-rose-400"></span>
-      <span class="w-3 h-3 rounded-full bg-amber-400"></span>
-      <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
-      <div class="flex-1 text-center text-[11px] text-slate-500 font-medium">Designer Dashboard — 2026-05-03 (월)</div>
+  <!-- 오늘의 일정 -->
+  <div class="px-3 py-2 border-b border-slate-100">
+    <div class="flex items-center gap-2 mb-1.5">
+      <span class="text-[10px] uppercase tracking-wide text-slate-500 font-semibold">오늘의 일정</span>
+      <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-medium">3건</span>
     </div>
-    <!-- Toolbar -->
-    <div class="px-5 py-3 border-b border-slate-100 flex items-center gap-3">
-      <button class="text-slate-400 hover:text-slate-700">◀</button>
-      <span class="text-base font-semibold text-slate-900">2026-05-03 (월)</span>
-      <button class="text-slate-400 hover:text-slate-700">▶</button>
-      <span class="ml-3 text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">오늘</span>
-      <div class="ml-auto flex items-center gap-2 text-sm">
-        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>⟳</span>동기화</button>
-        <button onclick="openSearch()" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>🔍</span>검색<kbd class="ml-1 px-1 py-0 text-[10px] font-mono bg-slate-100 text-slate-500 rounded border border-slate-200">⌘K</kbd></button>
-        <button class="px-3 py-1.5 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-1.5"><span>⤴</span>공유</button>
+    <div class="space-y-1 text-[11px]">
+      <div class="flex items-center gap-1.5 text-slate-700">
+        <span class="font-mono text-[10px] text-slate-400 w-9">17:00</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+        <span class="truncate">SKU01 양산 발주서 마감</span>
       </div>
-    </div>
-
-    <!-- Color hierarchy legend -->
-    <details open class="border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-      <summary class="px-5 py-2 cursor-pointer flex items-center gap-2 text-[11px] text-slate-600 hover:bg-slate-50">
-        <span class="font-semibold text-slate-700">🎨 컬러 위계</span>
-        <span class="text-slate-400">— 채널과 우선순위가 색으로 구분됩니다</span>
-        <span class="ml-auto text-[10px] text-slate-400">접기 ▾</span>
-      </summary>
-      <div class="px-5 pb-3">
-        <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
-          <!-- Channel -->
-          <div>
-            <div class="font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5"><span>📡</span>채널 (메시지·파일 출처)</div>
-            <div class="flex gap-1.5 flex-wrap">
-              <span class="px-2 py-0.5 rounded bg-violet-100 text-violet-700 font-mono text-[10px]">Slack</span>
-              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-mono text-[10px]">Gmail</span>
-              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-700 font-mono text-[10px]">카톡</span>
-              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-mono text-[10px]">캘린더</span>
-              <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-mono text-[10px]">Notion</span>
-            </div>
-          </div>
-          <!-- Priority -->
-          <div class="border-l border-slate-200 pl-6">
-            <div class="font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5"><span>⚡</span>우선순위 (긴급도)</div>
-            <div class="flex gap-2 flex-wrap items-center text-[10px]">
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span class="text-rose-700 font-medium">긴급/D-day</span></span>
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span class="text-amber-700 font-medium">D-1·오늘</span></span>
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span><span class="text-blue-700 font-medium">이번주</span></span>
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span><span class="text-slate-600 font-medium">정상</span></span>
-              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-medium">완료</span></span>
-            </div>
-          </div>
-        </div>
-        <div class="mt-2 text-[10px] text-slate-400 italic">규칙: 좌측 점 = 우선순위 / 뱃지·로고 색 = 채널 / 진행률바 색 = 프로젝트 상태(완료=녹/지연=황/위험=적)</div>
+      <div class="flex items-center gap-1.5 text-slate-700">
+        <span class="font-mono text-[10px] text-slate-400 w-9">14:00</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+        <span class="truncate">MD 김** 미팅</span>
       </div>
-    </details>
-
-    <!-- 3-column dashboard -->
-    <div class="grid grid-cols-12 gap-0">
-      <!-- Left: Today -->
-      <aside class="col-span-3 border-r border-slate-100 p-4">
-        <div class="flex items-center gap-2 mb-3">
-          <h3 class="text-sm font-semibold text-slate-900">오늘 할 일</h3>
-          <span class="text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
-        </div>
-        <ul class="space-y-1 text-sm">
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-900">SKU01 양산 발주서 보내기</div>
-              <div class="text-[11px] text-slate-500">⚠ D-1 · 공장A</div>
-            </div>
-            <button class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-slate-700 text-xs">⋯</button>
-          </li>
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-900">SKU02 시안 v2 마감</div>
-              <div class="text-[11px] text-slate-500">오늘 · MD 김** 검토용</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-900">SKU03 QC 항목 점검</div>
-              <div class="text-[11px] text-slate-500">⚠ D+2 · 지연</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-900">MD 사이즈 컨펌 요청</div>
-              <div class="text-[11px] text-slate-500">SKU01 · 카톡</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-900">공장B 견적 회신</div>
-              <div class="text-[11px] text-slate-500">SKU04 · 메일</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" checked class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-400 line-through">아침 메일 정리</div>
-            </div>
-          </li>
-          <li class="flex items-start gap-2 p-2 rounded hover:bg-slate-50 group">
-            <input type="checkbox" class="mt-0.5">
-            <div class="flex-1">
-              <div class="text-slate-900">14:00 MD 미팅 준비</div>
-              <div class="text-[11px] text-slate-500">SKU02 시안 보드</div>
-            </div>
-          </li>
-        </ul>
-        <button class="mt-3 w-full py-2 text-xs text-slate-500 border border-dashed border-slate-300 rounded hover:bg-slate-50 hover:text-slate-700">+ 직접 추가</button>
-      </aside>
-      <!-- Center: Active projects -->
-      <section class="col-span-6 border-r border-slate-100 p-4 bg-slate-50/50">
-        <div class="flex items-center gap-2 mb-3">
-          <h3 class="text-sm font-semibold text-slate-900">활성 프로젝트</h3>
-          <span class="text-[11px] text-slate-500">4개</span>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <!-- Project A -->
-          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3">
-            <div class="flex items-start justify-between mb-2">
-              <div>
-                <div class="text-xs text-slate-400">SKU01</div>
-                <div class="text-sm font-semibold text-slate-900">봄 시즌 운동화</div>
-              </div>
-              <span class="text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">샘플 D-1</span>
-            </div>
-            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">67%</span></div>
-            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full progress-bar" style="width:67%"></div></div>
-            <div class="text-xs">
-              <div class="text-slate-700"><span class="text-slate-400">다음:</span> 양산 발주</div>
-              <div class="text-slate-500 mt-1">📌 AI: 도면에 사이즈 누락 — 발주 전 확인 필요</div>
-            </div>
-            <div class="mt-3 pt-2 border-t border-slate-100 flex gap-1.5 text-[11px]">
-              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">Slack 12</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">Mail 8</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">카톡 5</span>
-            </div>
-          </div>
-          <!-- Project B -->
-          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3">
-            <div class="flex items-start justify-between mb-2">
-              <div>
-                <div class="text-xs text-slate-400">SKU02</div>
-                <div class="text-sm font-semibold text-slate-900">여름 백팩</div>
-              </div>
-              <span class="text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">2차 시안</span>
-            </div>
-            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">50%</span></div>
-            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full progress-bar warn" style="width:50%"></div></div>
-            <div class="text-xs">
-              <div class="text-slate-700"><span class="text-slate-400">다음:</span> MD 시안 검토</div>
-              <div class="text-slate-500 mt-1">📌 AI: 색상 옵션 3가지 모두 패브릭 컨펌 완료</div>
-            </div>
-            <div class="mt-3 pt-2 border-t border-slate-100 flex gap-1.5 text-[11px]">
-              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">Slack 7</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-600">시안 v3</span>
-            </div>
-          </div>
-          <!-- Project C -->
-          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3">
-            <div class="flex items-start justify-between mb-2">
-              <div>
-                <div class="text-xs text-slate-400">SKU03</div>
-                <div class="text-sm font-semibold text-slate-900">비치웨어 라인</div>
-              </div>
-              <span class="text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">⚠ D+2 지연</span>
-            </div>
-            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">17%</span></div>
-            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full progress-bar danger" style="width:17%"></div></div>
-            <div class="text-xs">
-              <div class="text-slate-700"><span class="text-slate-400">다음:</span> 1차 시안 마감</div>
-              <div class="text-rose-600 mt-1">📌 AI: 공장에서 24h 응답 없음 — 컨택 추천</div>
-            </div>
-          </div>
-          <!-- Project D -->
-          <div class="card-hover bg-white rounded-lg border border-slate-200 p-3 opacity-70">
-            <div class="flex items-start justify-between mb-2">
-              <div>
-                <div class="text-xs text-slate-400">SKU04</div>
-                <div class="text-sm font-semibold text-slate-900">가을 트렌치 코트</div>
-              </div>
-              <span class="text-[11px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">✓ 출고 완료</span>
-            </div>
-            <div class="text-[11px] text-slate-500 mb-1.5 flex justify-between"><span>진행률</span><span class="font-mono">100%</span></div>
-            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full bg-emerald-500" style="width:100%"></div></div>
-            <div class="text-xs text-slate-500">2026-04-25 출고됨</div>
-          </div>
-        </div>
-        <button class="mt-3 w-full py-2 text-xs text-slate-500 border border-dashed border-slate-300 rounded hover:bg-slate-50 hover:text-slate-700">+ 프로젝트 추가</button>
-      </section>
-      <!-- Right: Send drafts -->
-      <aside class="col-span-3 p-4">
-        <div class="flex items-center gap-2 mb-3">
-          <h3 class="text-sm font-semibold text-slate-900">보낼 메시지</h3>
-          <span class="text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
-          <span class="ml-auto text-[10px] text-slate-400">AI 초안</span>
-        </div>
-        <div class="space-y-3">
-          <!-- Draft 1 -->
-          <article class="card-hover bg-white rounded-lg border border-slate-200 overflow-hidden">
-            <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
-              <span class="text-[10px] text-slate-500">→ Slack #factory-A</span>
-              <span class="ml-auto text-[10px] text-slate-400">SKU01</span>
-            </div>
-            <div class="p-3 text-xs text-slate-700 leading-relaxed">
-              <p class="font-medium text-slate-900 mb-1">사장님, 안녕하세요.</p>
-              <p>SKU01 양산 D-1 리마인드 드립니다. 도면에서 사이즈 표기 누락 건 확인 부탁드리고, 발주서는 오늘 17시까지 회신 주시면 감사하겠습니다.</p>
-            </div>
-            <div class="px-3 py-2 bg-amber-50 border-t border-amber-100 text-[10px] text-amber-800">
-              ✓ 수신: 김사장 (공장A) · 다른 프로젝트 1건 · 수신자 시간 09:14
-            </div>
-            <div class="px-3 py-2 flex gap-1.5">
-              <button class="flex-1 px-2 py-1.5 text-xs rounded bg-indigo-600 text-white hover:bg-indigo-700">발송</button>
-              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">수정</button>
-              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">무시</button>
-            </div>
-          </article>
-          <!-- Draft 2 -->
-          <article class="card-hover bg-white rounded-lg border border-slate-200 overflow-hidden">
-            <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
-              <span class="text-[10px] text-slate-500">→ Slack DM @md_kim</span>
-              <span class="ml-auto text-[10px] text-slate-400">SKU01</span>
-            </div>
-            <div class="p-3 text-xs text-slate-700 leading-relaxed">
-              <p class="font-medium text-slate-900 mb-1">MD 김** 님</p>
-              <p>SKU01 사이즈 컨펌 한 번만 더 부탁드릴게요. 어제 카톡 주신 230 사이즈 라인이 도면 반영됐는지 확인이 필요합니다.</p>
-            </div>
-            <div class="px-3 py-2 bg-amber-50 border-t border-amber-100 text-[10px] text-amber-800">
-              ✓ 수신: 김MD (내부) · 존댓말
-            </div>
-            <div class="px-3 py-2 flex gap-1.5">
-              <button class="flex-1 px-2 py-1.5 text-xs rounded bg-indigo-600 text-white hover:bg-indigo-700">발송</button>
-              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">수정</button>
-              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">무시</button>
-            </div>
-          </article>
-          <!-- Draft 3 (English / factory) -->
-          <article class="card-hover bg-white rounded-lg border border-slate-200 overflow-hidden">
-            <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex items-center gap-2">
-              <span class="text-[10px] text-slate-500">→ Gmail · linh@vnfactory</span>
-              <span class="ml-auto text-[10px] text-slate-400">SKU03</span>
-            </div>
-            <div class="p-3 text-xs text-slate-700 leading-relaxed">
-              <p class="font-medium text-slate-900 mb-1">Hi Linh,</p>
-              <p>Following up on the beachwear sample timeline. Could you confirm whether the fabric arrived this week? Our launch is at risk if it slips past May 10.</p>
-            </div>
-            <div class="px-3 py-2 bg-amber-50 border-t border-amber-100 text-[10px] text-amber-800">
-              ✓ 수신: Linh (VN factory) · 영문 자동 · 수신자 시간 07:14 ⚠
-            </div>
-            <div class="px-3 py-2 flex gap-1.5">
-              <button class="flex-1 px-2 py-1.5 text-xs rounded bg-indigo-600 text-white hover:bg-indigo-700">발송</button>
-              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">수정</button>
-              <button class="px-2 py-1.5 text-xs rounded border border-slate-200 hover:bg-slate-50">무시</button>
-            </div>
-          </article>
-        </div>
-        <button class="mt-3 w-full py-2 text-xs text-slate-500 border border-dashed border-slate-300 rounded hover:bg-slate-50 hover:text-slate-700">+ 직접 작성</button>
-      </aside>
-    </div>
-    <!-- Activity timeline -->
-    <div class="border-t border-slate-100 px-5 py-4">
-      <div class="flex items-center gap-2 mb-3">
-        <h3 class="text-sm font-semibold text-slate-900">최근 활동</h3>
-        <span class="text-[11px] text-slate-500">통합 타임라인</span>
-        <div class="ml-auto flex gap-1 text-[11px]">
-          <button class="px-2 py-0.5 rounded bg-slate-900 text-white">전체</button>
-          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">Slack</button>
-          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">Gmail</button>
-          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">카톡</button>
-          <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100">Notion</button>
-        </div>
-      </div>
-      <ul class="space-y-1.5 text-xs">
-        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
-          <span class="px-1.5 py-0.5 text-[10px] rounded bg-violet-100 text-violet-700 font-mono">Slack</span>
-          <span class="text-slate-700">#factory-A · 파일 업로드</span>
-          <span class="text-slate-400">SKU01_v3.psd</span>
-          <span class="ml-auto text-slate-400">2분 전</span>
-        </li>
-        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
-          <span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-100 text-amber-700 font-mono">카톡</span>
-          <span class="text-slate-700">MD 김** · "사이즈 OK"</span>
-          <span class="text-emerald-600">→ 노션 SKU01 반영됨</span>
-          <span class="ml-auto text-slate-400">15분 전</span>
-        </li>
-        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
-          <span class="px-1.5 py-0.5 text-[10px] rounded bg-rose-100 text-rose-700 font-mono">Gmail</span>
-          <span class="text-slate-700">공장B 견적서 도착</span>
-          <span class="text-slate-400">→ SKU04 견적</span>
-          <span class="ml-auto text-slate-400">1시간 전</span>
-        </li>
-        <li class="flex items-center gap-2 py-1.5 border-b border-slate-50">
-          <span class="px-1.5 py-0.5 text-[10px] rounded bg-blue-100 text-blue-700 font-mono">캘린더</span>
-          <span class="text-slate-700">14:00 MD 미팅</span>
-          <span class="text-slate-400">SKU02 시안 검토</span>
-          <span class="ml-auto text-slate-400">오늘</span>
-        </li>
-        <li class="flex items-center gap-2 py-1.5">
-          <span class="px-1.5 py-0.5 text-[10px] rounded bg-slate-200 text-slate-700 font-mono">Notion</span>
-          <span class="text-slate-700">SKU01 마일스톤 갱신</span>
-          <span class="text-slate-400">샘플 도착 → ☑</span>
-          <span class="ml-auto text-slate-400">2시간 전</span>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Month-view calendar (all projects timeline) -->
-    <div class="border-t border-slate-100 px-5 py-4">
-      <div class="flex items-center gap-3 mb-3">
-        <h3 class="text-sm font-semibold text-slate-900">월간 타임라인</h3>
-        <span class="text-[11px] text-slate-500">모든 프로젝트 일정 한눈에</span>
-        <div class="ml-auto flex items-center gap-1 text-xs">
-          <button class="text-slate-400 hover:text-slate-700 px-1">◀</button>
-          <span class="font-semibold text-slate-700 px-2">2026년 5월</span>
-          <button class="text-slate-400 hover:text-slate-700 px-1">▶</button>
-          <div class="ml-3 flex gap-1">
-            <button class="px-2 py-0.5 rounded bg-slate-900 text-white text-[11px]">월</button>
-            <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100 text-[11px]">주</button>
-            <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100 text-[11px]">분기</button>
-          </div>
-          <div class="ml-3 flex items-center gap-2 text-[10px] text-slate-500">
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-indigo-500"></span>SKU01</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-amber-500"></span>SKU02</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-rose-500"></span>SKU03</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-emerald-500"></span>SKU04</span>
-          </div>
-        </div>
-      </div>
-      <div class="border border-slate-200 rounded-lg overflow-hidden">
-        <!-- Day headers -->
-        <div class="grid grid-cols-7 bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-center">
-          <div class="py-2 text-rose-500">일</div>
-          <div class="py-2 text-slate-700">월</div>
-          <div class="py-2 text-slate-700">화</div>
-          <div class="py-2 text-slate-700">수</div>
-          <div class="py-2 text-slate-700">목</div>
-          <div class="py-2 text-slate-700">금</div>
-          <div class="py-2 text-blue-500">토</div>
-        </div>
-        <!-- Week 1 -->
-        <div class="grid grid-cols-7 border-b border-slate-100">
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">25</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">26</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">27</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">28</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">29</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">30</div></div>
-          <div class="min-h-[80px] p-1.5">
-            <div class="text-[11px] text-rose-500 font-medium">1</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 truncate">근로자의 날</div>
-          </div>
-        </div>
-        <!-- Week 2 (TODAY row) -->
-        <div class="grid grid-cols-7 border-b border-slate-100">
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">2</div></div>
-          <!-- TODAY 5/3 -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-indigo-50">
-            <div class="flex items-center gap-1">
-              <span class="w-5 h-5 rounded-full bg-indigo-600 text-white text-[10px] grid place-items-center font-bold">3</span>
-              <span class="text-[10px] text-indigo-700 font-semibold">오늘</span>
-            </div>
-            <div class="mt-1 space-y-0.5">
-              <div class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">17:00 SKU01 발주서</div>
-              <div class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 truncate">14:00 MD 미팅</div>
-              <div class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 truncate">SKU02 시안 v2</div>
-            </div>
-          </div>
-          <!-- 5/4 SKU01 컨펌 -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-slate-700 font-medium">4</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 컨펌 ⚠</div>
-          </div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">5</div></div>
-          <!-- 5/6 양산 발주 -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-slate-700 font-medium">6</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 양산 발주</div>
-          </div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">7</div></div>
-          <!-- 5/8 양산 시작 -->
-          <div class="min-h-[80px] p-1.5">
-            <div class="text-[11px] text-blue-500 font-medium">8</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 양산 시작</div>
-          </div>
-        </div>
-        <!-- Week 3 -->
-        <div class="grid grid-cols-7 border-b border-slate-100">
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">9</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">10</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">11</div></div>
-          <!-- 5/12 MD 검토 -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-slate-700 font-medium">12</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 truncate">SKU02 MD 검토</div>
-          </div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">13</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">14</div></div>
-          <!-- 5/15 SKU02 샘플 도착 -->
-          <div class="min-h-[80px] p-1.5">
-            <div class="text-[11px] text-blue-500 font-medium">15</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 truncate">SKU02 샘플 도착</div>
-          </div>
-        </div>
-        <!-- Week 4 -->
-        <div class="grid grid-cols-7 border-b border-slate-100">
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">16</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">17</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">18</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">19</div></div>
-          <!-- 5/20 SKU03 1차 시안 -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-slate-700 font-medium">20</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 truncate">SKU03 1차 시안</div>
-          </div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-rose-500 font-medium">21</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 truncate">석가탄신일</div>
-          </div>
-          <div class="min-h-[80px] p-1.5"><div class="text-[11px] text-blue-500">22</div></div>
-        </div>
-        <!-- Week 5 -->
-        <div class="grid grid-cols-7 border-b border-slate-100">
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">23</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">24</div></div>
-          <!-- 5/25 SKU01 QC -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-slate-700 font-medium">25</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 QC 점검</div>
-          </div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">26</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">27</div></div>
-          <!-- 5/28 SKU03 2차 시안 -->
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
-            <div class="text-[11px] text-slate-700 font-medium">28</div>
-            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 truncate">SKU03 2차 시안</div>
-          </div>
-          <div class="min-h-[80px] p-1.5"><div class="text-[11px] text-blue-500">29</div></div>
-        </div>
-        <!-- Week 6 -->
-        <div class="grid grid-cols-7">
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">30</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">31</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">1</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">2</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">3</div></div>
-          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">4</div></div>
-          <div class="min-h-[80px] p-1.5 bg-slate-50/50"><div class="text-[11px] text-slate-300">5</div></div>
-        </div>
+      <div class="flex items-center gap-1.5 text-slate-700">
+        <span class="font-mono text-[10px] text-slate-400 w-9">종일</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+        <span class="truncate">SKU02 시안 v2 마감</span>
       </div>
     </div>
   </div>
-</section>
 
-<!-- 3. Project detail -->
-<section id="project">
-  <div class="flex items-baseline gap-3 mb-4">
-    <h2 class="text-xl font-semibold text-slate-900">3. 프로젝트 상세</h2>
-    <span class="text-xs text-slate-500">활성 프로젝트 카드 클릭 시</span>
-  </div>
-  <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-    <div class="px-6 py-4 border-b border-slate-100 flex items-center gap-3">
-      <button class="text-slate-400 hover:text-slate-700 text-sm">← 대시보드</button>
-      <div class="ml-2">
-        <div class="text-xs text-slate-400">SKU01</div>
-        <h3 class="text-lg font-semibold text-slate-900">봄 시즌 운동화</h3>
-      </div>
-      <span class="ml-3 text-[11px] px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">샘플 D-1</span>
-      <div class="ml-auto flex gap-2 text-sm">
-        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700">노션 열기 ↗</button>
-        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700">공유 링크 복사</button>
-      </div>
+  <!-- 미니 월간 캘린더 -->
+  <div class="px-2 py-2 border-b border-slate-100">
+    <div class="flex items-center justify-between mb-1 px-1">
+      <button class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">‹</button>
+      <span class="text-[11px] font-semibold text-slate-700">2026년 5월</span>
+      <button class="text-slate-400 hover:text-slate-700 text-sm leading-none w-5 h-5 grid place-items-center">›</button>
     </div>
-    <div class="grid grid-cols-12 gap-0">
-      <!-- Milestones -->
-      <div class="col-span-5 p-5 border-r border-slate-100">
-        <div class="flex items-center gap-2 mb-3">
-          <h4 class="text-sm font-semibold text-slate-900">마일스톤</h4>
-          <span class="text-[11px] text-slate-500">6 / 12 완료</span>
-          <span class="ml-auto text-sm font-mono text-slate-700">67%</span>
-        </div>
-        <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-4"><div class="h-full progress-bar" style="width:67%"></div></div>
-        <ol class="space-y-1.5 text-sm">
-          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">기획</span><span class="text-[11px] text-slate-400">04-01</span></li>
-          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">1차 시안</span><span class="text-[11px] text-slate-400">04-08</span></li>
-          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">1차 피드백</span><span class="text-[11px] text-slate-400">04-12</span></li>
-          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">2차/확정</span><span class="text-[11px] text-slate-400">04-18</span></li>
-          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">샘플 발주</span><span class="text-[11px] text-slate-400">04-22</span></li>
-          <li class="flex items-center gap-2"><span class="text-emerald-500">☑</span><span class="flex-1 text-slate-500 line-through">샘플 도착</span><span class="text-[11px] text-slate-400">04-29</span></li>
-          <li class="flex items-center gap-2 bg-rose-50 -mx-2 px-2 py-1 rounded">
-            <span class="text-slate-300">☐</span>
-            <span class="flex-1 text-slate-900 font-medium">컨펌</span>
-            <span class="text-[11px] text-rose-700 font-medium">D-1 · 05-04</span>
-          </li>
-          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">양산 발주</span><span class="text-[11px] text-slate-400">05-06</span></li>
-          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">양산 진행</span><span class="text-[11px] text-slate-400">05-08~</span></li>
-          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">QC/QA</span><span class="text-[11px] text-slate-400">—</span></li>
-          <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">출고/입고</span><span class="text-[11px] text-slate-400">예정 06-10</span></li>
-        </ol>
+    <div class="grid grid-cols-7 text-[9px] text-center font-medium">
+      <div class="text-rose-400 py-1">일</div>
+      <div class="text-slate-500 py-1">월</div>
+      <div class="text-slate-500 py-1">화</div>
+      <div class="text-slate-500 py-1">수</div>
+      <div class="text-slate-500 py-1">목</div>
+      <div class="text-slate-500 py-1">금</div>
+      <div class="text-blue-400 py-1">토</div>
+    </div>
+    <div class="grid grid-cols-7 text-[10px] text-center">
+      <div class="aspect-square grid place-items-center text-slate-300">25</div>
+      <div class="aspect-square grid place-items-center text-slate-300">26</div>
+      <div class="aspect-square grid place-items-center text-slate-300">27</div>
+      <div class="aspect-square grid place-items-center text-slate-300">28</div>
+      <div class="aspect-square grid place-items-center text-slate-300">29</div>
+      <div class="aspect-square grid place-items-center text-slate-300">30</div>
+      <div class="aspect-square relative grid place-items-center text-rose-500 font-medium">
+        <span>1</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-300"></span>
       </div>
-      <!-- Per-project Notion-style calendar + Channel activity + Assets -->
-      <div class="col-span-7 p-5 space-y-5">
-
-        <!-- SKU01 전용 노션 캘린더 -->
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <h4 class="text-sm font-semibold text-slate-900">프로젝트 캘린더</h4>
-            <span class="text-[11px] text-slate-500">SKU01 전용 · 노션 동기화</span>
-            <div class="ml-auto flex items-center gap-1 text-xs">
-              <button class="text-slate-400 hover:text-slate-700 px-1">◀</button>
-              <span class="font-medium text-slate-700 px-1">2026년 5월</span>
-              <button class="text-slate-400 hover:text-slate-700 px-1">▶</button>
-            </div>
-          </div>
-          <div class="flex items-center gap-3 mb-2 text-[10px] text-slate-500">
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-indigo-500"></span>마일스톤</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-rose-400"></span>마감/D-day</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded border border-slate-400 bg-white"></span>태스크</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-blue-400"></span>미팅</span>
-          </div>
-          <div class="border border-slate-200 rounded overflow-hidden">
-            <div class="grid grid-cols-7 bg-slate-50 border-b border-slate-200 text-[10px] text-center font-semibold">
-              <div class="py-1.5 text-rose-500">일</div>
-              <div class="py-1.5 text-slate-700">월</div>
-              <div class="py-1.5 text-slate-700">화</div>
-              <div class="py-1.5 text-slate-700">수</div>
-              <div class="py-1.5 text-slate-700">목</div>
-              <div class="py-1.5 text-slate-700">금</div>
-              <div class="py-1.5 text-blue-500">토</div>
-            </div>
-            <!-- Week 1 -->
-            <div class="grid grid-cols-7 border-b border-slate-100">
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">25</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">26</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">27</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">28</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">29</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">30</div></div>
-              <div class="min-h-[58px] p-1"><div class="text-[10px] text-rose-500">1</div></div>
-            </div>
-            <!-- Week 2 (TODAY row) -->
-            <div class="grid grid-cols-7 border-b border-slate-100">
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">2</div></div>
-              <!-- TODAY 5/3 -->
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-indigo-50">
-                <div class="flex items-center gap-1">
-                  <span class="w-4 h-4 rounded-full bg-indigo-600 text-white text-[9px] grid place-items-center font-bold">3</span>
-                </div>
-                <div class="mt-0.5 space-y-0.5">
-                  <div class="text-[9px] px-1 py-0.5 rounded border border-rose-300 bg-white text-rose-700 truncate">17:00 발주서</div>
-                  <div class="text-[9px] px-1 py-0.5 rounded bg-blue-100 text-blue-700 truncate">14:00 MD</div>
-                </div>
-              </div>
-              <!-- 5/4 컨펌 -->
-              <div class="min-h-[58px] p-1 border-r border-slate-100">
-                <div class="text-[10px] text-slate-700 font-medium">4</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-rose-500 text-white truncate">⚠ 컨펌 D-day</div>
-              </div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">5</div></div>
-              <!-- 5/6 양산 발주 -->
-              <div class="min-h-[58px] p-1 border-r border-slate-100">
-                <div class="text-[10px] text-slate-700 font-medium">6</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">양산 발주</div>
-              </div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">7</div></div>
-              <!-- 5/8 양산 시작 -->
-              <div class="min-h-[58px] p-1">
-                <div class="text-[10px] text-blue-500 font-medium">8</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">양산 시작</div>
-              </div>
-            </div>
-            <!-- Week 3 -->
-            <div class="grid grid-cols-7 border-b border-slate-100">
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">9</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">10</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">11</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">12</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">13</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">14</div></div>
-              <!-- 5/15 QC 시작 -->
-              <div class="min-h-[58px] p-1">
-                <div class="text-[10px] text-blue-500 font-medium">15</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded border border-slate-300 bg-white text-slate-700 truncate">QC 준비</div>
-              </div>
-            </div>
-            <!-- Week 4 -->
-            <div class="grid grid-cols-7 border-b border-slate-100">
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">16</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">17</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">18</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">19</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">20</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100">
-                <div class="text-[10px] text-rose-500">21</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-rose-50 text-rose-700 truncate">석가탄신일</div>
-              </div>
-              <div class="min-h-[58px] p-1"><div class="text-[10px] text-blue-500">22</div></div>
-            </div>
-            <!-- Week 5 -->
-            <div class="grid grid-cols-7 border-b border-slate-100">
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">23</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">24</div></div>
-              <!-- 5/25 QC 점검 -->
-              <div class="min-h-[58px] p-1 border-r border-slate-100">
-                <div class="text-[10px] text-slate-700 font-medium">25</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">QC 점검</div>
-              </div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">26</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">27</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">28</div></div>
-              <div class="min-h-[58px] p-1"><div class="text-[10px] text-blue-500">29</div></div>
-            </div>
-            <!-- Week 6 -->
-            <div class="grid grid-cols-7">
-              <div class="min-h-[58px] p-1 border-r border-slate-100">
-                <div class="text-[10px] text-rose-500">30</div>
-                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">양산 완료</div>
-              </div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">31</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">1</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">2</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">3</div></div>
-              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">4</div></div>
-              <div class="min-h-[58px] p-1 bg-slate-50/50">
-                <div class="text-[10px] text-slate-300">5</div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-2 px-2 py-1.5 bg-amber-50 border border-amber-200 rounded text-[10px] text-amber-800">
-            ⓘ 6/10 출고 예정 — 다음 달 보기에서 확인
-          </div>
-        </div>
-
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <h4 class="text-sm font-semibold text-slate-900">채널 활동</h4>
-            <span class="text-[11px] text-slate-500">이 프로젝트 관련 모든 채널</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="p-3 rounded border border-slate-200">
-              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-violet-100 text-violet-700 font-mono">Slack</span><span class="font-medium text-slate-900">#factory-A</span></div>
-              <div class="text-slate-500">12개 메시지 · 4개 첨부</div>
-            </div>
-            <div class="p-3 rounded border border-slate-200">
-              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-rose-100 text-rose-700 font-mono">Gmail</span><span class="font-medium text-slate-900">8개 메일</span></div>
-              <div class="text-slate-500">최근: 공장 견적서</div>
-            </div>
-            <div class="p-3 rounded border border-slate-200">
-              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-100 text-amber-700 font-mono">카톡</span><span class="font-medium text-slate-900">MD와 5개</span></div>
-              <div class="text-slate-500">.txt import 2회</div>
-            </div>
-            <div class="p-3 rounded border border-slate-200">
-              <div class="flex items-center gap-2 mb-1"><span class="px-1.5 py-0.5 text-[10px] rounded bg-slate-200 text-slate-700 font-mono">Notion</span><span class="font-medium text-slate-900">페이지 1건</span></div>
-              <div class="text-slate-500">갱신 30초 전</div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <h4 class="text-sm font-semibold text-slate-900">시안 자료</h4>
-            <span class="text-[11px] text-slate-500">Slack 자동 인지 · 카테고리별 분류</span>
-          </div>
-
-          <!-- 1. 시안 -->
-          <div class="mb-3">
-            <div class="flex items-center gap-2 mb-1.5">
-              <span class="w-5 h-5 rounded bg-indigo-100 grid place-items-center text-[10px] font-bold text-indigo-700">1</span>
-              <span class="text-xs font-semibold text-slate-700">시안</span>
-              <span class="text-[10px] text-slate-400">디자이너 작업물 · .psd / .ai</span>
-              <span class="ml-auto text-[10px] text-slate-400">3건</span>
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-              <div class="rounded border border-slate-200 overflow-hidden">
-                <div class="aspect-square bg-gradient-to-br from-slate-200 to-slate-300 grid place-items-center text-slate-400 text-[10px]">시안 v1</div>
-                <div class="px-2 py-1.5 text-[11px]">
-                  <div class="font-medium text-slate-700 truncate">SKU01_design_v1.psd</div>
-                  <div class="text-slate-400">04-08</div>
-                </div>
-              </div>
-              <div class="rounded border border-slate-200 overflow-hidden">
-                <div class="aspect-square bg-gradient-to-br from-indigo-200 to-violet-300 grid place-items-center text-white text-[10px]">시안 v2</div>
-                <div class="px-2 py-1.5 text-[11px]">
-                  <div class="font-medium text-slate-700 truncate">SKU01_design_v2.psd</div>
-                  <div class="text-slate-400">04-15</div>
-                </div>
-              </div>
-              <div class="rounded border-2 border-emerald-400 overflow-hidden ring-2 ring-emerald-100">
-                <div class="aspect-square bg-gradient-to-br from-emerald-200 to-emerald-400 grid place-items-center text-white text-[10px]">시안 v3 ⭐</div>
-                <div class="px-2 py-1.5 text-[11px]">
-                  <div class="font-medium text-slate-900 truncate">SKU01_design_v3.psd</div>
-                  <div class="text-emerald-600">방금</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2. n차 샘플사진 -->
-          <div class="mb-3">
-            <div class="flex items-center gap-2 mb-1.5">
-              <span class="w-5 h-5 rounded bg-amber-100 grid place-items-center text-[10px] font-bold text-amber-700">2</span>
-              <span class="text-xs font-semibold text-slate-700">n차 샘플 사진</span>
-              <span class="text-[10px] text-slate-400">공장 회신 · .jpg / .png</span>
-              <span class="ml-auto text-[10px] text-slate-400">2건</span>
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-              <div class="rounded border border-slate-200 overflow-hidden">
-                <div class="aspect-square bg-gradient-to-br from-amber-100 to-orange-200 grid place-items-center text-amber-700 text-[10px]">📷 1차 샘플</div>
-                <div class="px-2 py-1.5 text-[11px]">
-                  <div class="font-medium text-slate-700 truncate">SKU01_sample1_front.jpg</div>
-                  <div class="text-slate-400">04-29 · 공장A</div>
-                </div>
-              </div>
-              <div class="rounded border border-slate-200 overflow-hidden">
-                <div class="aspect-square bg-gradient-to-br from-amber-100 to-orange-200 grid place-items-center text-amber-700 text-[10px]">📷 1차 샘플</div>
-                <div class="px-2 py-1.5 text-[11px]">
-                  <div class="font-medium text-slate-700 truncate">SKU01_sample1_side.jpg</div>
-                  <div class="text-slate-400">04-29 · 공장A</div>
-                </div>
-              </div>
-              <div class="rounded border-2 border-dashed border-slate-300 overflow-hidden grid place-items-center">
-                <div class="text-center px-2 py-4 text-[10px] text-slate-400">
-                  <div class="text-lg">＋</div>
-                  <div>2차 샘플<br>대기 중</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. n차 수정 사양서 -->
-          <div>
-            <div class="flex items-center gap-2 mb-1.5">
-              <span class="w-5 h-5 rounded bg-rose-100 grid place-items-center text-[10px] font-bold text-rose-700">3</span>
-              <span class="text-xs font-semibold text-slate-700">n차 수정 사양서</span>
-              <span class="text-[10px] text-slate-400">도면·치수 · .pdf / .xlsx</span>
-              <span class="ml-auto text-[10px] text-slate-400">2건</span>
-            </div>
-            <div class="space-y-1.5">
-              <div class="flex items-center gap-2 p-2 rounded border border-slate-200 hover:bg-slate-50">
-                <span class="w-8 h-8 rounded bg-rose-50 grid place-items-center text-rose-600 text-xs font-mono">PDF</span>
-                <div class="flex-1 min-w-0">
-                  <div class="text-xs font-medium text-slate-800 truncate">SKU01_spec_r1.pdf — 1차 수정 (사이즈·소재 변경)</div>
-                  <div class="text-[10px] text-slate-400">04-12 · MD 김** 코멘트 7건 반영</div>
-                </div>
-                <span class="text-[10px] text-slate-400">↓</span>
-              </div>
-              <div class="flex items-center gap-2 p-2 rounded border-2 border-emerald-300 bg-emerald-50/50">
-                <span class="w-8 h-8 rounded bg-emerald-100 grid place-items-center text-emerald-700 text-xs font-mono">XLSX</span>
-                <div class="flex-1 min-w-0">
-                  <div class="text-xs font-medium text-slate-900 truncate">SKU01_spec_r2.xlsx ⭐ — 2차 수정 (확정안)</div>
-                  <div class="text-[10px] text-emerald-700">04-18 · 양산 발주용 · 도면 사이즈 누락 의심 ⚠</div>
-                </div>
-                <span class="text-[10px] text-slate-400">↓</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <h4 class="text-sm font-semibold text-slate-900">AI 인사이트</h4>
-            <span class="text-[11px] text-slate-500">참고용 · 점수 미반영</span>
-          </div>
-          <ul class="space-y-1.5 text-xs text-slate-600">
-            <li class="flex gap-2"><span class="text-violet-500">📌</span>1차 → 2차 사이클이 평균보다 2일 짧았음</li>
-            <li class="flex gap-2"><span class="text-violet-500">📌</span>공장A 응답 시간 평균 4시간, 양산 5일 후 시작 적정</li>
-            <li class="flex gap-2"><span class="text-rose-500">⚠</span>도면에 사이즈 누락 의심 — MD 컨펌 권장</li>
-          </ul>
-        </div>
+      <div class="aspect-square relative grid place-items-center text-rose-500">2</div>
+      <div class="aspect-square relative grid place-items-center">
+        <span class="absolute inset-1 rounded-full bg-indigo-600"></span>
+        <span class="relative text-white font-bold">3</span>
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-[2px]">
+          <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
+          <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
+          <span class="w-[3px] h-[3px] rounded-full bg-white"></span>
+        </span>
       </div>
+      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
+        <span>4</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500"></span>
+      </div>
+      <div class="aspect-square relative grid place-items-center text-slate-700">5</div>
+      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
+        <span>6</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500"></span>
+      </div>
+      <div class="aspect-square relative grid place-items-center text-slate-700">7</div>
+      <div class="aspect-square relative grid place-items-center text-blue-500 font-medium">
+        <span>8</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-500"></span>
+      </div>
+      <div class="aspect-square grid place-items-center text-rose-500">9</div>
+      <div class="aspect-square grid place-items-center text-slate-700">10</div>
+      <div class="aspect-square grid place-items-center text-slate-700">11</div>
+      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
+        <span>12</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-amber-500"></span>
+      </div>
+      <div class="aspect-square grid place-items-center text-slate-700">13</div>
+      <div class="aspect-square grid place-items-center text-slate-700">14</div>
+      <div class="aspect-square grid place-items-center text-blue-500">15</div>
+      <div class="aspect-square grid place-items-center text-rose-500">16</div>
+      <div class="aspect-square grid place-items-center text-slate-700">17</div>
+      <div class="aspect-square grid place-items-center text-slate-700">18</div>
+      <div class="aspect-square grid place-items-center text-slate-700">19</div>
+      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
+        <span>20</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-500"></span>
+      </div>
+      <div class="aspect-square relative grid place-items-center text-slate-700 font-medium">
+        <span>21</span>
+        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-rose-400"></span>
+      </div>
+      <div class="aspect-square grid place-items-center text-blue-500">22</div>
+      <div class="aspect-square grid place-items-center text-rose-500">23</div>
+      <div class="aspect-square grid place-items-center text-slate-700">24</div>
+      <div class="aspect-square grid place-items-center text-slate-700">25</div>
+      <div class="aspect-square grid place-items-center text-slate-700">26</div>
+      <div class="aspect-square grid place-items-center text-slate-700">27</div>
+      <div class="aspect-square grid place-items-center text-slate-700">28</div>
+      <div class="aspect-square grid place-items-center text-blue-500">29</div>
+      <div class="aspect-square grid place-items-center text-rose-500">30</div>
+      <div class="aspect-square grid place-items-center text-slate-700">31</div>
+      <div class="aspect-square grid place-items-center text-slate-300">1</div>
+      <div class="aspect-square grid place-items-center text-slate-300">2</div>
+      <div class="aspect-square grid place-items-center text-slate-300">3</div>
+      <div class="aspect-square grid place-items-center text-slate-300">4</div>
+      <div class="aspect-square grid place-items-center text-slate-300">5</div>
     </div>
   </div>
-</section>
 
-<!-- 4. Share page -->
-<section id="share">
-  <div class="flex items-baseline gap-3 mb-4">
-    <h2 class="text-xl font-semibold text-slate-900">4. 공유 페이지 (외부용)</h2>
-    <span class="text-xs text-slate-500">designer-dashboard.workers.dev/p/sku01/abc123</span>
-    <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 ml-2">메시지 본문 미노출</span>
-  </div>
-  <div class="max-w-md mx-auto rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-    <div class="bg-gradient-to-r from-indigo-500 to-violet-600 px-5 py-4 text-white">
-      <div class="text-xs opacity-80">SKU01</div>
-      <h3 class="text-lg font-semibold">봄 시즌 운동화</h3>
-      <div class="text-xs opacity-80 mt-1">공유: 이** 디자이너</div>
-    </div>
-    <div class="p-5 space-y-4">
-      <div>
-        <div class="flex justify-between text-xs text-slate-500 mb-1.5"><span>진행률</span><span class="font-mono">67%</span></div>
-        <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar" style="width:67%"></div></div>
-      </div>
-      <div class="bg-slate-50 rounded p-3">
-        <div class="text-[11px] text-slate-500 mb-1">다음 단계</div>
-        <div class="text-sm font-semibold text-slate-900">컨펌 (D-1)</div>
-      </div>
-      <div>
-        <div class="text-xs text-slate-500 mb-2">예정 일정</div>
-        <ul class="text-sm space-y-1.5">
-          <li class="flex justify-between"><span class="text-slate-700">컨펌</span><span class="font-mono text-rose-700">05-04</span></li>
-          <li class="flex justify-between"><span class="text-slate-700">양산 발주</span><span class="font-mono text-slate-500">05-06</span></li>
-          <li class="flex justify-between"><span class="text-slate-700">양산 시작</span><span class="font-mono text-slate-500">05-15</span></li>
-          <li class="flex justify-between"><span class="text-slate-700">출고 예정</span><span class="font-mono text-slate-500">06-10</span></li>
-        </ul>
-      </div>
-      <div>
-        <div class="text-xs text-slate-500 mb-2">최근 업데이트</div>
-        <ul class="text-xs space-y-1.5 text-slate-600">
-          <li>• 5/3  샘플 v3 업로드</li>
-          <li>• 5/2  사이즈 컨펌</li>
-          <li>• 4/29 샘플 도착</li>
-        </ul>
-      </div>
-      <div class="border-t border-slate-100 pt-3 text-[11px] text-slate-400 flex justify-between">
-        <span>※ 메시지 본문은 비공개</span>
-        <span>⏱ 1분 전 갱신</span>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- 빠른 진입 -->
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-2 flex items-center gap-2 text-sm">
+    <span class="text-slate-400">▶</span> 오늘 할 일
+    <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 font-medium">7</span>
+  </a>
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-2 flex items-center gap-2 text-sm">
+    <span class="text-slate-400">▶</span> 보낼 메시지
+    <span class="ml-auto text-[11px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">3</span>
+  </a>
 
-<!-- 5. Morning brief notification -->
-<section id="brief">
-  <div class="flex items-baseline gap-3 mb-4">
-    <h2 class="text-xl font-semibold text-slate-900">5. 아침 브리프 알림</h2>
-    <span class="text-xs text-slate-500">매일 8시 macOS Notification Center</span>
-  </div>
-  <div class="bg-gradient-to-b from-slate-200 to-slate-300 rounded-xl p-10 grid place-items-center">
-    <div class="w-[360px] bg-white/95 backdrop-blur rounded-xl shadow-2xl overflow-hidden">
-      <div class="p-4">
-        <div class="flex items-center gap-2 mb-2">
-          <div class="w-6 h-6 rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 grid place-items-center text-white text-xs">☉</div>
-          <span class="text-xs font-semibold text-slate-700">Designer Dashboard</span>
-          <span class="ml-auto text-[10px] text-slate-400">방금 전</span>
-        </div>
-        <p class="text-sm font-semibold text-slate-900">오늘 액션 7건 · 가장 급한 일</p>
-        <p class="text-sm text-slate-700 mt-1">"SKU01 샘플 D-1 — 컨펌 회의 잡기"</p>
-      </div>
-      <div class="border-t border-slate-200 grid grid-cols-2 divide-x divide-slate-200 text-sm">
-        <button class="py-2.5 hover:bg-slate-50 text-slate-600">나중에</button>
-        <button class="py-2.5 hover:bg-slate-50 font-semibold text-indigo-600">열기</button>
-      </div>
+  <!-- 활성 프로젝트 -->
+  <div class="border-t border-slate-100 my-1"></div>
+  <div class="px-3 py-1.5 text-[10px] uppercase tracking-wide text-slate-400">활성 프로젝트</div>
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+    <div class="flex items-center gap-2 text-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span class="font-medium text-slate-800">SKU01 봄 운동화</span>
+      <span class="ml-auto text-[11px] text-slate-500 font-mono">67%</span>
     </div>
-  </div>
-</section>
+    <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar" style="width:67%"></div></div>
+  </a>
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+    <div class="flex items-center gap-2 text-sm">
+      <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+      <span class="font-medium text-slate-800">SKU02 여름 백팩</span>
+      <span class="ml-auto text-[11px] text-slate-500 font-mono">50%</span>
+    </div>
+    <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar warn" style="width:50%"></div></div>
+  </a>
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+    <div class="flex items-center gap-2 text-sm">
+      <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+      <span class="font-medium text-slate-800">SKU03 비치웨어</span>
+      <span class="ml-auto text-[11px] text-rose-600 font-mono">17% ⚠</span>
+    </div>
+    <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full progress-bar danger" style="width:17%"></div></div>
+  </a>
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5">
+    <div class="flex items-center gap-2 text-sm">
+      <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+      <span class="font-medium text-slate-800">SKU04 가을 코트</span>
+      <span class="ml-auto text-[11px] text-slate-500 font-mono">100%</span>
+    </div>
+    <div class="ml-4 mt-1 h-1 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-slate-400" style="width:100%"></div></div>
+  </a>
 
-<footer class="py-12 text-center text-xs text-slate-400">
-  Designer Dashboard · v0 시각화 목업 · 2026-05-03 · 기획 검토용
-</footer>
-
-</main>
-
-<!-- Search modal -->
-<div id="search-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm" onclick="if(event.target===this)closeSearch()">
-  <div class="max-w-2xl mx-auto mt-20 mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200">
-    <div class="flex items-center gap-3 px-5 py-4 border-b border-slate-100">
-      <span class="text-slate-400 text-xl">🔍</span>
-      <input id="search-input" type="search" placeholder="프로젝트, 메시지, 파일 검색…  (예: '운동화', 'MD', 'psd')" class="flex-1 text-base bg-transparent outline-none placeholder:text-slate-400" autocomplete="off">
-      <button onclick="closeSearch()" class="text-slate-400 hover:text-slate-700 text-xs px-2 py-1 rounded border border-slate-200">ESC</button>
-    </div>
-    <div class="flex items-center gap-2 px-5 py-2 border-b border-slate-100 text-xs">
-      <span class="text-slate-500">유형:</span>
-      <button data-filter="all" class="filter-chip px-2 py-0.5 rounded bg-slate-900 text-white">전체</button>
-      <button data-filter="project" class="filter-chip px-2 py-0.5 rounded bg-white text-slate-600 hover:bg-slate-100">프로젝트</button>
-      <button data-filter="message" class="filter-chip px-2 py-0.5 rounded bg-white text-slate-600 hover:bg-slate-100">메시지</button>
-      <button data-filter="file" class="filter-chip px-2 py-0.5 rounded bg-white text-slate-600 hover:bg-slate-100">파일</button>
-      <span class="ml-auto text-slate-400" id="search-meta"></span>
-    </div>
-    <div id="search-results" class="max-h-[60vh] overflow-y-auto"></div>
-    <div class="px-5 py-2.5 border-t border-slate-100 bg-slate-50 flex items-center gap-3 text-[10px] text-slate-500 flex-wrap">
-      <span><kbd class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">↑↓</kbd> 이동</span>
-      <span><kbd class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">↵</kbd> 열기</span>
-      <span><kbd class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">⌘K</kbd> 어디서든 검색</span>
-      <span class="ml-auto">🔒 SQLite FTS5 로컬 검색 · 메시지 본문 외부 미전송</span>
-    </div>
-  </div>
+  <!-- 푸터 -->
+  <div class="border-t border-slate-100 my-1"></div>
+  <a href="#" onclick="openDashboard(event)" class="block px-3 py-1.5 text-sm text-slate-700 font-medium">⤢ 전체 대시보드 열기 →</a>
+  <a href="#" onclick="syncNow(event)" class="block px-3 py-1.5 text-sm text-slate-600">⟳ 지금 동기화</a>
+  <a href="#" onclick="openSettings(event)" class="block px-3 py-1.5 text-sm text-slate-600">⚙ 설정</a>
 </div>
 
 <script>
-  // Smooth scroll + URL hash update for ALL in-page anchors (header nav, menubar dropdown, etc)
-  function bindAnchors() {
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      if (a.dataset.bound) return;
-      a.dataset.bound = '1';
-      a.addEventListener('click', e => {
-        const id = a.getAttribute('href').slice(1);
-        if (!id) return;
-        const el = document.getElementById(id);
-        if (el) {
-          e.preventDefault();
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.pushState(null, '', '#' + id);
-        }
-      });
-    });
+  function openDashboard(e) {
+    if (e) e.preventDefault();
+    const url = 'https://lsh135401-hue.github.io/designer-dashboard-/.planning/sketches/v0-dashboard.html#main';
+    if (window.__TAURI__ && window.__TAURI__.opener) {
+      window.__TAURI__.opener.openUrl(url).catch(() => window.open(url, '_blank'));
+    } else {
+      window.open(url, '_blank');
+    }
   }
-  bindAnchors();
-  document.addEventListener('DOMContentLoaded', bindAnchors);
-
-  // Search index (mocked — would come from local SQLite FTS5 in real app)
-  const SEARCH_INDEX = [
-    // Projects
-    {type:'project', icon:'📦', title:'SKU01 봄 시즌 운동화', sub:'활성 · 67% · 다음: 양산 발주 · 공장A · MD 김**', priority:'urgent', date:'D-1'},
-    {type:'project', icon:'📦', title:'SKU02 여름 백팩', sub:'활성 · 50% · 다음: MD 시안 검토 · 공장A', priority:'today', date:'2주'},
-    {type:'project', icon:'📦', title:'SKU03 비치웨어 라인', sub:'⚠ 지연 · 17% · 공장 24h 무응답 · VN factory', priority:'urgent', date:'D+2'},
-    {type:'project', icon:'📦', title:'SKU04 가을 트렌치 코트', sub:'완료 · 100% · 공장B · 4/25 출고됨', priority:'done', date:'완료'},
-
-    // Messages
-    {type:'message', icon:'💬', channel:'Slack', title:'#factory-A 김사장', sub:'"운동화 도면 사이즈 확인 부탁드려요. 발주 전에 한번 더 확인이…"', date:'2분 전', project:'SKU01', priority:'urgent'},
-    {type:'message', icon:'💬', channel:'카톡', title:'MD 김** 메모', sub:'"운동화 라인업 사이즈 컨펌 OK. 양산 진행해도 됩니다."', date:'15분 전', project:'SKU01', priority:'today'},
-    {type:'message', icon:'💬', channel:'Gmail', title:'공장B 견적서 회신', sub:'"트렌치 코트 견적서 첨부드립니다. 단가 협의 가능…"', date:'1시간 전', project:'SKU04', priority:'normal'},
-    {type:'message', icon:'💬', channel:'Slack', title:'#factory-A 박실장', sub:'"백팩 v2 시안 잘 받았습니다. 색상 옵션 3가지 모두 패브릭 컨펌됐어요."', date:'어제', project:'SKU02', priority:'normal'},
-    {type:'message', icon:'💬', channel:'Notion', title:'SKU01 페이지 코멘트', sub:'"양산 발주서에 사이즈표 누락 의심 — 확인 요청"', date:'2시간 전', project:'SKU01', priority:'urgent'},
-    {type:'message', icon:'💬', channel:'카톡', title:'공장A 사장님', sub:'"운동화 샘플 다음주 월요일까지 보내드릴게요"', date:'3일 전', project:'SKU01', priority:'normal'},
-    {type:'message', icon:'💬', channel:'Gmail', title:'VN factory Linh', sub:'"Beachwear sample fabric arrived, will start cutting tomorrow"', date:'어제', project:'SKU03', priority:'urgent'},
-
-    // Files
-    {type:'file', icon:'🎨', title:'SKU01_design_v3.psd', sub:'시안 · 28.4 MB · ⭐ 최신', date:'방금', project:'SKU01', channel:'Slack'},
-    {type:'file', icon:'🎨', title:'SKU01_design_v2.psd', sub:'시안 · 27.1 MB', date:'4/15', project:'SKU01', channel:'Slack'},
-    {type:'file', icon:'🎨', title:'SKU01_design_v1.psd', sub:'시안 · 25.8 MB', date:'4/8', project:'SKU01', channel:'Slack'},
-    {type:'file', icon:'📷', title:'SKU01_sample1_front.jpg', sub:'1차 샘플 사진 · 4.2 MB · 공장A 회신', date:'4/29', project:'SKU01', channel:'Slack'},
-    {type:'file', icon:'📷', title:'SKU01_sample1_side.jpg', sub:'1차 샘플 사진 · 4.5 MB · 공장A 회신', date:'4/29', project:'SKU01', channel:'Slack'},
-    {type:'file', icon:'📄', title:'SKU01_spec_r2.xlsx', sub:'2차 수정 사양서 ⭐ 확정안 · 양산 발주용 · 220 KB', date:'4/18', project:'SKU01', channel:'Notion'},
-    {type:'file', icon:'📄', title:'SKU01_spec_r1.pdf', sub:'1차 수정 사양서 · MD 코멘트 7건 반영 · 180 KB', date:'4/12', project:'SKU01', channel:'Notion'},
-    {type:'file', icon:'📄', title:'SKU04_quote_factoryB.pdf', sub:'공장B 견적서 · 95 KB · 단가 협의 첨부', date:'1시간 전', project:'SKU04', channel:'Gmail'},
-    {type:'file', icon:'🎨', title:'SKU02_design_v2.psd', sub:'백팩 시안 v2 · 색상 3종 · 18.7 MB', date:'어제', project:'SKU02', channel:'Slack'},
-  ];
-
-  const channelColors = {
-    'Slack':'bg-violet-100 text-violet-700',
-    'Gmail':'bg-rose-100 text-rose-700',
-    '카톡':'bg-amber-100 text-amber-700',
-    'Notion':'bg-slate-200 text-slate-700',
-    '캘린더':'bg-blue-100 text-blue-700'
-  };
-  const priorityColors = {
-    urgent:'bg-rose-500',
-    today:'bg-amber-500',
-    week:'bg-blue-500',
-    normal:'bg-slate-400',
-    done:'bg-emerald-500'
-  };
-  const typeLabels = {project:'프로젝트', message:'메시지', file:'파일'};
-  let activeFilter = 'all';
-
-  function openSearch() {
-    document.getElementById('search-modal').classList.remove('hidden');
-    setTimeout(() => document.getElementById('search-input').focus(), 50);
-    renderResults('');
+  function syncNow(e) {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    const orig = btn.innerText;
+    btn.innerText = '⟳ 동기화 중…';
+    setTimeout(() => { btn.innerText = orig; }, 1500);
   }
-  function closeSearch() {
-    document.getElementById('search-modal').classList.add('hidden');
+  function openSettings(e) {
+    e.preventDefault();
+    alert('설정은 다음 phase에서 구현 (Notion·Slack·Google 토큰 입력)');
   }
 
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // 실시간 시계 (30초 갱신)
+  function updateTime() {
+    const now = new Date();
+    const days = ['일','월','화','수','목','금','토'];
+    document.getElementById('month-label').textContent = `${now.getFullYear()}년 ${now.getMonth()+1}월`;
+    document.getElementById('date-label').textContent = `${now.getDate()}일 ${days[now.getDay()]}요일`;
+    const h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const ampm = h < 12 ? '오전' : '오후';
+    const h12 = h === 0 ? 12 : (h > 12 ? h-12 : h);
+    document.getElementById('time-label').textContent = `${ampm} ${h12}:${m}`;
   }
-  function highlight(text, q) {
-    const safe = escapeHtml(text);
-    if (!q) return safe;
-    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-    return safe.replace(re, '<mark class="bg-amber-200 text-slate-900 rounded px-0.5">$1</mark>');
-  }
-
-  function renderResults(q) {
-    q = q.toLowerCase().trim();
-    const filtered = SEARCH_INDEX.filter(item => {
-      if (activeFilter !== 'all' && item.type !== activeFilter) return false;
-      if (!q) return true;
-      const haystack = (item.title + ' ' + (item.sub||'') + ' ' + (item.project||'') + ' ' + (item.channel||'')).toLowerCase();
-      return haystack.includes(q);
-    });
-    const grouped = {project:[], message:[], file:[]};
-    filtered.forEach(it => grouped[it.type].push(it));
-
-    const html = ['project','message','file'].map(group => {
-      const items = grouped[group];
-      if (!items.length) return '';
-      const rows = items.map(it => {
-        const channelChip = it.channel ? `<span class="px-1.5 py-0.5 text-[10px] rounded ${channelColors[it.channel]||'bg-slate-100 text-slate-600'} font-mono">${it.channel}</span>` : '';
-        const projectChip = it.project ? `<span class="text-[10px] text-slate-400 font-mono">${it.project}</span>` : '';
-        const priorityDot = it.priority ? `<span class="w-2 h-2 rounded-full ${priorityColors[it.priority]||'bg-slate-300'} shrink-0" title="${it.priority}"></span>` : '<span class="w-2 h-2 shrink-0"></span>';
-        const dateChip = it.date ? `<span class="ml-auto text-[10px] text-slate-400 shrink-0 font-mono">${it.date}</span>` : '';
-        return `
-          <a class="block px-5 py-2.5 hover:bg-indigo-50 border-b border-slate-50 cursor-pointer transition-colors">
-            <div class="flex items-center gap-2">
-              <span class="text-base">${it.icon}</span>
-              ${priorityDot}
-              <span class="font-medium text-slate-900 text-sm truncate flex-1 min-w-0">${highlight(it.title, q)}</span>
-              ${channelChip}
-              ${projectChip}
-              ${dateChip}
-            </div>
-            ${it.sub ? `<div class="text-xs text-slate-500 ml-7 mt-0.5 truncate">${highlight(it.sub, q)}</div>` : ''}
-          </a>`;
-      }).join('');
-      return `
-        <div class="border-b border-slate-100 last:border-b-0">
-          <div class="px-5 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold bg-slate-50 sticky top-0">${typeLabels[group]} <span class="font-mono text-slate-400">(${items.length})</span></div>
-          ${rows}
-        </div>`;
-    }).join('');
-
-    document.getElementById('search-results').innerHTML = html ||
-      `<div class="px-5 py-12 text-center text-sm text-slate-400">
-        <div class="text-3xl mb-2 opacity-30">🔍</div>
-        검색 결과 없음<br>
-        <span class="text-[11px]">다른 키워드를 시도해보세요</span>
-      </div>`;
-    document.getElementById('search-meta').textContent = q
-      ? `${filtered.length}건 / ${SEARCH_INDEX.length}건 인덱스`
-      : `인덱스 ${SEARCH_INDEX.length}건`;
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('search-input');
-    if (input) input.addEventListener('input', e => renderResults(e.target.value));
-    document.querySelectorAll('.filter-chip').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeFilter = btn.dataset.filter;
-        document.querySelectorAll('.filter-chip').forEach(b => {
-          b.classList.remove('bg-slate-900','text-white');
-          b.classList.add('bg-white','text-slate-600');
-        });
-        btn.classList.remove('bg-white','text-slate-600');
-        btn.classList.add('bg-slate-900','text-white');
-        renderResults(input.value);
-      });
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeSearch();
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        openSearch();
-      }
-    });
-  });
+  updateTime();
+  setInterval(updateTime, 30000);
 </script>
 </body>
 </html>
