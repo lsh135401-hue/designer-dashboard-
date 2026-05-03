@@ -289,10 +289,47 @@
       <span class="ml-3 text-[11px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">오늘</span>
       <div class="ml-auto flex items-center gap-2 text-sm">
         <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>⟳</span>동기화</button>
-        <button class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>🔍</span>검색</button>
+        <button onclick="openSearch()" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 flex items-center gap-1.5"><span>🔍</span>검색<kbd class="ml-1 px-1 py-0 text-[10px] font-mono bg-slate-100 text-slate-500 rounded border border-slate-200">⌘K</kbd></button>
         <button class="px-3 py-1.5 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-1.5"><span>⤴</span>공유</button>
       </div>
     </div>
+
+    <!-- Color hierarchy legend -->
+    <details open class="border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
+      <summary class="px-5 py-2 cursor-pointer flex items-center gap-2 text-[11px] text-slate-600 hover:bg-slate-50">
+        <span class="font-semibold text-slate-700">🎨 컬러 위계</span>
+        <span class="text-slate-400">— 채널과 우선순위가 색으로 구분됩니다</span>
+        <span class="ml-auto text-[10px] text-slate-400">접기 ▾</span>
+      </summary>
+      <div class="px-5 pb-3">
+        <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-[11px]">
+          <!-- Channel -->
+          <div>
+            <div class="font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5"><span>📡</span>채널 (메시지·파일 출처)</div>
+            <div class="flex gap-1.5 flex-wrap">
+              <span class="px-2 py-0.5 rounded bg-violet-100 text-violet-700 font-mono text-[10px]">Slack</span>
+              <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 font-mono text-[10px]">Gmail</span>
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-700 font-mono text-[10px]">카톡</span>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 font-mono text-[10px]">캘린더</span>
+              <span class="px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-mono text-[10px]">Notion</span>
+            </div>
+          </div>
+          <!-- Priority -->
+          <div class="border-l border-slate-200 pl-6">
+            <div class="font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5"><span>⚡</span>우선순위 (긴급도)</div>
+            <div class="flex gap-2 flex-wrap items-center text-[10px]">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span class="text-rose-700 font-medium">긴급/D-day</span></span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span class="text-amber-700 font-medium">D-1·오늘</span></span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span><span class="text-blue-700 font-medium">이번주</span></span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span><span class="text-slate-600 font-medium">정상</span></span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-medium">완료</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2 text-[10px] text-slate-400 italic">규칙: 좌측 점 = 우선순위 / 뱃지·로고 색 = 채널 / 진행률바 색 = 프로젝트 상태(완료=녹/지연=황/위험=적)</div>
+      </div>
+    </details>
+
     <!-- 3-column dashboard -->
     <div class="grid grid-cols-12 gap-0">
       <!-- Left: Today -->
@@ -1093,6 +1130,32 @@
 
 </main>
 
+<!-- Search modal -->
+<div id="search-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm" onclick="if(event.target===this)closeSearch()">
+  <div class="max-w-2xl mx-auto mt-20 mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200">
+    <div class="flex items-center gap-3 px-5 py-4 border-b border-slate-100">
+      <span class="text-slate-400 text-xl">🔍</span>
+      <input id="search-input" type="search" placeholder="프로젝트, 메시지, 파일 검색…  (예: '운동화', 'MD', 'psd')" class="flex-1 text-base bg-transparent outline-none placeholder:text-slate-400" autocomplete="off">
+      <button onclick="closeSearch()" class="text-slate-400 hover:text-slate-700 text-xs px-2 py-1 rounded border border-slate-200">ESC</button>
+    </div>
+    <div class="flex items-center gap-2 px-5 py-2 border-b border-slate-100 text-xs">
+      <span class="text-slate-500">유형:</span>
+      <button data-filter="all" class="filter-chip px-2 py-0.5 rounded bg-slate-900 text-white">전체</button>
+      <button data-filter="project" class="filter-chip px-2 py-0.5 rounded bg-white text-slate-600 hover:bg-slate-100">프로젝트</button>
+      <button data-filter="message" class="filter-chip px-2 py-0.5 rounded bg-white text-slate-600 hover:bg-slate-100">메시지</button>
+      <button data-filter="file" class="filter-chip px-2 py-0.5 rounded bg-white text-slate-600 hover:bg-slate-100">파일</button>
+      <span class="ml-auto text-slate-400" id="search-meta"></span>
+    </div>
+    <div id="search-results" class="max-h-[60vh] overflow-y-auto"></div>
+    <div class="px-5 py-2.5 border-t border-slate-100 bg-slate-50 flex items-center gap-3 text-[10px] text-slate-500 flex-wrap">
+      <span><kbd class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">↑↓</kbd> 이동</span>
+      <span><kbd class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">↵</kbd> 열기</span>
+      <span><kbd class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">⌘K</kbd> 어디서든 검색</span>
+      <span class="ml-auto">🔒 SQLite FTS5 로컬 검색 · 메시지 본문 외부 미전송</span>
+    </div>
+  </div>
+</div>
+
 <script>
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1100,6 +1163,145 @@
       const id = a.getAttribute('href').slice(1);
       const el = document.getElementById(id);
       if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Search index (mocked — would come from local SQLite FTS5 in real app)
+  const SEARCH_INDEX = [
+    // Projects
+    {type:'project', icon:'📦', title:'SKU01 봄 시즌 운동화', sub:'활성 · 67% · 다음: 양산 발주 · 공장A · MD 김**', priority:'urgent', date:'D-1'},
+    {type:'project', icon:'📦', title:'SKU02 여름 백팩', sub:'활성 · 50% · 다음: MD 시안 검토 · 공장A', priority:'today', date:'2주'},
+    {type:'project', icon:'📦', title:'SKU03 비치웨어 라인', sub:'⚠ 지연 · 17% · 공장 24h 무응답 · VN factory', priority:'urgent', date:'D+2'},
+    {type:'project', icon:'📦', title:'SKU04 가을 트렌치 코트', sub:'완료 · 100% · 공장B · 4/25 출고됨', priority:'done', date:'완료'},
+
+    // Messages
+    {type:'message', icon:'💬', channel:'Slack', title:'#factory-A 김사장', sub:'"운동화 도면 사이즈 확인 부탁드려요. 발주 전에 한번 더 확인이…"', date:'2분 전', project:'SKU01', priority:'urgent'},
+    {type:'message', icon:'💬', channel:'카톡', title:'MD 김** 메모', sub:'"운동화 라인업 사이즈 컨펌 OK. 양산 진행해도 됩니다."', date:'15분 전', project:'SKU01', priority:'today'},
+    {type:'message', icon:'💬', channel:'Gmail', title:'공장B 견적서 회신', sub:'"트렌치 코트 견적서 첨부드립니다. 단가 협의 가능…"', date:'1시간 전', project:'SKU04', priority:'normal'},
+    {type:'message', icon:'💬', channel:'Slack', title:'#factory-A 박실장', sub:'"백팩 v2 시안 잘 받았습니다. 색상 옵션 3가지 모두 패브릭 컨펌됐어요."', date:'어제', project:'SKU02', priority:'normal'},
+    {type:'message', icon:'💬', channel:'Notion', title:'SKU01 페이지 코멘트', sub:'"양산 발주서에 사이즈표 누락 의심 — 확인 요청"', date:'2시간 전', project:'SKU01', priority:'urgent'},
+    {type:'message', icon:'💬', channel:'카톡', title:'공장A 사장님', sub:'"운동화 샘플 다음주 월요일까지 보내드릴게요"', date:'3일 전', project:'SKU01', priority:'normal'},
+    {type:'message', icon:'💬', channel:'Gmail', title:'VN factory Linh', sub:'"Beachwear sample fabric arrived, will start cutting tomorrow"', date:'어제', project:'SKU03', priority:'urgent'},
+
+    // Files
+    {type:'file', icon:'🎨', title:'SKU01_design_v3.psd', sub:'시안 · 28.4 MB · ⭐ 최신', date:'방금', project:'SKU01', channel:'Slack'},
+    {type:'file', icon:'🎨', title:'SKU01_design_v2.psd', sub:'시안 · 27.1 MB', date:'4/15', project:'SKU01', channel:'Slack'},
+    {type:'file', icon:'🎨', title:'SKU01_design_v1.psd', sub:'시안 · 25.8 MB', date:'4/8', project:'SKU01', channel:'Slack'},
+    {type:'file', icon:'📷', title:'SKU01_sample1_front.jpg', sub:'1차 샘플 사진 · 4.2 MB · 공장A 회신', date:'4/29', project:'SKU01', channel:'Slack'},
+    {type:'file', icon:'📷', title:'SKU01_sample1_side.jpg', sub:'1차 샘플 사진 · 4.5 MB · 공장A 회신', date:'4/29', project:'SKU01', channel:'Slack'},
+    {type:'file', icon:'📄', title:'SKU01_spec_r2.xlsx', sub:'2차 수정 사양서 ⭐ 확정안 · 양산 발주용 · 220 KB', date:'4/18', project:'SKU01', channel:'Notion'},
+    {type:'file', icon:'📄', title:'SKU01_spec_r1.pdf', sub:'1차 수정 사양서 · MD 코멘트 7건 반영 · 180 KB', date:'4/12', project:'SKU01', channel:'Notion'},
+    {type:'file', icon:'📄', title:'SKU04_quote_factoryB.pdf', sub:'공장B 견적서 · 95 KB · 단가 협의 첨부', date:'1시간 전', project:'SKU04', channel:'Gmail'},
+    {type:'file', icon:'🎨', title:'SKU02_design_v2.psd', sub:'백팩 시안 v2 · 색상 3종 · 18.7 MB', date:'어제', project:'SKU02', channel:'Slack'},
+  ];
+
+  const channelColors = {
+    'Slack':'bg-violet-100 text-violet-700',
+    'Gmail':'bg-rose-100 text-rose-700',
+    '카톡':'bg-amber-100 text-amber-700',
+    'Notion':'bg-slate-200 text-slate-700',
+    '캘린더':'bg-blue-100 text-blue-700'
+  };
+  const priorityColors = {
+    urgent:'bg-rose-500',
+    today:'bg-amber-500',
+    week:'bg-blue-500',
+    normal:'bg-slate-400',
+    done:'bg-emerald-500'
+  };
+  const typeLabels = {project:'프로젝트', message:'메시지', file:'파일'};
+  let activeFilter = 'all';
+
+  function openSearch() {
+    document.getElementById('search-modal').classList.remove('hidden');
+    setTimeout(() => document.getElementById('search-input').focus(), 50);
+    renderResults('');
+  }
+  function closeSearch() {
+    document.getElementById('search-modal').classList.add('hidden');
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function highlight(text, q) {
+    const safe = escapeHtml(text);
+    if (!q) return safe;
+    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return safe.replace(re, '<mark class="bg-amber-200 text-slate-900 rounded px-0.5">$1</mark>');
+  }
+
+  function renderResults(q) {
+    q = q.toLowerCase().trim();
+    const filtered = SEARCH_INDEX.filter(item => {
+      if (activeFilter !== 'all' && item.type !== activeFilter) return false;
+      if (!q) return true;
+      const haystack = (item.title + ' ' + (item.sub||'') + ' ' + (item.project||'') + ' ' + (item.channel||'')).toLowerCase();
+      return haystack.includes(q);
+    });
+    const grouped = {project:[], message:[], file:[]};
+    filtered.forEach(it => grouped[it.type].push(it));
+
+    const html = ['project','message','file'].map(group => {
+      const items = grouped[group];
+      if (!items.length) return '';
+      const rows = items.map(it => {
+        const channelChip = it.channel ? `<span class="px-1.5 py-0.5 text-[10px] rounded ${channelColors[it.channel]||'bg-slate-100 text-slate-600'} font-mono">${it.channel}</span>` : '';
+        const projectChip = it.project ? `<span class="text-[10px] text-slate-400 font-mono">${it.project}</span>` : '';
+        const priorityDot = it.priority ? `<span class="w-2 h-2 rounded-full ${priorityColors[it.priority]||'bg-slate-300'} shrink-0" title="${it.priority}"></span>` : '<span class="w-2 h-2 shrink-0"></span>';
+        const dateChip = it.date ? `<span class="ml-auto text-[10px] text-slate-400 shrink-0 font-mono">${it.date}</span>` : '';
+        return `
+          <a class="block px-5 py-2.5 hover:bg-indigo-50 border-b border-slate-50 cursor-pointer transition-colors">
+            <div class="flex items-center gap-2">
+              <span class="text-base">${it.icon}</span>
+              ${priorityDot}
+              <span class="font-medium text-slate-900 text-sm truncate flex-1 min-w-0">${highlight(it.title, q)}</span>
+              ${channelChip}
+              ${projectChip}
+              ${dateChip}
+            </div>
+            ${it.sub ? `<div class="text-xs text-slate-500 ml-7 mt-0.5 truncate">${highlight(it.sub, q)}</div>` : ''}
+          </a>`;
+      }).join('');
+      return `
+        <div class="border-b border-slate-100 last:border-b-0">
+          <div class="px-5 py-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold bg-slate-50 sticky top-0">${typeLabels[group]} <span class="font-mono text-slate-400">(${items.length})</span></div>
+          ${rows}
+        </div>`;
+    }).join('');
+
+    document.getElementById('search-results').innerHTML = html ||
+      `<div class="px-5 py-12 text-center text-sm text-slate-400">
+        <div class="text-3xl mb-2 opacity-30">🔍</div>
+        검색 결과 없음<br>
+        <span class="text-[11px]">다른 키워드를 시도해보세요</span>
+      </div>`;
+    document.getElementById('search-meta').textContent = q
+      ? `${filtered.length}건 / ${SEARCH_INDEX.length}건 인덱스`
+      : `인덱스 ${SEARCH_INDEX.length}건`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('search-input');
+    if (input) input.addEventListener('input', e => renderResults(e.target.value));
+    document.querySelectorAll('.filter-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.filter;
+        document.querySelectorAll('.filter-chip').forEach(b => {
+          b.classList.remove('bg-slate-900','text-white');
+          b.classList.add('bg-white','text-slate-600');
+        });
+        btn.classList.remove('bg-white','text-slate-600');
+        btn.classList.add('bg-slate-900','text-white');
+        renderResults(input.value);
+      });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeSearch();
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openSearch();
+      }
     });
   });
 </script>
