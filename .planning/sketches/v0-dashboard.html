@@ -88,6 +88,31 @@
         </div>
       </div>
 
+      <!-- Today's events strip (moved up — order 1-3-2) -->
+      <div class="px-3 py-2 border-b border-slate-100">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-[10px] uppercase tracking-wide text-slate-500 font-semibold">오늘의 일정</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-medium">3건</span>
+        </div>
+        <div class="space-y-1 text-[11px]">
+          <div class="flex items-center gap-1.5 text-slate-700">
+            <span class="font-mono text-[10px] text-slate-400 w-9">17:00</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
+            <span class="truncate">SKU01 양산 발주서 마감</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-slate-700">
+            <span class="font-mono text-[10px] text-slate-400 w-9">14:00</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+            <span class="truncate">MD 김** 미팅</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-slate-700">
+            <span class="font-mono text-[10px] text-slate-400 w-9">종일</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+            <span class="truncate">SKU02 시안 v2 마감</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Mini month calendar -->
       <div class="px-2 py-2 border-b border-slate-100">
         <div class="flex items-center justify-between mb-1 px-1">
@@ -189,15 +214,6 @@
           <div class="aspect-square grid place-items-center text-slate-300">3</div>
           <div class="aspect-square grid place-items-center text-slate-300">4</div>
           <div class="aspect-square grid place-items-center text-slate-300">5</div>
-        </div>
-        <!-- Today's events strip under calendar -->
-        <div class="mt-1.5 px-1 py-1.5 bg-indigo-50 rounded text-[10px] text-indigo-900">
-          <div class="font-semibold mb-0.5">오늘의 일정 · 3건</div>
-          <div class="space-y-0.5">
-            <div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-rose-500"></span><span>SKU01 양산 발주서 17:00</span></div>
-            <div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-blue-500"></span><span>14:00 MD 김** 미팅</span></div>
-            <div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-amber-500"></span><span>SKU02 시안 v2 마감</span></div>
-          </div>
         </div>
       </div>
 
@@ -533,6 +549,151 @@
         </li>
       </ul>
     </div>
+
+    <!-- Month-view calendar (all projects timeline) -->
+    <div class="border-t border-slate-100 px-5 py-4">
+      <div class="flex items-center gap-3 mb-3">
+        <h3 class="text-sm font-semibold text-slate-900">월간 타임라인</h3>
+        <span class="text-[11px] text-slate-500">모든 프로젝트 일정 한눈에</span>
+        <div class="ml-auto flex items-center gap-1 text-xs">
+          <button class="text-slate-400 hover:text-slate-700 px-1">◀</button>
+          <span class="font-semibold text-slate-700 px-2">2026년 5월</span>
+          <button class="text-slate-400 hover:text-slate-700 px-1">▶</button>
+          <div class="ml-3 flex gap-1">
+            <button class="px-2 py-0.5 rounded bg-slate-900 text-white text-[11px]">월</button>
+            <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100 text-[11px]">주</button>
+            <button class="px-2 py-0.5 rounded text-slate-600 hover:bg-slate-100 text-[11px]">분기</button>
+          </div>
+          <div class="ml-3 flex items-center gap-2 text-[10px] text-slate-500">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-indigo-500"></span>SKU01</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-amber-500"></span>SKU02</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-rose-500"></span>SKU03</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-emerald-500"></span>SKU04</span>
+          </div>
+        </div>
+      </div>
+      <div class="border border-slate-200 rounded-lg overflow-hidden">
+        <!-- Day headers -->
+        <div class="grid grid-cols-7 bg-slate-50 border-b border-slate-200 text-[11px] font-semibold text-center">
+          <div class="py-2 text-rose-500">일</div>
+          <div class="py-2 text-slate-700">월</div>
+          <div class="py-2 text-slate-700">화</div>
+          <div class="py-2 text-slate-700">수</div>
+          <div class="py-2 text-slate-700">목</div>
+          <div class="py-2 text-slate-700">금</div>
+          <div class="py-2 text-blue-500">토</div>
+        </div>
+        <!-- Week 1 -->
+        <div class="grid grid-cols-7 border-b border-slate-100">
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">25</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">26</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">27</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">28</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">29</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">30</div></div>
+          <div class="min-h-[80px] p-1.5">
+            <div class="text-[11px] text-rose-500 font-medium">1</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 truncate">근로자의 날</div>
+          </div>
+        </div>
+        <!-- Week 2 (TODAY row) -->
+        <div class="grid grid-cols-7 border-b border-slate-100">
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">2</div></div>
+          <!-- TODAY 5/3 -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-indigo-50">
+            <div class="flex items-center gap-1">
+              <span class="w-5 h-5 rounded-full bg-indigo-600 text-white text-[10px] grid place-items-center font-bold">3</span>
+              <span class="text-[10px] text-indigo-700 font-semibold">오늘</span>
+            </div>
+            <div class="mt-1 space-y-0.5">
+              <div class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">17:00 SKU01 발주서</div>
+              <div class="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 truncate">14:00 MD 미팅</div>
+              <div class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 truncate">SKU02 시안 v2</div>
+            </div>
+          </div>
+          <!-- 5/4 SKU01 컨펌 -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-slate-700 font-medium">4</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 컨펌 ⚠</div>
+          </div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">5</div></div>
+          <!-- 5/6 양산 발주 -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-slate-700 font-medium">6</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 양산 발주</div>
+          </div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">7</div></div>
+          <!-- 5/8 양산 시작 -->
+          <div class="min-h-[80px] p-1.5">
+            <div class="text-[11px] text-blue-500 font-medium">8</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 양산 시작</div>
+          </div>
+        </div>
+        <!-- Week 3 -->
+        <div class="grid grid-cols-7 border-b border-slate-100">
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">9</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">10</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">11</div></div>
+          <!-- 5/12 MD 검토 -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-slate-700 font-medium">12</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 truncate">SKU02 MD 검토</div>
+          </div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">13</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">14</div></div>
+          <!-- 5/15 SKU02 샘플 도착 -->
+          <div class="min-h-[80px] p-1.5">
+            <div class="text-[11px] text-blue-500 font-medium">15</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 truncate">SKU02 샘플 도착</div>
+          </div>
+        </div>
+        <!-- Week 4 -->
+        <div class="grid grid-cols-7 border-b border-slate-100">
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">16</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">17</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">18</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">19</div></div>
+          <!-- 5/20 SKU03 1차 시안 -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-slate-700 font-medium">20</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 truncate">SKU03 1차 시안</div>
+          </div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-rose-500 font-medium">21</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-50 text-rose-700 truncate">석가탄신일</div>
+          </div>
+          <div class="min-h-[80px] p-1.5"><div class="text-[11px] text-blue-500">22</div></div>
+        </div>
+        <!-- Week 5 -->
+        <div class="grid grid-cols-7 border-b border-slate-100">
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">23</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">24</div></div>
+          <!-- 5/25 SKU01 QC -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-slate-700 font-medium">25</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-800 truncate">SKU01 QC 점검</div>
+          </div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">26</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">27</div></div>
+          <!-- 5/28 SKU03 2차 시안 -->
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100">
+            <div class="text-[11px] text-slate-700 font-medium">28</div>
+            <div class="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 truncate">SKU03 2차 시안</div>
+          </div>
+          <div class="min-h-[80px] p-1.5"><div class="text-[11px] text-blue-500">29</div></div>
+        </div>
+        <!-- Week 6 -->
+        <div class="grid grid-cols-7">
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-rose-500">30</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100"><div class="text-[11px] text-slate-700">31</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">1</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">2</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">3</div></div>
+          <div class="min-h-[80px] p-1.5 border-r border-slate-100 bg-slate-50/50"><div class="text-[11px] text-slate-300">4</div></div>
+          <div class="min-h-[80px] p-1.5 bg-slate-50/50"><div class="text-[11px] text-slate-300">5</div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -582,8 +743,139 @@
           <li class="flex items-center gap-2"><span class="text-slate-300">☐</span><span class="flex-1 text-slate-700">출고/입고</span><span class="text-[11px] text-slate-400">예정 06-10</span></li>
         </ol>
       </div>
-      <!-- Channel activity + Assets -->
+      <!-- Per-project Notion-style calendar + Channel activity + Assets -->
       <div class="col-span-7 p-5 space-y-5">
+
+        <!-- SKU01 전용 노션 캘린더 -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <h4 class="text-sm font-semibold text-slate-900">프로젝트 캘린더</h4>
+            <span class="text-[11px] text-slate-500">SKU01 전용 · 노션 동기화</span>
+            <div class="ml-auto flex items-center gap-1 text-xs">
+              <button class="text-slate-400 hover:text-slate-700 px-1">◀</button>
+              <span class="font-medium text-slate-700 px-1">2026년 5월</span>
+              <button class="text-slate-400 hover:text-slate-700 px-1">▶</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 mb-2 text-[10px] text-slate-500">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-indigo-500"></span>마일스톤</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-rose-400"></span>마감/D-day</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded border border-slate-400 bg-white"></span>태스크</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-sm bg-blue-400"></span>미팅</span>
+          </div>
+          <div class="border border-slate-200 rounded overflow-hidden">
+            <div class="grid grid-cols-7 bg-slate-50 border-b border-slate-200 text-[10px] text-center font-semibold">
+              <div class="py-1.5 text-rose-500">일</div>
+              <div class="py-1.5 text-slate-700">월</div>
+              <div class="py-1.5 text-slate-700">화</div>
+              <div class="py-1.5 text-slate-700">수</div>
+              <div class="py-1.5 text-slate-700">목</div>
+              <div class="py-1.5 text-slate-700">금</div>
+              <div class="py-1.5 text-blue-500">토</div>
+            </div>
+            <!-- Week 1 -->
+            <div class="grid grid-cols-7 border-b border-slate-100">
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">25</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">26</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">27</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">28</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">29</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">30</div></div>
+              <div class="min-h-[58px] p-1"><div class="text-[10px] text-rose-500">1</div></div>
+            </div>
+            <!-- Week 2 (TODAY row) -->
+            <div class="grid grid-cols-7 border-b border-slate-100">
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">2</div></div>
+              <!-- TODAY 5/3 -->
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-indigo-50">
+                <div class="flex items-center gap-1">
+                  <span class="w-4 h-4 rounded-full bg-indigo-600 text-white text-[9px] grid place-items-center font-bold">3</span>
+                </div>
+                <div class="mt-0.5 space-y-0.5">
+                  <div class="text-[9px] px-1 py-0.5 rounded border border-rose-300 bg-white text-rose-700 truncate">17:00 발주서</div>
+                  <div class="text-[9px] px-1 py-0.5 rounded bg-blue-100 text-blue-700 truncate">14:00 MD</div>
+                </div>
+              </div>
+              <!-- 5/4 컨펌 -->
+              <div class="min-h-[58px] p-1 border-r border-slate-100">
+                <div class="text-[10px] text-slate-700 font-medium">4</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-rose-500 text-white truncate">⚠ 컨펌 D-day</div>
+              </div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">5</div></div>
+              <!-- 5/6 양산 발주 -->
+              <div class="min-h-[58px] p-1 border-r border-slate-100">
+                <div class="text-[10px] text-slate-700 font-medium">6</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">양산 발주</div>
+              </div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">7</div></div>
+              <!-- 5/8 양산 시작 -->
+              <div class="min-h-[58px] p-1">
+                <div class="text-[10px] text-blue-500 font-medium">8</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">양산 시작</div>
+              </div>
+            </div>
+            <!-- Week 3 -->
+            <div class="grid grid-cols-7 border-b border-slate-100">
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">9</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">10</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">11</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">12</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">13</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">14</div></div>
+              <!-- 5/15 QC 시작 -->
+              <div class="min-h-[58px] p-1">
+                <div class="text-[10px] text-blue-500 font-medium">15</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded border border-slate-300 bg-white text-slate-700 truncate">QC 준비</div>
+              </div>
+            </div>
+            <!-- Week 4 -->
+            <div class="grid grid-cols-7 border-b border-slate-100">
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">16</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">17</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">18</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">19</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">20</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100">
+                <div class="text-[10px] text-rose-500">21</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-rose-50 text-rose-700 truncate">석가탄신일</div>
+              </div>
+              <div class="min-h-[58px] p-1"><div class="text-[10px] text-blue-500">22</div></div>
+            </div>
+            <!-- Week 5 -->
+            <div class="grid grid-cols-7 border-b border-slate-100">
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-rose-500">23</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">24</div></div>
+              <!-- 5/25 QC 점검 -->
+              <div class="min-h-[58px] p-1 border-r border-slate-100">
+                <div class="text-[10px] text-slate-700 font-medium">25</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">QC 점검</div>
+              </div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">26</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">27</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">28</div></div>
+              <div class="min-h-[58px] p-1"><div class="text-[10px] text-blue-500">29</div></div>
+            </div>
+            <!-- Week 6 -->
+            <div class="grid grid-cols-7">
+              <div class="min-h-[58px] p-1 border-r border-slate-100">
+                <div class="text-[10px] text-rose-500">30</div>
+                <div class="mt-0.5 text-[9px] px-1 py-0.5 rounded bg-indigo-500 text-white truncate">양산 완료</div>
+              </div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100"><div class="text-[10px] text-slate-700">31</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">1</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">2</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">3</div></div>
+              <div class="min-h-[58px] p-1 border-r border-slate-100 bg-slate-50/50"><div class="text-[10px] text-slate-300">4</div></div>
+              <div class="min-h-[58px] p-1 bg-slate-50/50">
+                <div class="text-[10px] text-slate-300">5</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 px-2 py-1.5 bg-amber-50 border border-amber-200 rounded text-[10px] text-amber-800">
+            ⓘ 6/10 출고 예정 — 다음 달 보기에서 확인
+          </div>
+        </div>
+
         <div>
           <div class="flex items-center gap-2 mb-3">
             <h4 class="text-sm font-semibold text-slate-900">채널 활동</h4>
