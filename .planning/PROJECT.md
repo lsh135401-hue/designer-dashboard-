@@ -29,7 +29,7 @@
 - [ ] **AI Brief**: AI 인사이트가 프로젝트 페이지에 주석으로 첨부된다 (점수에는 반영 X)
 - [ ] **Send**: AI가 만든 지시 초안 카드를 본인이 [수정/발송/무시]로 처리하고 발송 결과가 노션 Communication Log에 자동 기록된다
 - [ ] **Send**: 발송 채널은 슬랙(채널/DM)과 지메일을 모두 지원한다
-- [ ] **Share**: 토큰화된 읽기전용 공유 URL을 발급/만료/회수할 수 있고 회수 시 즉시 403을 반환한다
+- [ ] **Share**: 무료 Cloudflare Workers 서브도메인(`designer-dashboard.workers.dev`)에서 토큰화된 읽기전용 공유 URL을 발급/만료/회수할 수 있고 회수 시 즉시 403을 반환한다 (커스텀 도메인은 v2 옵션)
 - [ ] **Share**: 공유 페이지에는 메시지 본문이 절대 노출되지 않는다 (진행률·일정·다음 단계만)
 - [ ] **Progress**: 프로젝트 진행률이 마일스톤(60%) + 태스크(40%) 가중 평균으로 계산된다
 - [ ] **Privacy**: 메시지 본문은 로컬 SQLite에만 저장되고 클라우드(공유 KV)에 절대 푸시되지 않는다
@@ -45,6 +45,7 @@
 - 자동 발송(승인 없이) — 디자이너 톤·뉘앙스 오류 위험으로 모든 발송은 사용자 승인 게이트 필수
 - 모바일 컴패니언 앱 — v1은 macOS 데스크탑만. 모바일은 공유 URL을 브라우저로 보는 방식
 - 다중 워크스페이스 (구글/슬랙) — v1은 단일 계정. 다중 계정은 v2
+- 유료 커스텀 도메인 — v1은 무료 `*.workers.dev` 서브도메인만. BYOD(Bring Your Own Domain)는 v2 옵션
 - 한국어 외 1차 지원 — UI는 한국어 우선, 영어/중국어는 발송 메시지 자동 감지 정도만
 
 ## Context
@@ -74,6 +75,7 @@
 - **Send policy**: 모든 외부 발송은 사용자 승인 게이트 통과 필수 — 자동 발송은 정형 알림(D-3 리마인드 등)에 한해 옵트인
 - **Platform**: macOS only (v1) — Tauri 구조상 후속 OS 추가는 가능하지만 v1 범위 외
 - **Distribution**: 코드 서명 + 자동 업데이트 — 사용자가 Gatekeeper 차단/수동 업데이트로 이탈하지 않게
+- **Cost**: v1 운영비 0원 인프라 — Cloudflare Workers/KV/R2 무료 한도, `*.workers.dev` 서브도메인 사용. 도메인 등록 비용 없음. AI 호출 ~$10/월 + Apple Developer ID $99/년만 발생
 
 ## Key Decisions
 
@@ -88,7 +90,7 @@
 | 데이터: 로컬 SQLite + 공유용만 Cloudflare KV | 프라이버시 + 비용 모두 유리, 메시지 본문은 절대 외부 X | — Pending |
 | SOTR: 노션 | 사용자 이미 노션 사용 중, 4채널 통합 시 충돌 해소를 한 곳에서 | — Pending |
 | AI: Anthropic Sonnet 4.6 + Haiku 4.5 + 프롬프트 캐싱 | 한국어 최상위, 사용자 친숙, 캐싱으로 ~$10/월 | — Pending |
-| 공유 호스팅: Cloudflare Workers + KV + R2 | 무료 한도 내, 정적·빠름, 토큰 회수 즉시 반영 | — Pending |
+| 공유 호스팅: Cloudflare Workers + KV + R2, `*.workers.dev` 무료 서브도메인 | 무료 한도 내·도메인 등록 비용 0원·정적·빠름·토큰 회수 즉시 반영 | — Pending |
 
 ## Evolution
 
